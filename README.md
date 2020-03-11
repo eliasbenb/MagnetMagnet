@@ -8,5 +8,5 @@ MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG
 - Exports magnet links into .txt file
 
 ## How to use:
-To use MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
-Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)
+- To use MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
+- Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)

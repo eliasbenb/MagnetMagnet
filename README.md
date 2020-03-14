@@ -13,7 +13,7 @@ MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG. I d
 - Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)
 ### Usage:
 - There are only three user changeable fields in MagnetMagnet:
-[IMG](https://i.imgur.com/iDXRFN2.png)
+![App Screenshot](https://i.imgur.com/iDXRFN2.png)
 - Domain: the first field is for the domain, here just input any RARBG domain name. I reccomend https://rarbg.to/ as of 2020
 - Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. **All the category IDs can be found below**
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard

@@ -65,6 +65,7 @@ ok_button = Button(app, text = "OK", command = callback)
 ok_button.place(relx=.5, rely=.91, anchor="center")
 
 app.title('MagnetMagnet - RARBG Scraper')
+app.iconbitmap(r'icon.ico')
 app.geometry('500x225')
 
 app.mainloop()

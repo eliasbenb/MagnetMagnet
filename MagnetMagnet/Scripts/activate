@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\elias\Documents\Python Apps\MagnetMagnet\MagnetMagnet"
+VIRTUAL_ENV="C:\Users\elias\Documents\GitHub\MagnetMagnet\MagnetMagnet"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

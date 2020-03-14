@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from bs4 import BeautifulSoup
 import time
 import pyperclip
@@ -12,7 +13,7 @@ def callback():
     rssLink = domain + 'rssdd.php?category=' + category
 
     request = requests.get(rssLink)
-    print('#############',request.status_code,'#############')
+
     source = request.content
     soup = str(BeautifulSoup(source, 'lxml'))
 
@@ -39,6 +40,8 @@ def callback():
     with open(filename,'w') as f:
         for item in magnets:
             f.write(item)
+    
+    messagebox.showinfo("MagnetMagnet - RARBG Scraper", "Magnet Links Have Been Exported to Local Directory")
 
 
 app = Tk()
@@ -60,6 +63,13 @@ clipboard_label = Label(app, text="Copy the Magnets to Clipboard?:")
 clipboard_label.place(relx=.5, rely=.60, anchor="center")
 clipboard_combobox = ttk.Combobox(app, values=['Yes', 'No'])
 clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
+
+domain_label.pack()
+domain_entry.pack()
+category_label.pack()
+category_entry.pack()
+clipboard_label.pack()
+clipboard_combobox.pack()
 
 ok_button = Button(app, text = "OK", command = callback)
 ok_button.place(relx=.5, rely=.91, anchor="center")

@@ -12,6 +12,13 @@ def callback():
     clipboard = clipboard_combobox.get()
     rssLink = domain + 'rssdd.php?category=' + category
 
+    try:
+        request = requests.get(rssLink)
+        if request.status_code == 200:
+            print(request.status_code)
+    except:
+        messagebox.showinfo("MagnetMagnet - RARBG Scraper (Made by @eliasbenb)", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+
     request = requests.get(rssLink)
 
     source = request.content
@@ -31,6 +38,7 @@ def callback():
 
     if clipboard == "Yes":
         pyperclip.copy(magnets)
+        messagebox.showinfo("MagnetMagnet - RARBG Scraper (Made by @eliasbenb)", "Magnets links successfully copied to clipboard")
     else:
         print("Magnets not copied to clipboard")
 
@@ -41,7 +49,7 @@ def callback():
         for item in magnets:
             f.write(item)
     
-    messagebox.showinfo("MagnetMagnet - RARBG Scraper", "Magnet Links Have Been Exported to Local Directory")
+    messagebox.showinfo("MagnetMagnet - RARBG Scraper (Made by @eliasbenb)", "Magnet links successfully exported to local directory")
 
 
 app = Tk()
@@ -74,7 +82,7 @@ clipboard_combobox.pack()
 ok_button = Button(app, text = "OK", command = callback)
 ok_button.place(relx=.5, rely=.91, anchor="center")
 
-app.title('MagnetMagnet - RARBG Scraper')
+app.title('MagnetMagnet - RARBG Scraper (Made by @eliasbenb)')
 app.iconbitmap(r'icon.ico')
 app.geometry('500x225')
 

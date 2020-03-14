@@ -15,23 +15,25 @@ def callback():
     print('#############',request.status_code,'#############')
     source = request.content
     soup = str(BeautifulSoup(source, 'lxml'))
-    cleanSoup = soup.replace('<', '')
-    cleanSoup = cleanSoup.replace('>', '')
-    cleanSoup = cleanSoup.replace('link/', '')
-    cleanSoup = cleanSoup.replace('\n', ' ')
+
+    cleanSoup = soup.replace('<', ' ')
+    cleanSoup = cleanSoup.replace('>', ' ')
     splitSoup = cleanSoup.split(' ')
-    magnets = [i for i in splitSoup if i.startswith('magnet')]
-    magnets = str(magnets).replace('magnet:?', '\nmagnet:?')
-    magnets =  str(magnets).replace("', '", "")
-    magnets =  str(magnets).replace("['", "")
-    magnets =  str(magnets).replace("']", "")
+
+    magnets = str([i for i in splitSoup if i.startswith('magnet')])
+    magnets = magnets.replace('magnet:?', '\nmagnet:?')
+    magnets = magnets.replace("', '", "")
+    magnets = magnets.replace("['", "")
+    magnets = magnets.replace("']", "")
+    magnets = magnets.replace(r"\n", "")
+    magnets = "==== Made by @eliasbenb ====" + magnets
 
     if clipboard == "Yes":
         pyperclip.copy(magnets)
     else:
         print("Magnets not copied to clipboard")
 
-    timestr = time.strftime("(%b-%d-%Y)")
+    timestr = time.strftime(" %Y%m%d%H%M%S")
     filename = "RARBG Results " + timestr + ".txt"
     print(filename)
     with open(filename,'w') as f:

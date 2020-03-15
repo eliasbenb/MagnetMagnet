@@ -1,6 +1,7 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
+from ttkthemes import ThemedStyle
 from bs4 import BeautifulSoup
-import time, os, pyperclip, requests
+import time, os, pyperclip, requests, tkinter.ttk
 import os
 
 path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
@@ -46,6 +47,22 @@ def rarbg():
         
         messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
+    def rarbg_load_config():
+        rarbg_domain_entry.delete(0,tkinter.END)
+        rarbg_category_entry.delete(0,tkinter.END)
+        with open(path+"rarbg_config.env", "r") as f2:
+            rarbg_saved_config = [line.rstrip('\n') for line in f2]
+        rarbg_domain_entry.insert(0,rarbg_saved_config[0])
+        rarbg_category_entry.insert(0,rarbg_saved_config[1])
+        rarbg_clipboard_combobox.insert(0, rarbg_saved_config[2])
+
+    def rarbg_save_config():
+        rarbg_domain = rarbg_domain_entry.get()
+        rarbg_category = rarbg_category_entry.get()
+        rarbg_clipboard = rarbg_clipboard_combobox.get()
+        with open(path+"rarbg_config.env", "w") as f3:
+            f3.write(rarbg_domain+'\n'+rarbg_category+'\n'+rarbg_clipboard)
+    
     rarbg_app = Tk()
 
     rarbg_domain_text = StringVar()
@@ -68,7 +85,14 @@ def rarbg():
     rarbg_ok_button = Button(rarbg_app, text = "OK", command = rarbg_callback)
     rarbg_ok_button.place(relx=.5, rely=.91, anchor="center")
 
+    rarbg_load_config_button = Button(rarbg_app, text = "Load Config", command = rarbg_load_config)
+    rarbg_load_config_button.place(relx=0.2, rely=0.5, anchor="center")
+
+    rarbg_save_config_button = Button(rarbg_app, text = "Save Config", command = rarbg_save_config)
+    rarbg_save_config_button.place(relx=0.8, rely=0.5, anchor="center")
+    
     rarbg_app.title('RARBG @eliasbenb')
     rarbg_app.iconbitmap(path+'icon.ico')
     rarbg_app.geometry('500x225')
+    
     rarbg_app.mainloop()

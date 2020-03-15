@@ -5,11 +5,12 @@
 </p>
 
 # What is this repo?
-MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG and The Pirate Bay. I decided to make this app to improve my Python skills.
+MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. I decided to make this app to improve my Python skills.
 
 ## Features supported:
 - Scraping magnet links from all RARBG mirrors
 - Scraping magnet links from **most** The Pirate Bay mirrors (depending on if the mirror supports RSS)
+- Scraping magnet links from **most** Kick Ass Torrents mirrors (depending on if the mirror contains the magnet link all on one page)
 - Ability to choose multiple categories/subcategories to scrape magnet links from
 - Copies magnet links to clipboard
 - Exports magnet links into .txt file
@@ -19,11 +20,11 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 **To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).**
 **Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)**
 ### Usage:
-- On launch you get two options of torrent indexers to scrape from: RARBG and The Pirate Bay
-![App Screenshot](https://user-images.githubusercontent.com/54410649/76706838-ea331300-6703-11ea-9667-aacb549b26d0.PNG)
+- On launch you get three options of torrent indexers to scrape from: RARBG, The Pirate Bay and Kick Ass Torrents
+![App Screenshot](https://user-images.githubusercontent.com/54410649/76709427-0b9dfa00-6718-11ea-9f53-9bc1c848d737.PNG)
 - There are only three user changeable fields in MagnetMagnet:
-![App Screenshot](https://user-images.githubusercontent.com/54410649/76706841-ec956d00-6703-11ea-9068-cae7ad0977e5.PNG)
-- Domain: the first field is for the domain, here just input any RARBG/The Pirate Bay domain name. I reccomend https://rarbg.to/ and https://tpb.party/ as of March 2020
+![App Screenshot](https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG)
+- Domain: the first field is for the domain, here just input a RARBG/The Pirate Bay/Kick Ass Torrents domain. I reccomend https://rarbg.to/ / https://tpb.party/ / https://kat.rip/ as of 16th March 2020
 - Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. **All the category IDs can be found below**
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
@@ -62,3 +63,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Porn = top100/500
 - Other = top100/600
 - All = top100/0
+### Category IDs for Kick Ass Torrents:
+**You can get any of these from the end of the Kick Ass Torrents link**
+- Movies = movies

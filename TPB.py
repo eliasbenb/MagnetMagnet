@@ -1,6 +1,9 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
 from bs4 import BeautifulSoup
 import time, os, pyperclip, requests
+import os
+
+path = '%s\\eliasbenb\\' %  os.environ['APPDATA']
 
 def tpb():
     def tpb_callback():
@@ -10,8 +13,6 @@ def tpb():
         tpb_rssLink = tpb_domain + 'rss/' + tpb_category
         try:
             tpb_request = requests.get(tpb_rssLink)
-            if tpb_request.status_code == 200:
-                print(tpb_request.status_code)
         except:
             messagebox.showinfo("TPB Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
@@ -35,11 +36,9 @@ def tpb():
             pyperclip.copy(tpb_magnets)
             messagebox.showinfo("TPB Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            print("Magnets not copied to clipboard")
-
+            nothing
         timestr = time.strftime(" %Y%m%d%H%M%S")
         tpb_filename = "TPB Results " + timestr + ".txt"
-        print(tpb_filename)
         with open(tpb_filename,'w') as f:
             for item in tpb_magnets:
                 f.write(item)
@@ -65,17 +64,10 @@ def tpb():
     tpb_clipboard_combobox = ttk.Combobox(tpb_app, values=['Yes', 'No'])
     tpb_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
 
-    tpb_domain_label.pack()
-    tpb_domain_entry.pack()
-    tpb_category_label.pack()
-    tpb_category_entry.pack()
-    tpb_clipboard_label.pack()
-    tpb_clipboard_combobox.pack()
-
     tpb_ok_button = Button(tpb_app, text = "OK", command = tpb_callback)
     tpb_ok_button.place(relx=.5, rely=.91, anchor="center")
 
     tpb_app.title('TPB @eliasbenb')
-    tpb_app.iconbitmap(r'icon.ico')
+    tpb_app.iconbitmap(path+'icon.ico')
     tpb_app.geometry('500x225')
     tpb_app.mainloop()

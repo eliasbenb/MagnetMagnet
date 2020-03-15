@@ -1,5 +1,11 @@
+<h3 align="center"><img src="https://i.imgur.com/pX9no9C.png" width="600px"></h3>
+<p align="center">
+  <a href="https://github.com/eliasbenb/MagnetMagnet/releases"><img src="https://img.shields.io/github/downloads/eliasbenb/MagnetMagnet/total?color=%234197fe&style=for-the-badge"></a>
+  <a href="https://github.com/eliasbenb/MagnetMagnet/releases/latest"><img src="https://img.shields.io/github/v/release/eliasbenb/MagnetMagnet?color=%234197fe&style=for-the-badge"></a>
+</p>
+
 # What is this repo?
-MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG and The Pirate Bay. I decided to make this app to improve my Python skills.
+MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG and The Pirate Bay. I decided to make this app to improve my Python skills.
 
 ## Features supported:
 - Scraping magnet links from all RARBG mirrors
@@ -10,14 +16,18 @@ MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG and 
 
 ## How to use:
 ### Installing:
-- To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
-- Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)
+**To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).**
+**Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)**
 ### Usage:
+- On launch you get two options of torrent indexers to scrape from: RARBG and The Pirate Bay
+![App Screenshot](https://user-images.githubusercontent.com/54410649/76706838-ea331300-6703-11ea-9667-aacb549b26d0.PNG)
 - There are only three user changeable fields in MagnetMagnet:
-![App Screenshot](https://user-images.githubusercontent.com/54410649/76688884-91537400-664a-11ea-9d22-9b6abef6bdc9.png)
-- Domain: the first field is for the domain, here just input any RARBG/The Pirate Bay domain name. I reccomend https://rarbg.to/ and https://tpb.party/ as of 2020
+![App Screenshot](https://user-images.githubusercontent.com/54410649/76706841-ec956d00-6703-11ea-9068-cae7ad0977e5.PNG)
+- Domain: the first field is for the domain, here just input any RARBG/The Pirate Bay domain name. I reccomend https://rarbg.to/ and https://tpb.party/ as of March 2020
 - Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. **All the category IDs can be found below**
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
+- Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
+- Load Config: this loads the config that has been saved to make filling the fields easier
 ### Category IDs for RARBG:
 **You can get any of these IDs from the end of the RARGB link**
 - XXX (18+) = 4

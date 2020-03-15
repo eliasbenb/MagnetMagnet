@@ -1,5 +1,4 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
-from ttkthemes import ThemedStyle
 from imagebytes import *
 from rarbg import *
 from tpb import *

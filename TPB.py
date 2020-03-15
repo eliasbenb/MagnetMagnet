@@ -1,5 +1,4 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
-from ttkthemes import ThemedStyle
 from bs4 import BeautifulSoup
 import time, os, pyperclip, requests, tkinter.ttk
 import os

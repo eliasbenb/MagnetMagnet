@@ -70,7 +70,7 @@ def tpb():
     tpb_domain_entry.place(relx=.5, rely=.20, anchor="center")
 
     tpb_category_text = StringVar()
-    tpb_category_label = Label(tpb_app, text="Enter Category Number:")
+    tpb_category_label = Label(tpb_app, text="Enter Category String:")
     tpb_category_label.place(relx=.5, rely=.35, anchor="center")
     tpb_category_entry = Entry(tpb_app, textvariable=tpb_category_text)
     tpb_category_entry.place(relx=.5, rely=.45, anchor="center")

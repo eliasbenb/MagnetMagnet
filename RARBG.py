@@ -2,80 +2,80 @@ from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
 from bs4 import BeautifulSoup
 import time, os, pyperclip, requests
 
-def RARBG():
-    def RARBG_callback():
-        RARBG_domain = RARBG_domain_entry.get()
-        RARBG_category = RARBG_category_entry.get()
-        RARBG_clipboard = RARBG_clipboard_combobox.get()
-        RARBG_rssLink = RARBG_domain + 'rssdd.php?category=' + RARBG_category
+def rarbg():
+    def rarbg_callback():
+        rarbg_domain = rarbg_domain_entry.get()
+        rarbg_category = rarbg_category_entry.get()
+        rarbg_clipboard = rarbg_clipboard_combobox.get()
+        rarbg_rssLink = rarbg_domain + 'rssdd.php?category=' + rarbg_category
         try:
-            RARBG_request = requests.get(RARBG_rssLink)
-            if RARBG_request.status_code == 200:
-                print(RARBG_request.status_code)
+            rarbg_request = requests.get(rarbg_rssLink)
+            if rarbg_request.status_code == 200:
+                print(rarbg_request.status_code)
         except:
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
-        RARBG_request = requests.get(RARBG_rssLink)
-        RARBG_source = RARBG_request.content
-        RARBG_soup = str(BeautifulSoup(RARBG_source, 'lxml'))
+        rarbg_request = requests.get(rarbg_rssLink)
+        rarbg_source = rarbg_request.content
+        rarbg_soup = str(BeautifulSoup(rarbg_source, 'lxml'))
 
-        RARBG_cleanSoup = RARBG_soup.replace('<', ' ')
-        RARBG_cleanSoup = RARBG_cleanSoup.replace('>', ' ')
-        RARBG_splitSoup = RARBG_cleanSoup.split(' ')
+        rarbg_cleanSoup = rarbg_soup.replace('<', ' ')
+        rarbg_cleanSoup = rarbg_cleanSoup.replace('>', ' ')
+        rarbg_splitSoup = rarbg_cleanSoup.split(' ')
 
-        RARBG_magnets = str([i for i in RARBG_splitSoup if i.startswith('magnet')])
-        RARBG_magnets = RARBG_magnets.replace('magnet:?', '\nmagnet:?')
-        RARBG_magnets = RARBG_magnets.replace("', '", "")
-        RARBG_magnets = RARBG_magnets.replace("['", "")
-        RARBG_magnets = RARBG_magnets.replace("']", "")
-        RARBG_magnets = RARBG_magnets.replace(r"\n", "")
-        RARBG_magnets = "==== Made by @eliasbenb ====" + RARBG_magnets
+        rarbg_magnets = str([i for i in rarbg_splitSoup if i.startswith('magnet')])
+        rarbg_magnets = rarbg_magnets.replace('magnet:?', '\nmagnet:?')
+        rarbg_magnets = rarbg_magnets.replace("', '", "")
+        rarbg_magnets = rarbg_magnets.replace("['", "")
+        rarbg_magnets = rarbg_magnets.replace("']", "")
+        rarbg_magnets = rarbg_magnets.replace(r"\n", "")
+        rarbg_magnets = "==== Made by @eliasbenb ====" + rarbg_magnets
 
-        if RARBG_clipboard == "Yes":
-            pyperclip.copy(RARBG_magnets)
+        if rarbg_clipboard == "Yes":
+            pyperclip.copy(rarbg_magnets)
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            print("Magnets not copied to clipboard")
+            print("Magnets not copied to clipboard.")
 
         timestr = time.strftime(" %Y%m%d%H%M%S")
-        RARBG_filename = "RARBG Results " + timestr + ".txt"
-        print(RARBG_filename)
-        with open(RARBG_filename,'w') as f:
-            for item in RARBG_magnets:
+        rarbg_filename = "RARBG Results " + timestr + ".txt"
+        print(rarbg_filename)
+        with open(rarbg_filename,'w') as f:
+            for item in rarbg_magnets:
                 f.write(item)
         
         messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
-    RARBG_app = Tk()
+    rarbg_app = Tk()
 
-    RARBG_domain_text = StringVar()
-    RARBG_domain_label = Label(RARBG_app, text="Enter RARBG Domain Link:")
-    RARBG_domain_label.place(relx=.5, rely=.1, anchor="center")
-    RARBG_domain_entry = Entry(RARBG_app, textvariable=RARBG_domain_text)
-    RARBG_domain_entry.place(relx=.5, rely=.20, anchor="center")
+    rarbg_domain_text = StringVar()
+    rarbg_domain_label = Label(rarbg_app, text="Enter RARBG Domain Link:")
+    rarbg_domain_label.place(relx=.5, rely=.1, anchor="center")
+    rarbg_domain_entry = Entry(rarbg_app, textvariable=rarbg_domain_text)
+    rarbg_domain_entry.place(relx=.5, rely=.20, anchor="center")
 
-    RARBG_category_text = StringVar()
-    RARBG_category_label = Label(RARBG_app, text="Enter Category Number:")
-    RARBG_category_label.place(relx=.5, rely=.35, anchor="center")
-    RARBG_category_entry = Entry(RARBG_app, textvariable=RARBG_category_text)
-    RARBG_category_entry.place(relx=.5, rely=.45, anchor="center")
+    rarbg_category_text = StringVar()
+    rarbg_category_label = Label(rarbg_app, text="Enter Category Number:")
+    rarbg_category_label.place(relx=.5, rely=.35, anchor="center")
+    rarbg_category_entry = Entry(rarbg_app, textvariable=rarbg_category_text)
+    rarbg_category_entry.place(relx=.5, rely=.45, anchor="center")
 
-    RARBG_clipboard_label = Label(RARBG_app, text="Copy the Magnets to Clipboard?")
-    RARBG_clipboard_label.place(relx=.5, rely=.60, anchor="center")
-    RARBG_clipboard_combobox = ttk.Combobox(RARBG_app, values=['Yes', 'No'])
-    RARBG_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
+    rarbg_clipboard_label = Label(rarbg_app, text="Copy the Magnets to Clipboard?")
+    rarbg_clipboard_label.place(relx=.5, rely=.60, anchor="center")
+    rarbg_clipboard_combobox = ttk.Combobox(rarbg_app, values=['Yes', 'No'])
+    rarbg_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
 
-    RARBG_domain_label.pack()
-    RARBG_domain_entry.pack()
-    RARBG_category_label.pack()
-    RARBG_category_entry.pack()
-    RARBG_clipboard_label.pack()
-    RARBG_clipboard_combobox.pack()
+    rarbg_domain_label.pack()
+    rarbg_domain_entry.pack()
+    rarbg_category_label.pack()
+    rarbg_category_entry.pack()
+    rarbg_clipboard_label.pack()
+    rarbg_clipboard_combobox.pack()
 
-    RARBG_ok_button = Button(RARBG_app, text = "OK", command = RARBG_callback)
-    RARBG_ok_button.place(relx=.5, rely=.91, anchor="center")
+    rarbg_ok_button = Button(rarbg_app, text = "OK", command = rarbg_callback)
+    rarbg_ok_button.place(relx=.5, rely=.91, anchor="center")
 
-    RARBG_app.title('RARBG @eliasbenb')
-    RARBG_app.iconbitmap(r'icon.ico')
-    RARBG_app.geometry('500x225')
-    RARBG_app.mainloop()
+    rarbg_app.title('RARBG @eliasbenb')
+    rarbg_app.iconbitmap(r'icon.ico')
+    rarbg_app.geometry('500x225')
+    rarbg_app.mainloop()

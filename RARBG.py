@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time, os, pyperclip, requests, tkinter.ttk
 import os
 
-path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
+path = '%s\\eliasbenb\\' %  os.environ['APPDATA']
 
 def rarbg():
     def rarbg_callback():
@@ -16,7 +16,6 @@ def rarbg():
         except:
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
-        rarbg_request = requests.get(rarbg_rssLink)
         rarbg_source = rarbg_request.content
         rarbg_soup = str(BeautifulSoup(rarbg_source, 'lxml'))
 
@@ -71,7 +70,7 @@ def rarbg():
     rarbg_domain_entry.place(relx=.5, rely=.20, anchor="center")
 
     rarbg_category_text = StringVar()
-    rarbg_category_label = Label(rarbg_app, text="Enter Category Number:")
+    rarbg_category_label = Label(rarbg_app, text="Enter Category String:")
     rarbg_category_label.place(relx=.5, rely=.35, anchor="center")
     rarbg_category_entry = Entry(rarbg_app, textvariable=rarbg_category_text)
     rarbg_category_entry.place(relx=.5, rely=.45, anchor="center")

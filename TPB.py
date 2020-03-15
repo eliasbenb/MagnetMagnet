@@ -1,6 +1,7 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
+from ttkthemes import ThemedStyle
 from bs4 import BeautifulSoup
-import time, os, pyperclip, requests
+import time, os, pyperclip, requests, tkinter.ttk
 import os
 
 path = '%s\\eliasbenb\\' %  os.environ['APPDATA']
@@ -45,6 +46,22 @@ def tpb():
         
         messagebox.showinfo("TPB Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
+    def tpb_load_config():
+        tpb_domain_entry.delete(0,tkinter.END)
+        tpb_category_entry.delete(0,tkinter.END)
+        with open(path+"tpb_config.env", "r") as f2:
+            tpb_saved_config = [line.rstrip('\n') for line in f2]
+        tpb_domain_entry.insert(0,tpb_saved_config[0])
+        tpb_category_entry.insert(0,tpb_saved_config[1])
+        tpb_clipboard_combobox.insert(0, tpb_saved_config[2])
+
+    def tpb_save_config():
+        tpb_domain = tpb_domain_entry.get()
+        tpb_category = tpb_category_entry.get()
+        tpb_clipboard = tpb_clipboard_combobox.get()
+        with open(path+"tpb_config.env", "w") as f3:
+            f3.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
+
     tpb_app = Tk()
 
     tpb_domain_text = StringVar()
@@ -67,7 +84,14 @@ def tpb():
     tpb_ok_button = Button(tpb_app, text = "OK", command = tpb_callback)
     tpb_ok_button.place(relx=.5, rely=.91, anchor="center")
 
+    tpb_load_config_button = Button(tpb_app, text = "Load Config", command = tpb_load_config)
+    tpb_load_config_button.place(relx=0.2, rely=0.5, anchor="center")
+
+    tpb_save_config_button = Button(tpb_app, text = "Save Config", command = tpb_save_config)
+    tpb_save_config_button.place(relx=0.8, rely=0.5, anchor="center")    
+
     tpb_app.title('TPB @eliasbenb')
     tpb_app.iconbitmap(path+'icon.ico')
     tpb_app.geometry('500x225')
+    
     tpb_app.mainloop()

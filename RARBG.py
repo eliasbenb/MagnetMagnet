@@ -1,6 +1,9 @@
 from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
 from bs4 import BeautifulSoup
 import time, os, pyperclip, requests
+import os
+
+path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
 
 def rarbg():
     def rarbg_callback():
@@ -10,8 +13,6 @@ def rarbg():
         rarbg_rssLink = rarbg_domain + 'rssdd.php?category=' + rarbg_category
         try:
             rarbg_request = requests.get(rarbg_rssLink)
-            if rarbg_request.status_code == 200:
-                print(rarbg_request.status_code)
         except:
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
@@ -35,11 +36,10 @@ def rarbg():
             pyperclip.copy(rarbg_magnets)
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            print("Magnets not copied to clipboard.")
+            nothing
 
         timestr = time.strftime(" %Y%m%d%H%M%S")
         rarbg_filename = "RARBG Results " + timestr + ".txt"
-        print(rarbg_filename)
         with open(rarbg_filename,'w') as f:
             for item in rarbg_magnets:
                 f.write(item)
@@ -65,17 +65,10 @@ def rarbg():
     rarbg_clipboard_combobox = ttk.Combobox(rarbg_app, values=['Yes', 'No'])
     rarbg_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
 
-    rarbg_domain_label.pack()
-    rarbg_domain_entry.pack()
-    rarbg_category_label.pack()
-    rarbg_category_entry.pack()
-    rarbg_clipboard_label.pack()
-    rarbg_clipboard_combobox.pack()
-
     rarbg_ok_button = Button(rarbg_app, text = "OK", command = rarbg_callback)
     rarbg_ok_button.place(relx=.5, rely=.91, anchor="center")
 
     rarbg_app.title('RARBG @eliasbenb')
-    rarbg_app.iconbitmap(r'icon.ico')
+    rarbg_app.iconbitmap(path+'icon.ico')
     rarbg_app.geometry('500x225')
     rarbg_app.mainloop()

@@ -10,7 +10,7 @@ MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG and 
 
 ## How to use:
 ### Installing:
-####- To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
+###### To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
 - Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)
 ### Usage:
 - On launch you get two options of torrent indexers to scrape from: RARBG and The Pirate Bay

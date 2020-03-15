@@ -5,7 +5,7 @@
 </p>
 
 # What is this repo?
-MagnetMagnet is a scraper that allows you to scrape magnet links from RARBG and The Pirate Bay. I decided to make this app to improve my Python skills.
+MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG and The Pirate Bay. I decided to make this app to improve my Python skills.
 
 ## Features supported:
 - Scraping magnet links from all RARBG mirrors

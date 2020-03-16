@@ -36,20 +36,20 @@ def tpb():
             pyperclip.copy(tpb_magnets)
             messagebox.showinfo("TPB Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            nothing
+            x = 0
         timestr = time.strftime(" %Y%m%d%H%M%S")
         tpb_filename = "TPB Results " + timestr + ".txt"
-        with open(tpb_filename,'w') as f:
+        with open(tpb_filename,'w') as t1:
             for item in tpb_magnets:
-                f.write(item)
+                t1.write(item)
         
         messagebox.showinfo("TPB Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
     def tpb_load_config():
         tpb_domain_entry.delete(0,tkinter.END)
         tpb_category_entry.delete(0,tkinter.END)
-        with open(path+"tpb_config.env", "r") as f2:
-            tpb_saved_config = [line.rstrip('\n') for line in f2]
+        with open(path+"tpb_config.env", "r") as t2:
+            tpb_saved_config = [line.rstrip('\n') for line in t2]
         tpb_domain_entry.insert(0,tpb_saved_config[0])
         tpb_category_entry.insert(0,tpb_saved_config[1])
         tpb_clipboard_combobox.insert(0, tpb_saved_config[2])
@@ -58,8 +58,8 @@ def tpb():
         tpb_domain = tpb_domain_entry.get()
         tpb_category = tpb_category_entry.get()
         tpb_clipboard = tpb_clipboard_combobox.get()
-        with open(path+"tpb_config.env", "w") as f3:
-            f3.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
+        with open(path+"tpb_config.env", "w") as t3:
+            t3.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
 
     tpb_app = Tk()
 

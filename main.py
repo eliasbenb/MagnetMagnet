@@ -6,14 +6,14 @@ from kat import *
 import os, tkinter.ttk, webbrowser
 
 path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
-with open(path+'\icon.ico','wb') as f:
-    f.write(icon_image_bytes)
-with open(path+'\website.png','wb') as f:
-    f.write(website_image_bytes)
-with open(path+'\github.png','wb') as f:
-    f.write(github_image_bytes)
-with open(path+'\eliasbenb.png','wb') as f:
-    f.write(eliasbenb_image_bytes)
+with open(path+'\icon.ico','wb') as m1:
+    m1.write(icon_image_bytes)
+with open(path+'\website.png','wb') as m2:
+    m2.write(website_image_bytes)
+with open(path+'\github.png','wb') as m3:
+    m3.write(github_image_bytes)
+with open(path+'\eliasbenb.png','wb') as m4:
+    m4.write(eliasbenb_image_bytes)
 
 app = Tk()
 

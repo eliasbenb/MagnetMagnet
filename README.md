@@ -31,6 +31,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ### Category IDs for RARBG:
 **You can get any of these IDs from the end of the RARGB link**
+<details><summary>Category IDs for RARBG</summary><br>
 - XXX (18+) = 4
 - Movies/XVID = 14
 - Movies/XVID/720 = 48
@@ -54,6 +55,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Games/XBOX-360 = 32
 - Software/PC ISO = 33
 - Games/PS4 = 53
+</details>
 ### Category IDs for The Pirate Bay:
 **You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss**
 - Audio = top100/100

@@ -29,7 +29,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
-### Category IDs for RARBG:
+## Category IDs:
+### RARBG:
 **You can get any of these IDs from the end of the RARGB link**
 <details><summary>Category IDs for RARBG</summary><br>
   <ul>
@@ -56,17 +57,33 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> Games/XBOX-360 = 32</li>
     <li> Software/PC ISO = 33</li>
     <li> Games/PS4 = 53</li>
-   </ul>
+  </ul>
 </details>
-### Category IDs for The Pirate Bay:
+### The Pirate Bay:
 **You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss**
-- Audio = top100/100
-- Video = top100/200
-- Applications = top100/300
-- Games = top100/400
-- Porn = top100/500
-- Other = top100/600
-- All = top100/0
-### Category IDs for Kick Ass Torrents:
+<details><summary>Category IDs for The Pirate Bay</summary><br>
+  <ul>
+    <li> Audio = top100/100</li>
+    <li> Video = top100/200</li>
+    <li> Applications = top100/300</li>
+    <li> Games = top100/400</li>
+    <li> Porn = top100/500</li>
+    <li> Other = top100/600</li>
+    <li> All = top100/0</li>
+  </ul>
+</details>
+### Kick Ass Torrents:
 **You can get any of these from the end of the Kick Ass Torrents link**
-- Movies = movies
+<details><summary>Category IDs for Kick Ass Torrents</summary><br>
+  <ul>
+    <li> Movies = movies</li>
+    <li> Tv = tv</li>
+    <li> Anime = anime</li>
+    <li> Music = music</li>
+    <li> Books = books</li>
+    <li> Games = games</li>
+    <li> Applications = applications</li>
+    <li> XXX = xxx</li>
+    <li> All = new</li>
+  </ul>
+</details>GBMAT

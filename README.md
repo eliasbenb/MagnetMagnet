@@ -25,13 +25,13 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - There are only three user changeable fields in MagnetMagnet:
 ![App Screenshot](https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG)
 - Domain: the first field is for the domain, here just input a RARBG/The Pirate Bay/Kick Ass Torrents domain. I reccomend https://rarbg.to/ / https://tpb.party/ / https://kat.rip/ as of 16th March 2020
-- Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. **All the category IDs can be found below**
+- Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. ** All the category IDs can be found below **
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
 ### RARBG:
-**You can get any of these IDs from the end of the RARGB link**
+** You can get any of these IDs from the end of the RARGB link **
 <details><summary>Category IDs for RARBG</summary><br>
   <ul>
     <li> XXX (18+) = 4</li>
@@ -60,7 +60,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
   </ul>
 </details>
 ### The Pirate Bay:
-**You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss**
+** You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss **
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
     <li> Audio = top100/100</li>
@@ -73,11 +73,11 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
   </ul>
 </details>
 ### Kick Ass Torrents:
-**You can get any of these from the end of the Kick Ass Torrents link**
+** You can get any of these from the end of the Kick Ass Torrents link **
 <details><summary>Category IDs for Kick Ass Torrents</summary><br>
   <ul>
     <li> Movies = movies</li>
-    <li> Tv = tv</li>
+    <li> TV = tv</li>
     <li> Anime = anime</li>
     <li> Music = music</li>
     <li> Books = books</li>

@@ -32,29 +32,31 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 ### Category IDs for RARBG:
 **You can get any of these IDs from the end of the RARGB link**
 <details><summary>Category IDs for RARBG</summary><br>
-- XXX (18+) = 4
-- Movies/XVID = 14
-- Movies/XVID/720 = 48
-- Movies/x264 = 17
-- Movies/x264/1080 = 44
-- Movies/x264/720 = 45
-- Movies/x264/3D = 47
-- Movies/x264/4k = 50
-- Movies/x265/4k = 51
-- Movs/x265/4k/HDR = 52
-- Movies/Full BD = 42
-- Movies/BD Remux = 46
-- TV Episodes = 18
-- TV HD Episodes = 41
-- TV UHD Episodes = 49
-- Music/MP3 = 23
-- Music/FLAC = 25
-- Games/PC ISO = 27
-- Games/PC RIP = 28
-- Games/PS3 = 40
-- Games/XBOX-360 = 32
-- Software/PC ISO = 33
-- Games/PS4 = 53
+  <ul>
+    <li> XXX (18+) = 4</li>
+    <li> Movies/XVID = 14</li>
+    <li> Movies/XVID/720 = 48</li>
+    <li> Movies/x264 = 17</li>
+    <li> Movies/x264/1080 = 44</li>
+    <li> Movies/x264/720 = 45</li>
+    <li> Movies/x264/3D = 47</li>
+    <li> Movies/x264/4k = 50</li>
+    <li> Movies/x265/4k = 51</li>
+    <li> Movs/x265/4k/HDR = 52</li>
+    <li> Movies/Full BD = 42</li>
+    <li> Movies/BD Remux = 46</li>
+    <li> TV Episodes = 18</li>
+    <li> TV HD Episodes = 41</li>
+    <li> TV UHD Episodes = 49</li>
+    <li> Music/MP3 = 23</li>
+    <li> Music/FLAC = 25</li>
+    <li> Games/PC ISO = 27</li>
+    <li> Games/PC RIP = 28</li>
+    <li> Games/PS3 = 40</li>
+    <li> Games/XBOX-360 = 32</li>
+    <li> Software/PC ISO = 33</li>
+    <li> Games/PS4 = 53</li>
+   </ul>
 </details>
 ### Category IDs for The Pirate Bay:
 **You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss**

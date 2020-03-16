@@ -4,16 +4,16 @@
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases/latest"><img src="https://img.shields.io/github/v/release/eliasbenb/MagnetMagnet?color=%234197fe&style=for-the-badge"></a>
 </p>
 
-<img src="https://user-images.githubusercontent.com/54410649/76709427-0b9dfa00-6718-11ea-9f53-9bc1c848d737.PNG" alt="img" align="right" width="400px">
+# What is this repo?
 MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. I decided to make this app to improve my Python skills.
-Supports windows only.
 
-### Features supported:
-- Scraping magnet links from all RARBG mirrors, most The Pirate Bay Mirrors and most Kick Ass Torrent Mirrors
-<img src="https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG" alt="img" align="right" width="400px">
-- Ability to copy magnet links to clipboard
-- Ability to exports magnet links into .txt file
-- Ability to save and load configs for easy scraping
+## Features supported:
+- Scraping magnet links from all RARBG mirrors
+- Scraping magnet links from **most** The Pirate Bay mirrors (depending on if the mirror supports RSS)
+- Scraping magnet links from **most** Kick Ass Torrents mirrors (depending on if the mirror contains the magnet link all on one page)
+- Ability to choose multiple categories/subcategories to scrape magnet links from
+- Copies magnet links to clipboard
+- Exports magnet links into .txt file
 
 ## How to use:
 ### Installing:

@@ -37,21 +37,21 @@ def kat():
             pyperclip.copy(kat_magnets)
             messagebox.showinfo("KAT Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            emptyVar = 0
+            x = 0
 
         timestr = time.strftime(" %Y%m%d%H%M%S")
         kat_filename = "KAT Results " + timestr + ".txt"
-        with open(kat_filename,'w') as f:
+        with open(kat_filename,'w') as k1:
             for item in kat_magnets:
-                f.write(item)
+                k1.write(item)
         
         messagebox.showinfo("KAT Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
     def kat_load_config():
         kat_domain_entry.delete(0,tkinter.END)
         kat_category_entry.delete(0,tkinter.END)
-        with open(path+"kat_config.env", "r") as f2:
-            kat_saved_config = [line.rstrip('\n') for line in f2]
+        with open(path+"kat_config.env", "r") as k2:
+            kat_saved_config = [line.rstrip('\n') for line in k2]
         kat_domain_entry.insert(0,kat_saved_config[0])
         kat_category_entry.insert(0,kat_saved_config[1])
         kat_clipboard_combobox.insert(0, kat_saved_config[2])
@@ -60,8 +60,8 @@ def kat():
         kat_domain = kat_domain_entry.get()
         kat_category = kat_category_entry.get()
         kat_clipboard = kat_clipboard_combobox.get()
-        with open(path+"kat_config.env", "w") as f3:
-            f3.write(kat_domain+'\n'+kat_category+'\n'+kat_clipboard)
+        with open(path+"kat_config.env", "w") as k3:
+            k3.write(kat_domain+'\n'+kat_category+'\n'+kat_clipboard)
     
     kat_app = Tk()
 

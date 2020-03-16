@@ -5,7 +5,6 @@
 </p>
 
 <img src="https://user-images.githubusercontent.com/54410649/76709427-0b9dfa00-6718-11ea-9f53-9bc1c848d737.PNG" alt="img" align="right" width="400px">
-<img src="https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG" alt="img" align="right" width="400px">
 MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. I decided to make this app to improve my Python skills.
 Supports windows only.
 

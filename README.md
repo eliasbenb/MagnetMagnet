@@ -9,8 +9,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 Supports windows only.
 
 ### Features supported:
-<img src="https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG" alt="img" align="right" width="400px">
 - Scraping magnet links from all RARBG mirrors
+<img src="https://user-images.githubusercontent.com/54410649/76709428-0d67bd80-6718-11ea-9261-c46a57bf0812.PNG" alt="img" align="right" width="400px">
 - Scraping magnet links from **most** The Pirate Bay mirrors (depending on if the mirror supports RSS)
 - Scraping magnet links from **most** Kick Ass Torrents mirrors (depending on if the mirror contains the magnet link all on one page)
 - Ability to choose multiple categories/subcategories to scrape magnet links from

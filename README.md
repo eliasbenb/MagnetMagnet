@@ -30,8 +30,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
-### RARBG:
-** You can get any of these IDs from the end of the RARGB link **
+<h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
   <ul>
     <li> XXX (18+) = 4</li>
@@ -59,8 +58,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> Games/PS4 = 53</li>
   </ul>
 </details>
-### The Pirate Bay:
-** You can get any of these from the end of the The Pirate Bay link here: https://tpb.party/rss **
+<h3>The Pirate Bay:</h3>
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
     <li> Audio = top100/100</li>
@@ -72,8 +70,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = top100/0</li>
   </ul>
 </details>
-### Kick Ass Torrents:
-** You can get any of these from the end of the Kick Ass Torrents link **
+<h3>Kick Ass Torrents:</h3>
 <details><summary>Category IDs for Kick Ass Torrents</summary><br>
   <ul>
     <li> Movies = movies</li>
@@ -86,4 +83,4 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> XXX = xxx</li>
     <li> All = new</li>
   </ul>
-</details>GBMAT
+</details>

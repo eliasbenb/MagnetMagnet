@@ -34,7 +34,6 @@ def tpb():
         else:
             pass
 
-        print(tpb_magnets)
         timestr = time.strftime(" %Y%m%d%H%M%S")
         tpb_filename = "TPB Results " + timestr + ".txt"
         with open(tpb_filename,'w') as t1:

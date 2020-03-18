@@ -1,18 +1,18 @@
-from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk, PhotoImage
+from tkinter import Tk, Label, Button, ttk, PhotoImage
 from imagebytes import *
-from rarbg import *
-from tpb import *
-from kat import *
-import os, tkinter.ttk, webbrowser
+from kat import kat
+from rarbg import rarbg
+from tpb import tpb
+import os, webbrowser
 
-path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
-with open(path+'\icon.ico','wb') as m1:
+path = '%s\\eliasbenb' %  os.environ['APPDATA'] 
+with open(path+'icon.ico','wb') as m1:
     m1.write(icon_image_bytes)
-with open(path+'\website.png','wb') as m2:
+with open(path+'website.png','wb') as m2:
     m2.write(website_image_bytes)
-with open(path+'\github.png','wb') as m3:
+with open(path+'github.png','wb') as m3:
     m3.write(github_image_bytes)
-with open(path+'\eliasbenb.png','wb') as m4:
+with open(path+'eliasbenb.png','wb') as m4:
     m4.write(eliasbenb_image_bytes)
 
 app = Tk()
@@ -26,12 +26,12 @@ def website_open():
 def github_open():
     webbrowser.open('https://github.com/eliasbenb/MagnetMagnet')
 
-rarbg_button = Button(app, text="RARBG", font=("Segoe UI", 15, "bold"), command=rarbg)
-rarbg_button.place(relx=0.166666666, rely=0.38, anchor="center", height=150, width=150)
-tpb_button = Button(app, text="TPB", font=("Segoe UI", 15, "bold"), command=tpb)
-tpb_button.place(relx=0.5, rely=0.38, anchor="center", height=150, width=150)
 kat_button = Button(app, text="KAT", font=("Segoe UI", 15, "bold"), command=kat)
-kat_button.place(relx=0.833333333, rely=0.38, anchor="center", height=150, width=150)
+kat_button.place(relx=(1/3), rely=0.381, anchor="e", height=150, width=150)
+rarbg_button = Button(app, text="RARBG", font=("Segoe UI", 15, "bold"), command=rarbg)
+rarbg_button.place(relx=0.5, rely=0.381, anchor="center", height=150, width=150)
+tpb_button = Button(app, text="TPB", font=("Segoe UI", 15, "bold"), command=tpb)
+tpb_button.place(relx=(2/3), rely=0.381, anchor="w", height=150, width=150)
 
 eliasbenb_label = Label(app, image=eliasbenb_photo)
 eliasbenb_label.place(relx=0.5, rely=0.8775, anchor="center", height=32)

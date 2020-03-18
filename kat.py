@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time, os, pyperclip, requests, tkinter.ttk
 import os
 
-path = '%s\\eliasbenb\\' %  os.environ['APPDATA'] 
+path = '%s\\eliasbenb' %  os.environ['APPDATA'] 
 
 def kat():
     def kat_callback():
@@ -37,7 +37,7 @@ def kat():
             pyperclip.copy(kat_magnets)
             messagebox.showinfo("KAT Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            x = 0
+            pass
 
         timestr = time.strftime(" %Y%m%d%H%M%S")
         kat_filename = "KAT Results " + timestr + ".txt"

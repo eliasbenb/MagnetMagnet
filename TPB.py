@@ -3,28 +3,24 @@ from bs4 import BeautifulSoup
 import time, os, pyperclip, requests, tkinter.ttk
 import os
 
-path = '%s\\eliasbenb\\' %  os.environ['APPDATA']
+path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 def tpb():
     def tpb_callback():
         tpb_domain = tpb_domain_entry.get()
         tpb_category = tpb_category_entry.get()
         tpb_clipboard = tpb_clipboard_combobox.get()
-        tpb_rssLink = tpb_domain + 'rss/' + tpb_category
+        tpb_link = tpb_domain + 'browse/' + tpb_category
         try:
-            tpb_request = requests.get(tpb_rssLink)
+            tpb_request = requests.get(tpb_link)
         except:
             messagebox.showinfo("TPB Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
-        tpb_request = requests.get(tpb_rssLink)
-        tpb_source = tpb_request.content
-        tpb_soup = str(BeautifulSoup(tpb_source, 'lxml'))
-
-        tpb_cleanSoup = tpb_soup.replace('<', ' ')
-        tpb_cleanSoup = tpb_cleanSoup.replace('>', ' ')
-        tpb_splitSoup = tpb_cleanSoup.split(' ')
-
-        tpb_magnets = str([i for i in tpb_splitSoup if i.startswith('magnet')])
+        tpb_request = requests.get(tpb_link)
+        tpb_soup = str(BeautifulSoup(tpb_request.content, 'html.parser'))
+        tpb_clean_soup = tpb_soup.replace('"', " ")
+        tpb_split_soup = tpb_clean_soup.split(" ")
+        tpb_magnets = str([i for i in tpb_split_soup if i.startswith('magnet')])
         tpb_magnets = tpb_magnets.replace('magnet:?', '\nmagnet:?')
         tpb_magnets = tpb_magnets.replace("', '", "")
         tpb_magnets = tpb_magnets.replace("['", "")
@@ -36,7 +32,9 @@ def tpb():
             pyperclip.copy(tpb_magnets)
             messagebox.showinfo("TPB Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            x = 0
+            pass
+
+        print(tpb_magnets)
         timestr = time.strftime(" %Y%m%d%H%M%S")
         tpb_filename = "TPB Results " + timestr + ".txt"
         with open(tpb_filename,'w') as t1:

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time, os, pyperclip, requests, tkinter.ttk
 import os
 
-path = '%s\\eliasbenb\\' %  os.environ['APPDATA']
+path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 def rarbg():
     def rarbg_callback():
@@ -19,11 +19,11 @@ def rarbg():
         rarbg_source = rarbg_request.content
         rarbg_soup = str(BeautifulSoup(rarbg_source, 'lxml'))
 
-        rarbg_cleanSoup = rarbg_soup.replace('<', ' ')
-        rarbg_cleanSoup = rarbg_cleanSoup.replace('>', ' ')
-        rarbg_splitSoup = rarbg_cleanSoup.split(' ')
+        rarbg_clean_soup = rarbg_soup.replace('<', ' ')
+        rarbg_clean_soup = rarbg_clean_soup.replace('>', ' ')
+        rarbg_split_soup = rarbg_clean_soup.split(' ')
 
-        rarbg_magnets = str([i for i in rarbg_splitSoup if i.startswith('magnet')])
+        rarbg_magnets = str([i for i in rarbg_split_soup if i.startswith('magnet')])
         rarbg_magnets = rarbg_magnets.replace('magnet:?', '\nmagnet:?')
         rarbg_magnets = rarbg_magnets.replace("', '", "")
         rarbg_magnets = rarbg_magnets.replace("['", "")
@@ -35,11 +35,11 @@ def rarbg():
             pyperclip.copy(rarbg_magnets)
             messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
-            x = 0
-
+            pass
+        
         timestr = time.strftime(" %Y%m%d%H%M%S")
-        rarbg_filename = "RARBG Results " + timestr + ".txt"
-        with open(rarbg_filename,'w') as r1:
+        rarbg_file_name = "RARBG Results " + timestr + ".txt"
+        with open(rarbg_file_name,'w') as r1:
             for item in rarbg_magnets:
                 r1.write(item)
         

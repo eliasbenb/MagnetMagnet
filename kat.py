@@ -31,7 +31,6 @@ def kat():
         kat_cleanSoup = kat_cleanSoup.replace("',\n'magnet", "")
         kat_magnets = kat_magnets.replace(" ", "\n")
         kat_magnets = "==== Made by @eliasbenb ====" + '\n' + kat_magnets
-        print(kat_magnets)
 
         if kat_clipboard == "Yes":
             pyperclip.copy(kat_magnets)

@@ -165,7 +165,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = 0</li>
   </ul>
 </details>
-## Working Mirrors:
+<h2>Working Mirrors:</h2>
 <h3><details><summary>KAT</summary><br></h3>
   <ul>
     <li> https://kat.rip/</li>

@@ -46,6 +46,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 </details>
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
+  <ul>
     <li> XXX = 2;4</li>
     <details><summary>XXX Subcategories</summary><br>
       <ul>
@@ -69,6 +70,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Games/XBOX-360 = 32</li>
         <li> Games/PS4 = 53</li>
       </ul>
+    </ul>
     </details>
     <li> Music = 2;23;24;25;26</li>
     <details><summary>Music Subcategories</summary><br>

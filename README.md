@@ -61,13 +61,19 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 <h3>The Pirate Bay:</h3>
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
-    <li> Audio = top100/100</li>
-    <li> Video = top100/200</li>
-    <li> Applications = top100/300</li>
-    <li> Games = top100/400</li>
-    <li> Porn = top100/500</li>
-    <li> Other = top100/600</li>
-    <li> All = top100/0</li>
+    <li> Audio = 100</li>
+    <details><summary>Audio Subcategories</summary><br>
+      <ul>
+        <li> Music = 101</li>
+        <li> Audio books = 102</li>
+      </ul>
+    </details>
+    <li> Video = 200</li>
+    <li> Applications = 300</li>
+    <li> Games = 400</li>
+    <li> Porn = 500</li>
+    <li> Other = 600</li>
+    <li> All = 0</li>
   </ul>
 </details>
 <h3>Kick Ass Torrents:</h3>

@@ -30,6 +30,20 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
+<h3>KAT:</h3>
+<details><summary>Category IDs for KAT</summary><br>
+  <ul>
+    <li> Movies = movies</li>
+    <li> TV = tv</li>
+    <li> Anime = anime</li>
+    <li> Music = music</li>
+    <li> Books = books</li>
+    <li> Games = games</li>
+    <li> Applications = applications</li>
+    <li> XXX = xxx</li>
+    <li> All = new</li>
+  </ul>
+</details>
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
     <li> XXX = 2;4</li>
@@ -68,14 +82,11 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
       <ul>
         <li> Software/PC ISO = 33</li>
       </ul>
-    </details>
-        
-
-        
+    </details>       
   </ul>
 </details>
-<h3>The Pirate Bay:</h3>
-<details><summary>Category IDs for The Pirate Bay</summary><br>
+<h3>TPB:</h3>
+<details><summary>Category IDs for TPB</summary><br>
   <ul>
     <li> Audio = 100</li>
     <details><summary>Audio Subcategories</summary><br>
@@ -154,17 +165,31 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = 0</li>
   </ul>
 </details>
-<h3>Kick Ass Torrents:</h3>
-<details><summary>Category IDs for Kick Ass Torrents</summary><br>
+## Working Mirrors:
+<h3><details><summary>KAT</summary><br></h3>
   <ul>
-    <li> Movies = movies</li>
-    <li> TV = tv</li>
-    <li> Anime = anime</li>
-    <li> Music = music</li>
-    <li> Books = books</li>
-    <li> Games = games</li>
-    <li> Applications = applications</li>
-    <li> XXX = xxx</li>
-    <li> All = new</li>
+    <li> https://kat.rip/</li>
+    <li> https://thekat.app/</li>
+    <li> https://kickass.ws/</li>
+    <li> https://thekat.info/</li>
+    <li> https://katcr.co/</li>
+  </ul>
+</details>
+<h3><details><summary>RARBG</summary><br></h3>
+  <ul>
+    <li> https://rarbgmirror.com/</li>
+    <li> https://rarbgaccess.org/</li>
+    <li> http://rarbgproxy.org/</li>
+    <li> https://rarbgmirror.org/</li>
+    <li> https://rarbg.to/</li>
+  </ul>
+</details>
+<h3><details><summary>TPB</summary><br></h3>
+  <ul>
+    <li> https://piratebay.live/</li>
+    <li> https://tpb.party/</li>
+    <li> https://piratepiratepirate.net/</li>
+    <li> https://lepiratebay.org/</li>
+    <li> https://thehiddenbay.com/</li>
   </ul>
 </details>

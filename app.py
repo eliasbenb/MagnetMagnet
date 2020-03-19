@@ -6,7 +6,8 @@ from tpb import tpb
 import os, webbrowser
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
-os.mkdir(path)
+if not os.path.exists(path):
+    os.makedirs(path)
 with open(path+'\\icon.ico','wb') as m1:
     m1.write(icon_image_bytes)
 with open(path+'\\website.png','wb') as m2:

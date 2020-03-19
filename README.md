@@ -166,7 +166,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
   </ul>
 </details>
 <h2>Working Mirrors:</h2>
-<h3><details><summary>KAT</summary><br></h3>
+<details><summary>KAT</summary><br>
   <ul>
     <li> https://kat.rip/</li>
     <li> https://thekat.app/</li>
@@ -175,7 +175,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> https://katcr.co/</li>
   </ul>
 </details>
-<h3><details><summary>RARBG</summary><br></h3>
+<details><summary>RARBG</summary>
   <ul>
     <li> https://rarbgmirror.com/</li>
     <li> https://rarbgaccess.org/</li>
@@ -184,7 +184,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> https://rarbg.to/</li>
   </ul>
 </details>
-<h3><details><summary>TPB</summary><br></h3>
+<details><summary>TPB</summary><br>
   <ul>
     <li> https://piratebay.live/</li>
     <li> https://tpb.party/</li>

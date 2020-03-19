@@ -70,7 +70,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Games/XBOX-360 = 32</li>
         <li> Games/PS4 = 53</li>
       </ul>
-    </ul>
     </details>
     <li> Music = 2;23;24;25;26</li>
     <details><summary>Music Subcategories</summary><br>

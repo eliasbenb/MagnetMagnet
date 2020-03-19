@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, ttk, PhotoImage
+from tkinter import Button, Label, PhotoImage, Tk
 from imagebytes import *
 from kat import kat
 from rarbg import rarbg

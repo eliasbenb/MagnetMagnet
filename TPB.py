@@ -1,9 +1,8 @@
-from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
+from tkinter import Button, Entry, Label, messagebox, StringVar, Tk, ttk
+import os, pyperclip, requests, re, tkinter.ttk, time
 from bs4 import BeautifulSoup
-import time, os, pyperclip, requests, tkinter.ttk
-import os
 
-path = '%s\\eliasbenb' %  os.environ['APPDATA']
+tpb_path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 def tpb():
     def tpb_callback():
@@ -16,17 +15,19 @@ def tpb():
         except:
             messagebox.showinfo("TPB Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
-        tpb_request = requests.get(tpb_link)
-        tpb_soup = str(BeautifulSoup(tpb_request.content, 'html.parser'))
-        tpb_clean_soup = tpb_soup.replace('"', " ")
-        tpb_split_soup = tpb_clean_soup.split(" ")
-        tpb_magnets = str([i for i in tpb_split_soup if i.startswith('magnet')])
-        tpb_magnets = tpb_magnets.replace('magnet:?', '\nmagnet:?')
-        tpb_magnets = tpb_magnets.replace("', '", "")
-        tpb_magnets = tpb_magnets.replace("['", "")
-        tpb_magnets = tpb_magnets.replace("']", "")
-        tpb_magnets = tpb_magnets.replace(r"\n", "")
-        tpb_magnets = "==== Made by @eliasbenb ====" + tpb_magnets
+        tpb_source = tpb_request.content
+        tpb_soup = BeautifulSoup(tpb_source, 'lxml')
+        tpb_magnets = ['==== Made by @eliasbenb ====']
+        for link in tpb_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+            tpb_magnets.append('\n')
+            tpb_magnets.append(link.get('href'))
+        
+        tpb_timestr = time.strftime(" %Y%m%d%H%M%S")
+        tpb_file_name = "TPB Results " + tpb_timestr + ".txt"
+        with open(tpb_file_name,'w') as tpb_w1:
+            for magnet in tpb_magnets:
+                tpb_w1.write(magnet)
+        messagebox.showinfo("TPB Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
         if tpb_clipboard == "Yes":
             pyperclip.copy(tpb_magnets)
@@ -34,20 +35,11 @@ def tpb():
         else:
             pass
 
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        tpb_filename = "TPB Results " + timestr + ".txt"
-        with open(tpb_filename,'w') as t1:
-            for item in tpb_magnets:
-                t1.write(item)
-        print(tpb_magnets)
-        
-        messagebox.showinfo("TPB Scraper @eliasbenb", "Magnet links successfully exported to local directory")
-
     def tpb_load_config():
         tpb_domain_entry.delete(0,tkinter.END)
         tpb_category_entry.delete(0,tkinter.END)
-        with open(path+"\\tpb_config.env", "r") as t2:
-            tpb_saved_config = [line.rstrip('\n') for line in t2]
+        with open(tpb_path+"\\tpb_config.env", "r") as tpb_r1:
+            tpb_saved_config = [line.rstrip('\n') for line in tpb_r1]
         tpb_domain_entry.insert(0,tpb_saved_config[0])
         tpb_category_entry.insert(0,tpb_saved_config[1])
         tpb_clipboard_combobox.insert(0, tpb_saved_config[2])
@@ -56,9 +48,9 @@ def tpb():
         tpb_domain = tpb_domain_entry.get()
         tpb_category = tpb_category_entry.get()
         tpb_clipboard = tpb_clipboard_combobox.get()
-        with open(path+"\\tpb_config.env", "w") as t3:
-            t3.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
-
+        with open(tpb_path+"\\tpb_config.env", "w") as tpb_w2:
+            tpb_w2.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
+    
     tpb_app = Tk()
 
     tpb_domain_text = StringVar()
@@ -85,10 +77,10 @@ def tpb():
     tpb_load_config_button.place(relx=0.2, rely=0.5, anchor="center")
 
     tpb_save_config_button = Button(tpb_app, text = "Save Config", command = tpb_save_config)
-    tpb_save_config_button.place(relx=0.8, rely=0.5, anchor="center")    
-
+    tpb_save_config_button.place(relx=0.8, rely=0.5, anchor="center")
+    
     tpb_app.title('TPB @eliasbenb')
-    tpb_app.iconbitmap(path+'\\icon.ico')
+    tpb_app.iconbitmap(tpb_path+'\\icon.ico')
     tpb_app.geometry('500x225')
     
     tpb_app.mainloop()

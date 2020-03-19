@@ -1,7 +1,6 @@
-from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
+from tkinter import Button, Entry, Label, messagebox, StringVar, Tk, ttk
+import os, pyperclip, requests, re, tkinter.ttk, time
 from bs4 import BeautifulSoup
-import time, os, pyperclip, requests, tkinter.ttk
-import os
 
 rarbg_path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
@@ -30,21 +29,19 @@ def rarbg():
         rarbg_clean_soup = rarbg_clean_soup.replace("']", "")
         rarbg_clean_soup = rarbg_clean_soup.replace(r"\n", "")
         rarbg_magnets = "==== Made by @eliasbenb ====" + rarbg_clean_soup
-
-        if rarbg_clipboard == "Yes":
-            pyperclip.copy(rarbg_magnets)
-            messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
-        else:
-            pass
         
         rarbg_timestr = time.strftime(" %Y%m%d%H%M%S")
         rarbg_file_name = "RARBG Results " + rarbg_timestr + ".txt"
         with open(rarbg_file_name,'w') as rarbg_w1:
             for magnet in rarbg_magnets:
                 rarbg_w1.write(magnet)
-        print(rarbg_magnets)
-
         messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnet links successfully exported to local directory")
+
+        if rarbg_clipboard == "Yes":
+            pyperclip.copy(rarbg_magnets)
+            messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
+        else:
+            pass
 
     def rarbg_load_config():
         rarbg_domain_entry.delete(0,tkinter.END)

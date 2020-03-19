@@ -1,9 +1,8 @@
-from tkinter import Tk, messagebox, StringVar, Label, Entry, Button, ttk
+from tkinter import Button, Entry, Label, messagebox, StringVar, Tk, ttk
+import os, pyperclip, requests, re, tkinter.ttk, time
 from bs4 import BeautifulSoup
-import time, os, pyperclip, requests, tkinter.ttk
-import os
 
-path = '%s\\eliasbenb' %  os.environ['APPDATA'] 
+kat_path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 def kat():
     def kat_callback():
@@ -16,42 +15,35 @@ def kat():
         except:
             messagebox.showinfo("KAT Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
-        kat_soup = str(BeautifulSoup(kat_request.content, 'lxml'))
-
-        kat_cleanSoup = kat_soup.replace('"', '')
-        kat_cleanSoup = kat_cleanSoup.replace('href="magnet', 'magnet')
-        kat_cleanSoup = kat_cleanSoup.replace("'magnet:?", "magnet:?")
-        kat_cleanSoup = kat_cleanSoup.replace("Fannounce'", "Fannounce")
-        kat_splitSoup = kat_cleanSoup.split(' ')
+        kat_source = kat_request.content
+        kat_soup = BeautifulSoup(kat_source, 'lxml')
+        kat_magnets = ['==== Made by @eliasbenb ====']
+        for link in kat_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+            kat_magnets.append('\n'+link.get('href'))
+        kat_magnets = list(dict.fromkeys(kat_magnets))
         
-        kat_magnets = str([i for i in kat_splitSoup if i.startswith('magnet')])
-        kat_magnets = kat_magnets.replace("['", "")
-        kat_magnets = kat_magnets.replace("']", "")
-        kat_magnets = kat_magnets.replace("', 'magnet', '", " ")
-        kat_cleanSoup = kat_cleanSoup.replace("',\n'magnet", "")
-        kat_magnets = kat_magnets.replace(" ", "\n")
-        kat_magnets = "==== Made by @eliasbenb ====" + '\n' + kat_magnets
+        kat_timestr = time.strftime(" %Y%m%d%H%M%S")
+        kat_file_name = "KAT Results " + kat_timestr + ".txt"
+        with open(kat_file_name,'w') as kat_w1:
+            for magnet in kat_magnets:
+                kat_w1.write(magnet)
+        messagebox.showinfo("KAT Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
         if kat_clipboard == "Yes":
-            pyperclip.copy(kat_magnets)
+            kat_magnets_clipboard = str(kat_magnets)
+            kat_magnets_clipboard = kat_magnets_clipboard.replace(r"', '\n", "\n")
+            kat_magnets_clipboard = kat_magnets_clipboard.replace("['", "")
+            kat_magnets_clipboard = kat_magnets_clipboard.replace("']", "")
+            pyperclip.copy(kat_magnets_clipboard)
             messagebox.showinfo("KAT Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
         else:
             pass
 
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        kat_filename = "KAT Results " + timestr + ".txt"
-        with open(kat_filename,'w') as k1:
-            for item in kat_magnets:
-                k1.write(item)
-        print(kat_magnets)
-        
-        messagebox.showinfo("KAT Scraper @eliasbenb", "Magnet links successfully exported to local directory")
-
     def kat_load_config():
         kat_domain_entry.delete(0,tkinter.END)
         kat_category_entry.delete(0,tkinter.END)
-        with open(path+"\\kat_config.env", "r") as k2:
-            kat_saved_config = [line.rstrip('\n') for line in k2]
+        with open(kat_path+"\\kat_config.env", "r") as kat_r1:
+            kat_saved_config = [line.rstrip('\n') for line in kat_r1]
         kat_domain_entry.insert(0,kat_saved_config[0])
         kat_category_entry.insert(0,kat_saved_config[1])
         kat_clipboard_combobox.insert(0, kat_saved_config[2])
@@ -60,8 +52,8 @@ def kat():
         kat_domain = kat_domain_entry.get()
         kat_category = kat_category_entry.get()
         kat_clipboard = kat_clipboard_combobox.get()
-        with open(path+"\\kat_config.env", "w") as k3:
-            k3.write(kat_domain+'\n'+kat_category+'\n'+kat_clipboard)
+        with open(kat_path+"\\kat_config.env", "w") as kat_w2:
+            kat_w2.write(kat_domain+'\n'+kat_category+'\n'+kat_clipboard)
     
     kat_app = Tk()
 
@@ -92,7 +84,7 @@ def kat():
     kat_save_config_button.place(relx=0.8, rely=0.5, anchor="center")
     
     kat_app.title('KAT @eliasbenb')
-    kat_app.iconbitmap(path+'\\icon.ico')
+    kat_app.iconbitmap(kat_path+'\\icon.ico')
     kat_app.geometry('500x225')
     
     kat_app.mainloop()

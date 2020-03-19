@@ -30,6 +30,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
+<h3>KAT:</h3>
 <details><summary>Category IDs for KAT</summary><br>
   <ul>
     <li> Movies = movies</li>
@@ -43,6 +44,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = new</li>
   </ul>
 </details>
+<h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
     <li> XXX = 2;4</li>
     <details><summary>XXX Subcategories</summary><br>
@@ -83,6 +85,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     </details>       
   </ul>
 </details>
+<h3>TPB:</h3>
 <details><summary>Category IDs for TPB</summary><br>
   <ul>
     <li> Audio = 100</li>
@@ -163,7 +166,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
   </ul>
 </details>
 <h2>Working Mirrors:</h2>
-<details><summary>KAT</summary><br>
+<h3>KAT:</h3>
+<details><summary>KAT Working Mirrors</summary><br>
   <ul>
     <li> https://kat.rip/</li>
     <li> https://thekat.app/</li>
@@ -172,7 +176,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> https://katcr.co/</li>
   </ul>
 </details>
-<details><summary>RARBG</summary>
+<h3>RARBG:</h3>
+<details><summary>RARBG Working Mirrors</summary>
   <ul>
     <li> https://rarbgmirror.com/</li>
     <li> https://rarbgaccess.org/</li>
@@ -181,7 +186,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> https://rarbg.to/</li>
   </ul>
 </details>
-<details><summary>TPB</summary><br>
+<h3>TPB:</h3>
+<details><summary>TPB Working Mirrors</summary><br>
   <ul>
     <li> https://piratebay.live/</li>
     <li> https://tpb.party/</li>

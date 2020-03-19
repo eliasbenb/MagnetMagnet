@@ -10,9 +10,9 @@ def kat():
         kat_domain = kat_domain_entry.get()
         kat_category = kat_category_entry.get()
         kat_clipboard = kat_clipboard_combobox.get()
-        kat_rssLink = kat_domain + kat_category
+        kat_link = kat_domain + kat_category
         try:
-            kat_request = requests.get(kat_rssLink)
+            kat_request = requests.get(kat_link)
         except:
             messagebox.showinfo("KAT Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
@@ -43,13 +43,14 @@ def kat():
         with open(kat_filename,'w') as k1:
             for item in kat_magnets:
                 k1.write(item)
+        print(kat_magnets)
         
         messagebox.showinfo("KAT Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
     def kat_load_config():
         kat_domain_entry.delete(0,tkinter.END)
         kat_category_entry.delete(0,tkinter.END)
-        with open(path+"\kat_config.env", "r") as k2:
+        with open(path+"\\kat_config.env", "r") as k2:
             kat_saved_config = [line.rstrip('\n') for line in k2]
         kat_domain_entry.insert(0,kat_saved_config[0])
         kat_category_entry.insert(0,kat_saved_config[1])
@@ -59,7 +60,7 @@ def kat():
         kat_domain = kat_domain_entry.get()
         kat_category = kat_category_entry.get()
         kat_clipboard = kat_clipboard_combobox.get()
-        with open(path+"\kat_config.env", "w") as k3:
+        with open(path+"\\kat_config.env", "w") as k3:
             k3.write(kat_domain+'\n'+kat_category+'\n'+kat_clipboard)
     
     kat_app = Tk()
@@ -91,7 +92,7 @@ def kat():
     kat_save_config_button.place(relx=0.8, rely=0.5, anchor="center")
     
     kat_app.title('KAT @eliasbenb')
-    kat_app.iconbitmap(path+'\icon.ico')
+    kat_app.iconbitmap(path+'\\icon.ico')
     kat_app.geometry('500x225')
     
     kat_app.mainloop()

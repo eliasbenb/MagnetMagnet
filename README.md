@@ -30,7 +30,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
-<h3>KAT:</h3>
 <details><summary>Category IDs for KAT</summary><br>
   <ul>
     <li> Movies = movies</li>
@@ -44,7 +43,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = new</li>
   </ul>
 </details>
-<h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
     <li> XXX = 2;4</li>
     <details><summary>XXX Subcategories</summary><br>
@@ -85,7 +83,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     </details>       
   </ul>
 </details>
-<h3>TPB:</h3>
 <details><summary>Category IDs for TPB</summary><br>
   <ul>
     <li> Audio = 100</li>

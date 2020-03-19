@@ -45,7 +45,7 @@ def tpb():
     def tpb_load_config():
         tpb_domain_entry.delete(0,tkinter.END)
         tpb_category_entry.delete(0,tkinter.END)
-        with open(path+"tpb_config.env", "r") as t2:
+        with open(path+"\tpb_config.env", "r") as t2:
             tpb_saved_config = [line.rstrip('\n') for line in t2]
         tpb_domain_entry.insert(0,tpb_saved_config[0])
         tpb_category_entry.insert(0,tpb_saved_config[1])
@@ -55,7 +55,7 @@ def tpb():
         tpb_domain = tpb_domain_entry.get()
         tpb_category = tpb_category_entry.get()
         tpb_clipboard = tpb_clipboard_combobox.get()
-        with open(path+"tpb_config.env", "w") as t3:
+        with open(path+"\tpb_config.env", "w") as t3:
             t3.write(tpb_domain+'\n'+tpb_category+'\n'+tpb_clipboard)
 
     tpb_app = Tk()
@@ -86,7 +86,7 @@ def tpb():
     tpb_save_config_button = Button(tpb_app, text = "Save Config", command = tpb_save_config)
     tpb_save_config_button.place(relx=0.8, rely=0.5, anchor="center")    
 
-    tpb_app.title('TPB @eliasbenb')
+    tpb_app.title('\TPB @eliasbenb')
     tpb_app.iconbitmap(path+'icon.ico')
     tpb_app.geometry('500x225')
     

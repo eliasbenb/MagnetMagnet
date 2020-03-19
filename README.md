@@ -32,30 +32,46 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 ## Category IDs:
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
-  <ul>
-    <li> XXX (18+) = 4</li>
-    <li> Movies/XVID = 14</li>
-    <li> Movies/XVID/720 = 48</li>
-    <li> Movies/x264 = 17</li>
-    <li> Movies/x264/1080 = 44</li>
-    <li> Movies/x264/720 = 45</li>
-    <li> Movies/x264/3D = 47</li>
-    <li> Movies/x264/4k = 50</li>
-    <li> Movies/x265/4k = 51</li>
-    <li> Movs/x265/4k/HDR = 52</li>
-    <li> Movies/Full BD = 42</li>
-    <li> Movies/BD Remux = 46</li>
-    <li> TV Episodes = 18</li>
-    <li> TV HD Episodes = 41</li>
-    <li> TV UHD Episodes = 49</li>
-    <li> Music/MP3 = 23</li>
-    <li> Music/FLAC = 25</li>
-    <li> Games/PC ISO = 27</li>
-    <li> Games/PC RIP = 28</li>
-    <li> Games/PS3 = 40</li>
-    <li> Games/XBOX-360 = 32</li>
-    <li> Software/PC ISO = 33</li>
-    <li> Games/PS4 = 53</li>
+    <li> XXX = 2;4</li>
+    <details><summary>XXX Subcategories</summary><br>
+      <ul>
+        <li> XXX (18+) = 4</li>
+      </ul>
+    </details>
+    <li> TV Shows = 2;18;41;49</li>
+    <details><summary>TV Shows Subcategories</summary><br>
+      <ul>
+        <li> TV Episodes = 18</li>
+        <li> TV HD Episodes = 41</li>
+        <li> TV UHD Episodes = 49</li>
+      </ul>
+    </details>
+    <li> Games = 2;27;28;29;30;31;32;40;53</li>
+    <details><summary>Games Subcategories</summary><br>
+      <ul>
+        <li> Games/PC ISO = 27</li>
+        <li> Games/PC RIP = 28</li>
+        <li> Games/PS3 = 40</li>
+        <li> Games/XBOX-360 = 32</li>
+        <li> Games/PS4 = 53</li>
+      </ul>
+    </details>
+    <li> Music = 2;23;24;25;26</li>
+    <details><summary>Music Subcategories</summary><br>
+      <ul>
+        <li> Music/MP3 = 23</li>
+        <li> Music/FLAC = 25</li>
+      </ul>
+    </details>
+    <li> Software = 2;33;34;43 </li>
+    <details><summary>Software Subcategories</summary><br>
+      <ul>
+        <li> Software/PC ISO = 33</li>
+      </ul>
+    </details>
+        
+
+        
   </ul>
 </details>
 <h3>The Pirate Bay:</h3>

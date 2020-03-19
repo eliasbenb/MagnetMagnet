@@ -6,20 +6,20 @@ from tpb import tpb
 import os, webbrowser
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA'] 
-with open(path+'\icon.ico','wb') as m1:
+with open(path+'\\icon.ico','wb') as m1:
     m1.write(icon_image_bytes)
-with open(path+'\website.png','wb') as m2:
+with open(path+'\\website.png','wb') as m2:
     m2.write(website_image_bytes)
-with open(path+'\github.png','wb') as m3:
+with open(path+'\\github.png','wb') as m3:
     m3.write(github_image_bytes)
-with open(path+'\eliasbenb.png','wb') as m4:
+with open(path+'\\eliasbenb.png','wb') as m4:
     m4.write(eliasbenb_image_bytes)
 
 app = Tk()
 
-website_photo = PhotoImage(file=path+"\website.png")
-github_photo = PhotoImage(file=path+"\github.png")
-eliasbenb_photo = PhotoImage(file=path+"\eliasbenb.png")
+website_photo = PhotoImage(file=path+"\\website.png")
+github_photo = PhotoImage(file=path+"\\github.png")
+eliasbenb_photo = PhotoImage(file=path+"\\eliasbenb.png")
 
 def website_open():
     webbrowser.open('https://eliasbenb.github.io')
@@ -43,7 +43,7 @@ github_button.place(relx=0.83333333, rely=0.8775, anchor="center", height=32, wi
 github_button["border"] = "0"
 
 app.title('MagnetMagnet @eliasbenb')
-app.iconbitmap(path+'\icon.ico')
+app.iconbitmap(path+'\\icon.ico')
 app.geometry('450x200')
 
 app.mainloop()

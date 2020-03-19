@@ -171,10 +171,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 <details><summary>KAT Working Mirrors</summary><br>
   <ul>
     <li> https://kat.rip/</li>
-    <li> https://thekat.app/</li>
-    <li> https://kickass.ws/</li>
-    <li> https://thekat.info/</li>
-    <li> https://katcr.co/</li>
   </ul>
 </details>
 <h3>RARBG:</h3>

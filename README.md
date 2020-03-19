@@ -66,13 +66,75 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
       <ul>
         <li> Music = 101</li>
         <li> Audio books = 102</li>
+        <li> Sound clips = 103</li>
+        <li> FLAC = 104</li>
+        <li> Other = 199</li>
       </ul>
     </details>
     <li> Video = 200</li>
+    <details><summary>Video Subcategories</summary><br>
+      <ul>
+        <li> Movies = 201</li>
+        <li> Movies DVDR = 202</li>
+        <li> Music videos = 203</li>
+        <li> Movie clips = 204</li>
+        <li> TV shows = 205</li>
+        <li> Handheld = 206</li>
+        <li> HD - Movies = 207</li>
+        <li> HD - TV shows = 208</li>
+        <li> 3D = 209</li>
+        <li> Other = 299</li>
+      </ul>
+    </details>
     <li> Applications = 300</li>
+    <details><summary>Applications Subcategories</summary><br>
+      <ul>
+        <li> Windows = 301</li>
+        <li> Mac = 302</li>
+        <li> Unix clips = 303</li>
+        <li> Handheld = 304</li>
+        <li> IOS (iPad/iPhone) = 305</li>
+        <li> Android = 306</li>
+        <li> Other OS = 399</li>
+      </ul>
+    </details>
     <li> Games = 400</li>
+    <details><summary>Games Subcategories</summary><br>
+      <ul>
+        <li> PC = 401</li>
+        <li> Mac = 402</li>
+        <li> PSx = 403</li>
+        <li> XBOX360 = 404</li>
+        <li> Wii = 405</li>
+        <li> Handheld = 406</li>
+        <li> IOS (iPad/iPhone) = 407</li>
+        <li> Android = 408</li>
+        <li> Other = 499</li>
+      </ul>
+    </details>
     <li> Porn = 500</li>
+    <details><summary>Porn Subcategories</summary><br>
+      <ul>
+        <li> Movies = 501</li>
+        <li> Movies DVDR = 502</li>
+        <li> Pictures = 503</li>
+        <li> Games = 504</li>
+        <li> HD - Movies = 505</li>
+        <li> Movie clips = 506</li>
+        <li> Other = 599</li>
+      </ul>
+    </details>
     <li> Other = 600</li>
+    <details><summary>Other Subcategories</summary><br>
+      <ul>
+        <li> E-books = 601</li>
+        <li> Comics = 602</li>
+        <li> Pictures = 603</li>
+        <li> Covers = 604</li>
+        <li> Physibles = 605</li>
+        <li> Other = 699</li>
+      </ul>
+    </details>
     <li> All = 0</li>
   </ul>
 </details>

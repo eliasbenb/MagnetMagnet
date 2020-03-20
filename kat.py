@@ -59,23 +59,23 @@ def kat():
 
     kat_domain_text = StringVar()
     kat_domain_label = Label(kat_app, text="Enter KAT Domain Link:")
-    kat_domain_label.place(relx=.5, rely=.1, anchor="center")
+    kat_domain_label.place(relx=0.5, rely=0.1, anchor="center")
     kat_domain_entry = Entry(kat_app, textvariable=kat_domain_text)
-    kat_domain_entry.place(relx=.5, rely=.20, anchor="center")
+    kat_domain_entry.place(relx=0.5, rely=0.2, anchor="center")
 
     kat_category_text = StringVar()
     kat_category_label = Label(kat_app, text="Enter Category String:")
-    kat_category_label.place(relx=.5, rely=.35, anchor="center")
+    kat_category_label.place(relx=0.5, rely=0.35, anchor="center")
     kat_category_entry = Entry(kat_app, textvariable=kat_category_text)
-    kat_category_entry.place(relx=.5, rely=.45, anchor="center")
+    kat_category_entry.place(relx=0.5, rely=0.45, anchor="center")
 
     kat_clipboard_label = Label(kat_app, text="Copy the Magnets to Clipboard?")
-    kat_clipboard_label.place(relx=.5, rely=.60, anchor="center")
+    kat_clipboard_label.place(relx=0.5, rely=0.6, anchor="center")
     kat_clipboard_combobox = ttk.Combobox(kat_app, values=['Yes', 'No'])
-    kat_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
+    kat_clipboard_combobox.place(relx=0.5, rely=0.7, anchor="center")
 
     kat_ok_button = Button(kat_app, text = "OK", command = kat_callback)
-    kat_ok_button.place(relx=.5, rely=.91, anchor="center")
+    kat_ok_button.place(relx=0.5, rely=0.91, anchor="center")
 
     kat_load_config_button = Button(kat_app, text = "Load Config", command = kat_load_config)
     kat_load_config_button.place(relx=0.2, rely=0.5, anchor="center")

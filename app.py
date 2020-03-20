@@ -3,6 +3,7 @@ from imagebytes import *
 from kat import kat
 from rarbg import rarbg
 from tpb import tpb
+from searcher import searcher
 import os, webbrowser
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
@@ -28,24 +29,27 @@ def website_open():
 def github_open():
     webbrowser.open('https://github.com/eliasbenb/MagnetMagnet')
 
-kat_button = Button(app, text="KAT", font=("Segoe UI", 15, "bold"), command=kat)
-kat_button.place(relx=(1/3), rely=0.381, anchor="e", height=150, width=150)
-rarbg_button = Button(app, text="RARBG", font=("Segoe UI", 15, "bold"), command=rarbg)
-rarbg_button.place(relx=0.5, rely=0.381, anchor="center", height=150, width=150)
-tpb_button = Button(app, text="TPB", font=("Segoe UI", 15, "bold"), command=tpb)
-tpb_button.place(relx=(2/3), rely=0.381, anchor="w", height=150, width=150)
+searcher_button = Button(app, text="Searcher", font=("Segoe UI", 15, "bold"), command=searcher)
+searcher_button.place(relx=(0.5), rely=(75/275), anchor="s", height=75, width=450)
 
-eliasbenb_label = Label(app, image=eliasbenb_photo)
-eliasbenb_label.place(relx=0.5, rely=0.8775, anchor="center", height=32)
+kat_button = Button(app, text="KAT", font=("Segoe UI", 15, "bold"), command=kat)
+kat_button.place(relx=(1/6), rely=(225/275), anchor="s", height=150, width=150)
+rarbg_button = Button(app, text="RARBG", font=("Segoe UI", 15, "bold"), command=rarbg)
+rarbg_button.place(relx=(1/2), rely=(225/275), anchor="s", height=150, width=150)
+tpb_button = Button(app, text="TPB", font=("Segoe UI", 15, "bold"), command=tpb)
+tpb_button.place(relx=(5/6), rely=(225/275), anchor="s", height=150, width=150)
+
 website_button = Button(app, image=website_photo, command=website_open)
-website_button.place(relx=0.16666666, rely=0.8775, anchor="center", height=32, width=32)
+website_button.place(relx=(1/6), rely=1, anchor="s", height=50, width=32)
 website_button["border"] = "0"
+eliasbenb_label = Label(app, image=eliasbenb_photo)
+eliasbenb_label.place(relx=(1/2), rely=1, anchor="s", height=50)
 github_button = Button(app, image=github_photo, command=github_open)
-github_button.place(relx=0.83333333, rely=0.8775, anchor="center", height=32, width=32)
+github_button.place(relx=(5/6), rely=1, anchor="s", height=50, width=32)
 github_button["border"] = "0"
 
 app.title('MagnetMagnet @eliasbenb')
 app.iconbitmap(path+'\\icon.ico')
-app.geometry('450x200')
+app.geometry('450x275')
 
 app.mainloop()

@@ -63,23 +63,23 @@ def rarbg():
 
     rarbg_domain_text = StringVar()
     rarbg_domain_label = Label(rarbg_app, text="Enter RARBG Domain Link:")
-    rarbg_domain_label.place(relx=.5, rely=.1, anchor="center")
+    rarbg_domain_label.place(relx=0.5, rely=0.1, anchor="center")
     rarbg_domain_entry = Entry(rarbg_app, textvariable=rarbg_domain_text)
-    rarbg_domain_entry.place(relx=.5, rely=.20, anchor="center")
+    rarbg_domain_entry.place(relx=0.5, rely=0.2, anchor="center")
 
     rarbg_category_text = StringVar()
     rarbg_category_label = Label(rarbg_app, text="Enter Category String:")
-    rarbg_category_label.place(relx=.5, rely=.35, anchor="center")
+    rarbg_category_label.place(relx=0.5, rely=0.35, anchor="center")
     rarbg_category_entry = Entry(rarbg_app, textvariable=rarbg_category_text)
-    rarbg_category_entry.place(relx=.5, rely=.45, anchor="center")
+    rarbg_category_entry.place(relx=0.5, rely=0.45, anchor="center")
 
     rarbg_clipboard_label = Label(rarbg_app, text="Copy the Magnets to Clipboard?")
-    rarbg_clipboard_label.place(relx=.5, rely=.60, anchor="center")
+    rarbg_clipboard_label.place(relx=0.5, rely=0.6, anchor="center")
     rarbg_clipboard_combobox = ttk.Combobox(rarbg_app, values=['Yes', 'No'])
-    rarbg_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
+    rarbg_clipboard_combobox.place(relx=0.5, rely=0.7, anchor="center")
 
     rarbg_ok_button = Button(rarbg_app, text = "OK", command = rarbg_callback)
-    rarbg_ok_button.place(relx=.5, rely=.91, anchor="center")
+    rarbg_ok_button.place(relx=0.5, rely=0.91, anchor="center")
 
     rarbg_load_config_button = Button(rarbg_app, text = "Load Config", command = rarbg_load_config)
     rarbg_load_config_button.place(relx=0.2, rely=0.5, anchor="center")

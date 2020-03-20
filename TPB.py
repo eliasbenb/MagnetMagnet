@@ -55,23 +55,23 @@ def tpb():
 
     tpb_domain_text = StringVar()
     tpb_domain_label = Label(tpb_app, text="Enter TPB Domain Link:")
-    tpb_domain_label.place(relx=.5, rely=.1, anchor="center")
+    tpb_domain_label.place(relx=0.5, rely=0.1, anchor="center")
     tpb_domain_entry = Entry(tpb_app, textvariable=tpb_domain_text)
-    tpb_domain_entry.place(relx=.5, rely=.20, anchor="center")
+    tpb_domain_entry.place(relx=0.5, rely=0.2, anchor="center")
 
     tpb_category_text = StringVar()
     tpb_category_label = Label(tpb_app, text="Enter Category String:")
-    tpb_category_label.place(relx=.5, rely=.35, anchor="center")
+    tpb_category_label.place(relx=0.5, rely=0.35, anchor="center")
     tpb_category_entry = Entry(tpb_app, textvariable=tpb_category_text)
-    tpb_category_entry.place(relx=.5, rely=.45, anchor="center")
+    tpb_category_entry.place(relx=0.5, rely=0.45, anchor="center")
 
     tpb_clipboard_label = Label(tpb_app, text="Copy the Magnets to Clipboard?")
-    tpb_clipboard_label.place(relx=.5, rely=.60, anchor="center")
+    tpb_clipboard_label.place(relx=0.5, rely=0.6, anchor="center")
     tpb_clipboard_combobox = ttk.Combobox(tpb_app, values=['Yes', 'No'])
-    tpb_clipboard_combobox.place(relx=.5, rely=.70, anchor="center")
+    tpb_clipboard_combobox.place(relx=0.5, rely=0.7, anchor="center")
 
     tpb_ok_button = Button(tpb_app, text = "OK", command = tpb_callback)
-    tpb_ok_button.place(relx=.5, rely=.91, anchor="center")
+    tpb_ok_button.place(relx=0.5, rely=0.91, anchor="center")
 
     tpb_load_config_button = Button(tpb_app, text = "Load Config", command = tpb_load_config)
     tpb_load_config_button.place(relx=0.2, rely=0.5, anchor="center")

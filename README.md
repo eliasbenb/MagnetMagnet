@@ -30,23 +30,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
-<h3>KAT:</h3>
-<details><summary>Category IDs for KAT</summary><br>
-  <ul>
-    <li> Movies = movies</li>
-    <li> TV = tv</li>
-    <li> Anime = anime</li>
-    <li> Music = music</li>
-    <li> Books = books</li>
-    <li> Games = games</li>
-    <li> Applications = applications</li>
-    <li> XXX = xxx</li>
-    <li> All = new</li>
-  </ul>
-</details>
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
-  <ul>
     <li> XXX = 2;4</li>
     <details><summary>XXX Subcategories</summary><br>
       <ul>
@@ -83,11 +68,14 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
       <ul>
         <li> Software/PC ISO = 33</li>
       </ul>
-    </details>       
+    </details>
+        
+
+        
   </ul>
 </details>
-<h3>TPB:</h3>
-<details><summary>Category IDs for TPB</summary><br>
+<h3>The Pirate Bay:</h3>
+<details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
     <li> Audio = 100</li>
     <details><summary>Audio Subcategories</summary><br>
@@ -166,30 +154,17 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     <li> All = 0</li>
   </ul>
 </details>
-<h2>Working Mirrors:</h2>
-<h3>KAT:</h3>
-<details><summary>KAT Working Mirrors</summary><br>
+<h3>Kick Ass Torrents:</h3>
+<details><summary>Category IDs for Kick Ass Torrents</summary><br>
   <ul>
-    <li> https://kat.rip/</li>
-  </ul>
-</details>
-<h3>RARBG:</h3>
-<details><summary>RARBG Working Mirrors</summary>
-  <ul>
-    <li> https://rarbgmirror.com/</li>
-    <li> https://rarbgaccess.org/</li>
-    <li> http://rarbgproxy.org/</li>
-    <li> https://rarbgmirror.org/</li>
-    <li> https://rarbg.to/</li>
-  </ul>
-</details>
-<h3>TPB:</h3>
-<details><summary>TPB Working Mirrors</summary><br>
-  <ul>
-    <li> https://piratebay.live/</li>
-    <li> https://tpb.party/</li>
-    <li> https://piratepiratepirate.net/</li>
-    <li> https://lepiratebay.org/</li>
-    <li> https://thehiddenbay.com/</li>
+    <li> Movies = movies</li>
+    <li> TV = tv</li>
+    <li> Anime = anime</li>
+    <li> Music = music</li>
+    <li> Books = books</li>
+    <li> Games = games</li>
+    <li> Applications = applications</li>
+    <li> XXX = xxx</li>
+    <li> All = new</li>
   </ul>
 </details>

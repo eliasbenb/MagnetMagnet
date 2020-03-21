@@ -3,20 +3,20 @@ from imagebytes import *
 from kat import kat
 from rarbg import rarbg
 from tpb import tpb
-from searcher import searcher
+from search import search
 import os, webbrowser
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 if not os.path.exists(path):
     os.makedirs(path)
-with open(path+'\\icon.ico','wb') as m1:
-    m1.write(icon_image_bytes)
-with open(path+'\\website.png','wb') as m2:
-    m2.write(website_image_bytes)
-with open(path+'\\github.png','wb') as m3:
-    m3.write(github_image_bytes)
-with open(path+'\\eliasbenb.png','wb') as m4:
-    m4.write(eliasbenb_image_bytes)
+with open(path+'\\icon.ico','wb') as w1:
+    w1.write(icon_image_bytes)
+with open(path+'\\website.png','wb') as w2:
+    w2.write(website_image_bytes)
+with open(path+'\\github.png','wb') as w3:
+    w3.write(github_image_bytes)
+with open(path+'\\eliasbenb.png','wb') as w4:
+    w4.write(eliasbenb_image_bytes)
 
 app = Tk()
 
@@ -29,8 +29,8 @@ def website_open():
 def github_open():
     webbrowser.open('https://github.com/eliasbenb/MagnetMagnet')
 
-searcher_button = Button(app, text="Searcher", font=("Segoe UI", 15, "bold"), command=searcher)
-searcher_button.place(relx=(0.5), rely=(75/275), anchor="s", height=75, width=450)
+search_button = Button(app, text="Search", font=("Segoe UI", 15, "bold"), command=search)
+search_button.place(relx=(0.5), rely=(75/275), anchor="s", height=75, width=450)
 
 kat_button = Button(app, text="KAT", font=("Segoe UI", 15, "bold"), command=kat)
 kat_button.place(relx=(1/6), rely=(225/275), anchor="s", height=150, width=150)

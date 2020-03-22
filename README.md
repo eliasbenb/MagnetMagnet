@@ -5,12 +5,13 @@
 </p>
 
 # What is this repo?
-MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. I decided to make this app to improve my Python skills.
+MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. It allows allows you to search Kick Ass Torrents and The Pirate Bay for torrents. I decided to make this app to improve my Python skills.
 
 ## Features supported:
+- Scrape magnet links using specific keywords
 - Scraping magnet links from all RARBG mirrors
-- Scraping magnet links from **most** The Pirate Bay mirrors (depending on if the mirror supports RSS)
-- Scraping magnet links from **most** Kick Ass Torrents mirrors (depending on if the mirror contains the magnet link all on one page)
+- Scraping magnet links from **most** The Pirate Bay mirrors
+- Scraping magnet links from **most** Kick Ass Torrents mirrors
 - Ability to choose multiple categories/subcategories to scrape magnet links from
 - Copies magnet links to clipboard
 - Exports magnet links into .txt file
@@ -32,13 +33,11 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 ## Category IDs:
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
-    <li> XXX = 2;4</li>
     <details><summary>XXX Subcategories</summary><br>
       <ul>
         <li> XXX (18+) = 4</li>
       </ul>
     </details>
-    <li> TV Shows = 2;18;41;49</li>
     <details><summary>TV Shows Subcategories</summary><br>
       <ul>
         <li> TV Episodes = 18</li>
@@ -46,7 +45,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> TV UHD Episodes = 49</li>
       </ul>
     </details>
-    <li> Games = 2;27;28;29;30;31;32;40;53</li>
     <details><summary>Games Subcategories</summary><br>
       <ul>
         <li> Games/PC ISO = 27</li>
@@ -56,14 +54,12 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Games/PS4 = 53</li>
       </ul>
     </details>
-    <li> Music = 2;23;24;25;26</li>
     <details><summary>Music Subcategories</summary><br>
       <ul>
         <li> Music/MP3 = 23</li>
         <li> Music/FLAC = 25</li>
       </ul>
     </details>
-    <li> Software = 2;33;34;43 </li>
     <details><summary>Software Subcategories</summary><br>
       <ul>
         <li> Software/PC ISO = 33</li>
@@ -77,7 +73,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 <h3>The Pirate Bay:</h3>
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
-    <li> Audio = 100</li>
     <details><summary>Audio Subcategories</summary><br>
       <ul>
         <li> Music = 101</li>
@@ -87,7 +82,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 199</li>
       </ul>
     </details>
-    <li> Video = 200</li>
     <details><summary>Video Subcategories</summary><br>
       <ul>
         <li> Movies = 201</li>
@@ -102,7 +96,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 299</li>
       </ul>
     </details>
-    <li> Applications = 300</li>
     <details><summary>Applications Subcategories</summary><br>
       <ul>
         <li> Windows = 301</li>
@@ -114,7 +107,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other OS = 399</li>
       </ul>
     </details>
-    <li> Games = 400</li>
     <details><summary>Games Subcategories</summary><br>
       <ul>
         <li> PC = 401</li>
@@ -128,7 +120,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 499</li>
       </ul>
     </details>
-    <li> Porn = 500</li>
     <details><summary>Porn Subcategories</summary><br>
       <ul>
         <li> Movies = 501</li>
@@ -140,7 +131,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 599</li>
       </ul>
     </details>
-    <li> Other = 600</li>
     <details><summary>Other Subcategories</summary><br>
       <ul>
         <li> E-books = 601</li>
@@ -151,7 +141,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 699</li>
       </ul>
     </details>
-    <li> All = 0</li>
   </ul>
 </details>
 <h3>Kick Ass Torrents:</h3>

@@ -1,4 +1,4 @@
-from tkinter import Button, Entry, Label, messagebox, StringVar, Tk, ttk, Checkbutton, IntVar, BooleanVar
+from tkinter import Button, Checkbutton, Entry, IntVar, Label, messagebox, StringVar, Tk, ttk
 import os, pyperclip, requests, re, tkinter.ttk, time, tkinter
 from bs4 import BeautifulSoup
 
@@ -12,7 +12,8 @@ def search():
             pyperclip.copy(magnet_choice)
             messagebox.showinfo("Search Scraper @eliasbenb", "The selected magnet link was successfully copied to the clipboard")
         search_query = search_query_entry.get()
-        if ('selected' or 'alternate' in search_tpb_domain_checkbutton.state()) and ('selected' or 'alternate' in search_kat_domain_checkbutton.state()):
+        if ('selected' in search_tpb_domain_checkbutton.state()) and ('selected' in search_kat_domain_checkbutton.state()):
+            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             search_kat_link = 'http://kat.rip/usearch/' + search_query
             try:
                 search_kat_request = requests.get(search_kat_link)
@@ -41,11 +42,11 @@ def search():
                 if tpb_title not in search_magnet_combobox['values']:
                     search_magnet_combobox['values'] += (tpb_title.text,)
             search_tpb_links = search_tpb_soup.findAll('a', title="Download this torrent using magnet")
-            search_magnets=[]
             for m in search_tpb_links:
                 search_magnets.append(m['href'])
 
-        elif 'selected' or 'alternate' in search_kat_domain_checkbutton.state():
+        elif 'selected' in search_kat_domain_checkbutton.state():
+            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             search_kat_link = 'http://kat.rip/usearch/' + search_query
             try:
                 search_kat_request = requests.get(search_kat_link)
@@ -62,7 +63,8 @@ def search():
             for m in search_kat_links:
                 search_magnets.append(m['href'])
 
-        elif 'selected' or 'alternate' in search_tpb_domain_checkbutton.state():
+        elif 'selected' in search_tpb_domain_checkbutton.state():
+            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             search_tpb_link = 'https://tpb.party/search/' + search_query + '/1/99/0/'
             try:
                 search_tpb_request = requests.get(search_tpb_link)
@@ -86,15 +88,19 @@ def search():
 
     search_app = Tk()
 
-    search_kat_domain_checkbutton = ttk.Checkbutton(search_app, text="KAT")
+    search_kat_domain_int = StringVar()
+    search_kat_domain_checkbutton = ttk.Checkbutton(search_app, text="KAT", variable=search_kat_domain_int)
     search_kat_domain_checkbutton.place(relx=0.4, rely=0.05, anchor="center")
-    search_tpb_domain_checkbutton = ttk.Checkbutton(search_app, text="TPB")
+    search_kat_domain_checkbutton.state(['!disabled','selected'])
+    search_tpb_domain_int = StringVar()
+    search_tpb_domain_checkbutton = ttk.Checkbutton(search_app, text="TPB", variable=search_tpb_domain_int)
     search_tpb_domain_checkbutton.place(relx=0.6, rely=0.05, anchor="center")
+    search_tpb_domain_checkbutton.state(['!disabled','selected'])
 
-    search_query_text = StringVar()
+    search_query_string = StringVar()
     search_query_label = Label(search_app, text="Enter a search query:")
     search_query_label.place(relx=0.5, rely=0.15, anchor="center")
-    search_query_entry = Entry(search_app, textvariable=search_query_text)
+    search_query_entry = Entry(search_app, textvariable=search_query_string)
     search_query_entry.place(relx=0.5, rely=0.25, anchor="center")
 
     search_magnet_combobox = ttk.Combobox(search_app, values=['-- SELECT A MAGNET LINK TO COPY --'], state='readonly')

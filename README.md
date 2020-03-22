@@ -78,7 +78,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 <h3>The Pirate Bay:</h3>
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
-    <li> Audio = 100</li>
     <details><summary>Audio Subcategories</summary><br>
       <ul>
         <li> Music = 101</li>
@@ -88,7 +87,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 199</li>
       </ul>
     </details>
-    <li> Video = 200</li>
     <details><summary>Video Subcategories</summary><br>
       <ul>
         <li> Movies = 201</li>
@@ -103,7 +101,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 299</li>
       </ul>
     </details>
-    <li> Applications = 300</li>
     <details><summary>Applications Subcategories</summary><br>
       <ul>
         <li> Windows = 301</li>
@@ -115,7 +112,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other OS = 399</li>
       </ul>
     </details>
-    <li> Games = 400</li>
     <details><summary>Games Subcategories</summary><br>
       <ul>
         <li> PC = 401</li>
@@ -129,7 +125,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 499</li>
       </ul>
     </details>
-    <li> Porn = 500</li>
     <details><summary>Porn Subcategories</summary><br>
       <ul>
         <li> Movies = 501</li>
@@ -141,7 +136,6 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Other = 599</li>
       </ul>
     </details>
-    <li> Other = 600</li>
     <details><summary>Other Subcategories</summary><br>
       <ul>
         <li> E-books = 601</li>

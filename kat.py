@@ -71,16 +71,16 @@ def kat():
 
     kat_clipboard_label = Label(kat_app, text="Copy the Magnets to Clipboard?")
     kat_clipboard_label.place(relx=0.5, rely=0.6, anchor="center")
-    kat_clipboard_combobox = ttk.Combobox(kat_app, values=['Yes', 'No'])
+    kat_clipboard_combobox = ttk.Combobox(kat_app, values=['Yes', 'No'], state='readonly')
     kat_clipboard_combobox.place(relx=0.5, rely=0.7, anchor="center")
 
     kat_ok_button = Button(kat_app, text = "OK", command = kat_callback)
     kat_ok_button.place(relx=0.5, rely=0.91, anchor="center")
 
-    kat_load_config_button = Button(kat_app, text = "Load Config", command = kat_load_config)
+    kat_load_config_button = Button(kat_app, text ="Load Config", command=kat_load_config)
     kat_load_config_button.place(relx=0.2, rely=0.5, anchor="center")
 
-    kat_save_config_button = Button(kat_app, text = "Save Config", command = kat_save_config)
+    kat_save_config_button = Button(kat_app, text ="Save Config", command=kat_save_config)
     kat_save_config_button.place(relx=0.8, rely=0.5, anchor="center")
     
     kat_app.title('KAT @eliasbenb')

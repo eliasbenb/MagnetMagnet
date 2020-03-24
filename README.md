@@ -21,16 +21,31 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 **To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).**
 **Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)**
 ### Usage:
-- On launch you get three options of torrent indexers to scrape from: RARBG, The Pirate Bay and Kick Ass Torrents
-![App Screenshot](https://user-images.githubusercontent.com/54410649/77230942-4fc64a00-6bb1-11ea-9c96-f38b39774105.PNG)
-- There are only three user changeable fields in MagnetMagnet:
-![App Screenshot](https://user-images.githubusercontent.com/54410649/77230937-4e951d00-6bb1-11ea-8c3a-c60be2023bf8.PNG)
-- Domain: the first field is for the domain, here just input a RARBG/The Pirate Bay/Kick Ass Torrents domain. I reccomend https://rarbg.to/ / https://tpb.party/ / https://kat.rip/ as of 16th March 2020
-- Category Number: the second field is for the category number. This must be entered as a number ID. Multiple IDs can be inputed at once when seperated by a semi colon ';'. ** All the category IDs can be found below **
+- On launch you get four options of torrent indexers to scrape from: RARBG, The Pirate Bay, Kick Ass Torrents and 1377x, and an option to make custom search querys in the 'Search' menu
+![App Screenshot](https://user-images.githubusercontent.com/54410649/77454424-f27d0380-6e11-11ea-95da-9e9b0e6cf4fb.PNG)
+- There are only three user changeable fields in MagnetMagnet's scraper:
+![App Screenshot](https://user-images.githubusercontent.com/54410649/77454431-f577f400-6e11-11ea-805e-e21f4e84640e.PNG)
+- Domain: the first field is for the domain, here just input the torrent scraper's domain. I reccomend https://rarbg.to/ / https://tpb.party/ / https://kat.rip/ / https://1377x.to/ as of 24th March 2020
+- Category Number: the second field is for the category number. This must be entered as string ID. All the category IDs can be found below
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
 ## Category IDs:
+<h3>Kick Ass Torrents:</h3>
+<details><summary>Category IDs for Kick Ass Torrents</summary><br>
+  <ul>
+    <li> Movies = movies</li>
+    <li> TV = tv</li>
+    <li> Anime = anime</li>
+    <li> Music = music</li>
+    <li> Books = books</li>
+    <li> Games = games</li>
+    <li> Applications = applications</li>
+    <li> XXX = xxx</li>
+    <li> All = new</li>
+  </ul>
+</details>
+
 <h3>RARBG:</h3>
 <details><summary>Category IDs for RARBG</summary><br>
     <details><summary>XXX Subcategories</summary><br>
@@ -65,11 +80,9 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
         <li> Software/PC ISO = 33</li>
       </ul>
     </details>
-        
-
-        
   </ul>
 </details>
+
 <h3>The Pirate Bay:</h3>
 <details><summary>Category IDs for The Pirate Bay</summary><br>
   <ul>
@@ -143,17 +156,18 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
     </details>
   </ul>
 </details>
-<h3>Kick Ass Torrents:</h3>
-<details><summary>Category IDs for Kick Ass Torrents</summary><br>
+
+<h3>1377x:</h3>
+<details><summary>Category IDs for 1377x</summary><br>
   <ul>
-    <li> Movies = movies</li>
-    <li> TV = tv</li>
-    <li> Anime = anime</li>
-    <li> Music = music</li>
-    <li> Books = books</li>
-    <li> Games = games</li>
-    <li> Applications = applications</li>
-    <li> XXX = xxx</li>
-    <li> All = new</li>
+    <li> Movies = popular-movies</li>
+    <li> TV = popular-tv</li>
+    <li> Games = popular-games</li>
+    <li> Music = popular-music</li>
+    <li> Applications = popular-apps</li>
+    <li> Anime = popular-anime</li>
+    <li> Documentaries = popular-documentaries</li>
+    <li> Other = popular-other</li>
+    <li> XXX = popular-xxx</li>
   </ul>
 </details>

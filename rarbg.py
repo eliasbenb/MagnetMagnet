@@ -7,15 +7,13 @@ rarbg_path = '%s\\eliasbenb' %  os.environ['APPDATA']
 def rarbg():
     def rarbg_callback():
         rarbg_domain = rarbg_domain_entry.get()
-        if not rarbg_domain.endswith('/'):
-            rarbg_domain += '/'
         rarbg_category = rarbg_category_entry.get()
         rarbg_clipboard = rarbg_clipboard_combobox.get()
         rarbg_link = rarbg_domain + 'rssdd.php?category=' + rarbg_category
         try:
             rarbg_request = requests.get(rarbg_link)
         except:
-            messagebox.showinfo("RARBG Scraper @eliasbenb", "Something went wrong!")
+            messagebox.showinfo("RARBG Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
 
         rarbg_source = rarbg_request.content
         rarbg_soup = str(BeautifulSoup(rarbg_source, 'lxml'))
@@ -34,9 +32,9 @@ def rarbg():
         
         rarbg_timestr = time.strftime(" %Y%m%d%H%M%S")
         rarbg_file_name = "RARBG Results " + rarbg_timestr + ".txt"
-        with open(rarbg_file_name,'w') as w1:
+        with open(rarbg_file_name,'w') as rarbg_w1:
             for magnet in rarbg_magnets:
-                w1.write(magnet)
+                rarbg_w1.write(magnet)
         messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
         if rarbg_clipboard == "Yes":
@@ -48,8 +46,8 @@ def rarbg():
     def rarbg_load_config():
         rarbg_domain_entry.delete(0,tkinter.END)
         rarbg_category_entry.delete(0,tkinter.END)
-        with open(rarbg_path+"\\rarbg_config.env", "r") as r1:
-            rarbg_saved_config = [line.rstrip('\n') for line in r1]
+        with open(rarbg_path+"\\rarbg_config.env", "r") as rarbg_r1:
+            rarbg_saved_config = [line.rstrip('\n') for line in rarbg_r1]
         rarbg_domain_entry.insert(0,rarbg_saved_config[0])
         rarbg_category_entry.insert(0,rarbg_saved_config[1])
         rarbg_clipboard_combobox.insert(0, rarbg_saved_config[2])
@@ -58,8 +56,8 @@ def rarbg():
         rarbg_domain = rarbg_domain_entry.get()
         rarbg_category = rarbg_category_entry.get()
         rarbg_clipboard = rarbg_clipboard_combobox.get()
-        with open(rarbg_path+"\\rarbg_config.env", "w") as w2:
-            w2.write(rarbg_domain+'\n'+rarbg_category+'\n'+rarbg_clipboard)
+        with open(rarbg_path+"\\rarbg_config.env", "w") as rarbg_w2:
+            rarbg_w2.write(rarbg_domain+'\n'+rarbg_category+'\n'+rarbg_clipboard)
     
     rarbg_app = Tk()
 

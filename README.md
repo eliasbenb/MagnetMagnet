@@ -6,7 +6,6 @@
 
 # What is this repo?
 MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape magnet links from RARBG, The Pirate Bay and Kick Ass Torrents. It allows allows you to search Kick Ass Torrents and The Pirate Bay for torrents. I decided to make this app to improve my Python skills.
-
 ## Features supported:
 - Scrape magnet links using specific keywords
 - Scraping magnet links from all RARBG mirrors
@@ -15,15 +14,14 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Ability to choose multiple categories/subcategories to scrape magnet links from
 - Copies magnet links to clipboard
 - Exports magnet links into .txt file
-
 ## To do list:
 - Add support to http://nyaa.si/
 
-## How to use:
-### Installing:
+# How to use:
+## Installing:
 **To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).**
 **Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)**
-### Usage:
+## Usage:
 ### Home screen:
 - On launch you get four options of torrent indexers to scrape from: RARBG, The Pirate Bay, Kick Ass Torrents and 1377x, and an option to make custom search querys for all the aformentioned torrent indexers in the 'Search' menu
 ![App Screenshot](https://user-images.githubusercontent.com/54410649/77454424-f27d0380-6e11-11ea-95da-9e9b0e6cf4fb.PNG)
@@ -41,6 +39,7 @@ To copy any generated magnet links you click on any item in the dropdown
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
+# Category IDs and Domains
 ## Category IDs:
 <h3>Kick Ass Torrents:</h3>
 <details><summary>Category IDs for Kick Ass Torrents</summary><br>

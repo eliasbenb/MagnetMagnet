@@ -39,8 +39,8 @@ To copy any generated magnet links you click on any item in the dropdown
 - Clipboard: this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - Save Config: this saves whatever is inputed in the text fields to a config file stored in %APPDATA%\eliasbenb
 - Load Config: this loads the config that has been saved to make filling the fields easier
-# Category IDs and Domains
-## Category IDs:
+
+## Category IDs
 <h3>Kick Ass Torrents:</h3>
 <details><summary>Category IDs for Kick Ass Torrents</summary><br>
   <ul>

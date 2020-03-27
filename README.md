@@ -24,15 +24,16 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 **To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).**
 **Or you can download the python file above and run it using python (make sure to install the dependencies in the requirements.txt file)**
 ### Usage:
+### Home screen:
 - On launch you get four options of torrent indexers to scrape from: RARBG, The Pirate Bay, Kick Ass Torrents and 1377x, and an option to make custom search querys for all the aformentioned torrent indexers in the 'Search' menu
 ![App Screenshot](https://user-images.githubusercontent.com/54410649/77454424-f27d0380-6e11-11ea-95da-9e9b0e6cf4fb.PNG)
-
+### Search:
 - In the MagnetMagnet Search app you have two user editable fields:
 ![App Screenshot](https://user-images.githubusercontent.com/54410649/77783311-0aeb5900-7072-11ea-8b53-d1a392dbb05e.PNG)
 - Checkboxes: you can select/deselect the torrent indexers you would like to search from
 - Search box: here you enter what the search query you would like to submit is
 To copy any generated magnet links you click on any item in the dropdown
-
+### Scrapers:
 - There are only three user changeable fields in MagnetMagnet's scraper:
 ![App Screenshot](https://user-images.githubusercontent.com/54410649/77454431-f577f400-6e11-11ea-805e-e21f4e84640e.PNG)
 - Domain: the first field is for the domain, here just input the torrent scraper's domain. I reccomend https://rarbg.to/ / https://tpb.party/ / https://kat.rip/ / https://1377x.to/ as of 24th March 2020

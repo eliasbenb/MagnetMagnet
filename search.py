@@ -37,12 +37,12 @@ def search():
             source = request.text
             soup = str(BeautifulSoup(source, 'lxml'))
             soup = soup.replace('<html><body><p>{"torrent_results":[', '')
-            print(soup)
             soup = soup.split(',')
             titles = str([i for i in soup if i.startswith('{"title":')])
             titles = titles.replace('{"title":"', '')
             titles = titles.replace('"', '')
             titles = titles.split("', '")
+            titles[0] = titles[0].replace("['", "")
             for title in titles:
                 magnet_combobox['values'] += (title,)
             links = str([i for i in soup if i.startswith('"download":')])

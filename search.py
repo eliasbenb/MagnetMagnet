@@ -2,222 +2,224 @@ from tkinter import Button, Checkbutton, Entry, IntVar, Label, messagebox, Strin
 import os, pyperclip, requests, re, tkinter.ttk, time
 from bs4 import BeautifulSoup
 
-search_path = '%s\\eliasbenb' %  os.environ['APPDATA']
+path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 def search():
-    def search_search_callback():
+    def callback():
         def magnet_copy(event):
-            search_choice = search_magnet_combobox.current()
-            magnet_choice = search_magnets[search_choice-1]
+            choice = magnet_combobox.current()
+            magnet_choice = magnets[choice-1]
             pyperclip.copy(magnet_choice)
             messagebox.showinfo("Search Scraper @eliasbenb", "The selected magnet link was successfully copied to the clipboard")
-        search_query = search_query_entry.get()
-        def search_kat():
-            search_kat_link = 'http://kat.rip/usearch/' + search_query
+        query = query_entry.get()
+        def kat():
+            kat_link = 'http://kat.rip/usearch/' + query
             try:
-                search_kat_request = requests.get(search_kat_link)
+                request = requests.get(kat_link)
             except:
                 messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
-            search_kat_source = search_kat_request.text
-            search_kat_soup = BeautifulSoup(search_kat_source, 'lxml')
-            kat_search_titles_all = search_kat_soup.findAll('a', class_="cellMainLink")
-            for kat_title in kat_search_titles_all:
-                if kat_title not in search_magnet_combobox['values']:
-                    search_magnet_combobox['values'] += (kat_title.text,)
-            search_kat_links = search_kat_soup.findAll('a', title="Torrent magnet link")
-            for m in search_kat_links:
-                search_magnets.append(m['href'])
+            source = request.text
+            soup = BeautifulSoup(source, 'lxml')
+            titles_all = soup.findAll('a', class_="cellMainLink")
+            for title in titles_all:
+                if title not in magnet_combobox['values']:
+                    magnet_combobox['values'] += (title.text,)
+            links = soup.findAll('a', title="Torrent magnet link")
+            for m in links:
+                magnets.append(m['href'])
         
-        def search_rarbg():
-            search_rarbg_link = 'https://www.rarbgmirror.com/torrents.php?search=' + search_query
+        def rarbg():
+            rarbg_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
             try:
-                search_rarbg_request = requests.get(search_rarbg_link)
+                request = requests.get(rarbg_link, headers={'User-Agent': 'Mozilla/5.0'})
+            except:
+                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+            source = request.text
+            soup = str(BeautifulSoup(source, 'lxml'))
+            soup = soup.replace('<html><body><p>{"torrent_results":[', '')
+            print(soup)
+            soup = soup.split(',')
+            titles = str([i for i in soup if i.startswith('{"title":')])
+            titles = titles.replace('{"title":"', '')
+            titles = titles.replace('"', '')
+            titles = titles.split("', '")
+            for title in titles:
+                magnet_combobox['values'] += (title,)
+            links = str([i for i in soup if i.startswith('"download":')])
+            links = links.replace('"download":"', '')
+            links = links.replace('"', '')
+            links = links.split("', '")
+            for link in links:
+                magnets.append(link)
+        
+        def tpb():
+            tpb_link = 'https://tpb.party/search/' + query + '/1/99/0/'
+            try:
+                request = requests.get(tpb_link)
             except:
                 messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
-            search_rarbg_source = search_rarbg_request.text
-            search_rarbg_soup = BeautifulSoup(search_rarbg_source, 'lxml')
-            for page_link in search_rarbg_soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
-                rarbg_page_link = 'https://www.rarbgmirror.com/' + page_link.get('href')
+            source = request.text
+            soup = BeautifulSoup(source, 'lxml')
+            titles_all = soup.findAll('div', class_="detName")
+            for title in titles_all:
+                if title not in magnet_combobox['values']:
+                    magnet_combobox['values'] += (title.text,)
+            links = soup.findAll('a', title="Download this torrent using magnet")
+            for m in links:
+                magnets.append(m['href'])
+        def x1377():
+            x1377_link = 'https://www.1377x.to/search/' + query + '/1/'
+            try:
+                request = requests.get(x1377_link)
+            except:
+                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
+            source = request.text
+            soup = BeautifulSoup(source, 'lxml')
+            for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
+                page_link = 'https://www.1377x.to/' + page_link.get('href')
                 try:
-                    rarbg_page_request = requests.get(rarbg_page_link)
+                    page_request = requests.get(page_link)
                 except:
                     messagebox.showinfo("Search Scraper @eliasbenb", "Something went wrong!")
 
-                rarbg_page_source = rarbg_page_request.content
-                rarbg_page_soup = BeautifulSoup(rarbg_page_source, 'lxml')
-                link = rarbg_page_soup.find('a', attrs={'href': re.compile("^magnet")})
-                search_magnets.append(link.get('href'))
-                rarbg_title = rarbg_page_soup.find('h1')
-                search_magnet_combobox['values'] += (rarbg_title.text,)
+                page_source = page_request.content
+                page_soup = BeautifulSoup(page_source, 'lxml')
+                link = page_soup.find('a', attrs={'href': re.compile("^magnet")})
+                magnets.append(link.get('href'))
+                title = page_soup.find('h1')
+                magnet_combobox['values'] += (title.text,)
+
+        if ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            rarbg()
+            tpb()
+            x1377()            
+
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            rarbg()
+            tpb()
         
-        def search_tpb():
-            search_tpb_link = 'https://tpb.party/search/' + search_query + '/1/99/0/'
-            try:
-                search_tpb_request = requests.get(search_tpb_link)
-            except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
-            search_tpb_source = search_tpb_request.text
-            search_tpb_soup = BeautifulSoup(search_tpb_source, 'lxml')
-            tpb_search_titles_all = search_tpb_soup.findAll('div', class_="detName")
-            for tpb_title in tpb_search_titles_all:
-                if tpb_title not in search_magnet_combobox['values']:
-                    search_magnet_combobox['values'] += (tpb_title.text,)
-            search_tpb_links = search_tpb_soup.findAll('a', title="Download this torrent using magnet")
-            for m in search_tpb_links:
-                search_magnets.append(m['href'])
-        def search_x1377():
-            search_x1377_link = 'https://www.1377x.to/search/' + search_query + '/1/'
-            try:
-                search_x1377_request = requests.get(search_x1377_link)
-            except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
-            search_1377x_source = search_x1377_request.text
-            search_1377x_soup = BeautifulSoup(search_1377x_source, 'lxml')
-            for page_link in search_1377x_soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
-                x1377_page_link = 'https://www.1377x.to/' + page_link.get('href')
-                try:
-                    x1377_page_request = requests.get(x1377_page_link)
-                except:
-                    messagebox.showinfo("Search Scraper @eliasbenb", "Something went wrong!")
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            rarbg()
+            x1377()
 
-                x1377_page_source = x1377_page_request.content
-                x1377_page_soup = BeautifulSoup(x1377_page_source, 'lxml')
-                link = x1377_page_soup.find('a', attrs={'href': re.compile("^magnet")})
-                search_magnets.append(link.get('href'))
-                x1377_title = x1377_page_soup.find('h1')
-                search_magnet_combobox['values'] += (x1377_title.text,)
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            tpb()
+            x1377()
 
-        if ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_rarbg()
-            search_tpb()
-            search_x1377()            
+        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            rarbg()
+            tpb()
+            x1377()
 
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_rarbg()
-            search_tpb()
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            rarbg()
+
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            tpb()
         
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_rarbg()
-            search_x1377()
-
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_tpb()
-            search_x1377()
-
-        elif ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_rarbg()
-            search_tpb()
-            search_x1377()
-
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_rarbg_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_rarbg()
-
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_tpb()
-        
-        elif ('selected' in search_kat_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
-            search_x1377()
+        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
+            x1377()
     
-        elif ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_tpb_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_rarbg()
-            search_tpb()
+        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            rarbg()
+            tpb()
 
-        elif ('selected' in search_rarbg_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_rarbg()
-            search_x1377()
+        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            rarbg()
+            x1377()
 
-        elif ('selected' in search_tpb_domain_checkbutton.state()) and ('selected' in search_x1377_domain_checkbutton.state()):
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_tpb()
-            search_x1377()
+        elif ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            tpb()
+            x1377()
 
-        elif 'selected' in search_kat_domain_checkbutton.state():
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_kat()
+        elif 'selected' in kat_domain_checkbutton.state():
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            kat()
 
-        elif 'selected' in search_rarbg_domain_checkbutton.state():
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_rarbg()
+        elif 'selected' in rarbg_domain_checkbutton.state():
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            rarbg()
 
-        elif 'selected' in search_tpb_domain_checkbutton.state():
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_tpb()
+        elif 'selected' in tpb_domain_checkbutton.state():
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            tpb()
 
-        elif 'selected' in search_x1377_domain_checkbutton.state():
-            search_magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            search_magnets = []
-            search_x1377()
+        elif 'selected' in x1377_domain_checkbutton.state():
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            x1377()
 
         else:
             messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
 
-        search_magnet_combobox.bind("<<ComboboxSelected>>", magnet_copy)
+        magnet_combobox.bind("<<ComboboxSelected>>", magnet_copy)
 
-    search_app = Tk()
+    app = Tk()
 
-    search_kat_domain_int = StringVar()
-    search_kat_domain_checkbutton = ttk.Checkbutton(search_app, text="KAT", variable=search_kat_domain_int)
-    search_kat_domain_checkbutton.place(relx=(1/5), rely=(1/20), anchor="center")
-    search_kat_domain_checkbutton.state(['!disabled','selected'])
-    search_rarbg_domain_int = StringVar()
-    search_rarbg_domain_checkbutton = ttk.Checkbutton(search_app, text="RARBG", variable=search_rarbg_domain_int)
-    search_rarbg_domain_checkbutton.place(relx=(2/5), rely=(1/20), anchor="center")
-    search_rarbg_domain_checkbutton.state(['!disabled','selected'])
-    search_tpb_domain_int = StringVar()
-    search_tpb_domain_checkbutton = ttk.Checkbutton(search_app, text="TPB", variable=search_tpb_domain_int)
-    search_tpb_domain_checkbutton.place(relx=(3/5), rely=(1/20), anchor="center")
-    search_tpb_domain_checkbutton.state(['!disabled','selected'])
-    search_x1377_domain_int = StringVar()
-    search_x1377_domain_checkbutton = ttk.Checkbutton(search_app, text="1377x", variable=search_x1377_domain_int)
-    search_x1377_domain_checkbutton.place(relx=(4/5), rely=(1/20), anchor="center")
-    search_x1377_domain_checkbutton.state(['!disabled','selected'])
+    kat_domain_int = StringVar()
+    kat_domain_checkbutton = ttk.Checkbutton(app, text="KAT", variable=kat_domain_int)
+    kat_domain_checkbutton.place(relx=(1/5), rely=(1/20), anchor="center")
+    kat_domain_checkbutton.state(['!disabled','selected'])
+    rarbg_domain_int = StringVar()
+    rarbg_domain_checkbutton = ttk.Checkbutton(app, text="RARBG", variable=rarbg_domain_int)
+    rarbg_domain_checkbutton.place(relx=(2/5), rely=(1/20), anchor="center")
+    rarbg_domain_checkbutton.state(['!disabled','selected'])
+    tpb_domain_int = StringVar()
+    tpb_domain_checkbutton = ttk.Checkbutton(app, text="TPB", variable=tpb_domain_int)
+    tpb_domain_checkbutton.place(relx=(3/5), rely=(1/20), anchor="center")
+    tpb_domain_checkbutton.state(['!disabled','selected'])
+    x1377_domain_int = StringVar()
+    x1377_domain_checkbutton = ttk.Checkbutton(app, text="1377x", variable=x1377_domain_int)
+    x1377_domain_checkbutton.place(relx=(4/5), rely=(1/20), anchor="center")
+    x1377_domain_checkbutton.state(['!disabled','selected'])
 
-    search_query_string = StringVar()
-    search_query_label = Label(search_app, text="Enter a Search Query:")
-    search_query_label.place(relx=(1/2), rely=(3/20), anchor="center")
-    search_query_entry = Entry(search_app, textvariable=search_query_string)
-    search_query_entry.place(relx=(1/2), rely=(1/4), anchor="center", width=300)
+    query_string = StringVar()
+    query_label = Label(app, text="Enter a Search Query:")
+    query_label.place(relx=(1/2), rely=(3/20), anchor="center")
+    query_entry = Entry(app, textvariable=query_string)
+    query_entry.place(relx=(1/2), rely=(1/4), anchor="center", width=300)
 
-    search_magnet_combobox = ttk.Combobox(search_app, values=['-- SELECT A MAGNET LINK TO COPY --'], state='readonly')
-    search_magnet_combobox.place(relx=(1/2), rely=(2/5), anchor="center", width = 300)
+    magnet_combobox = ttk.Combobox(app, values=['-- SELECT A MAGNET LINK TO COPY --'], state='readonly')
+    magnet_combobox.place(relx=(1/2), rely=(2/5), anchor="center", width = 300)
     
-    search_search_button = Button(search_app, text="Search", command=search_search_callback)
-    search_search_button.place(relx=(1/2), rely=(9/10), anchor="center")
+    search_button = Button(app, text="Search", command=callback)
+    search_button.place(relx=(1/2), rely=(9/10), anchor="center")
 
-    search_app.title('Search @eliasbenb')
-    search_app.iconbitmap(search_path+'\\icon.ico')
-    search_app.geometry('400x300')
-    search_app.resizable(False, False)
+    app.title('Search @eliasbenb')
+    app.iconbitmap(path+'\\icon.ico')
+    app.geometry('400x300')
+    app.resizable(False, False)
     
-    search_app.mainloop()
+    app.mainloop()

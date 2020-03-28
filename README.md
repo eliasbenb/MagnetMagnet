@@ -1,4 +1,3 @@
-
 <h3 align="center"><img src="https://i.ibb.co/w4drV5g/Magnet-Magnet-Header.png" width="600px"></h3>
 <p align="center">
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases"><img src="https://img.shields.io/github/downloads/eliasbenb/MagnetMagnet/total?color=%234197fe&style=for-the-badge"></a>
@@ -41,7 +40,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 ### Scrapers:
 - There are only three user changeable fields in the scraper apps:
 - **Domain:** the first field is for the domain, here just input the torrent indexer's domain. It is recommended to keep the preloaded domains as those are the ones most compatible with this app
-- **Category String:** the second field is for the category string. This must be entered as a string ID. All the category IDs can be found below
+- **Category String:** the second field is for the category string. This must be entered as a string ID. All the category IDs can be found [below](https://github.com/eliasbenb/MagnetMagnet/blob/master/README.md#category-ids)
 - **Clipboard:** this is the third field and is a yes or no option, this just copies the magnet links to your clipboard
 - **Save Config:** this saves whatever is inputted in the text fields to a config file stored in `%APPDATA%\eliasbenb`
 - **Load Config:** this loads the config that has been saved to make filling the fields easier

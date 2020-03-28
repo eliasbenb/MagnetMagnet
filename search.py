@@ -67,6 +67,7 @@ def search():
             links = soup.findAll('a', title="Download this torrent using magnet")
             for m in links:
                 magnets.append(m['href'])
+
         def x1377():
             x1377_link = 'https://www.1377x.to/search/' + query + '/1/'
             try:
@@ -95,7 +96,8 @@ def search():
             kat()
             rarbg()
             tpb()
-            x1377()            
+            x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")            
 
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
@@ -103,6 +105,7 @@ def search():
             kat()
             rarbg()
             tpb()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
         
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
@@ -110,6 +113,7 @@ def search():
             kat()
             rarbg()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
@@ -117,6 +121,7 @@ def search():
             kat()
             tpb()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
@@ -124,62 +129,73 @@ def search():
             rarbg()
             tpb()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             kat()
             rarbg()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             kat()
             tpb()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
         
         elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             kat()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
     
         elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             rarbg()
             tpb()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             rarbg()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             tpb()
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif 'selected' in kat_domain_checkbutton.state():
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             kat()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif 'selected' in rarbg_domain_checkbutton.state():
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             rarbg()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif 'selected' in tpb_domain_checkbutton.state():
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             tpb()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         elif 'selected' in x1377_domain_checkbutton.state():
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
             x1377()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
         else:
             messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")

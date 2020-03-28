@@ -1,5 +1,5 @@
-<h3 align="center"><img src="https://i.imgur.com/pX9no9C.png" width="600px"></h3>
 <p align="center">
+  <img src="https://i.ibb.co/w4drV5g/Magnet-Magnet-Header.png" width="600px">
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases"><img src="https://img.shields.io/github/downloads/eliasbenb/MagnetMagnet/total?color=%234197fe&style=for-the-badge"></a>
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases/latest"><img src="https://img.shields.io/github/v/release/eliasbenb/MagnetMagnet?color=%234197fe&style=for-the-badge"></a>
 </p>

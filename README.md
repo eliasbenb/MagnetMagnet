@@ -3,7 +3,7 @@
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases"><img src="https://img.shields.io/github/downloads/eliasbenb/MagnetMagnet/total?color=%234197fe&style=for-the-badge"></a>
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases/latest"><img src="https://img.shields.io/github/v/release/eliasbenb/MagnetMagnet?color=%234197fe&style=for-the-badge"></a>
 </p>
-<a href="https://eliasbenb.github.io/"><h3 align="center"><img src="https://i.ibb.co/6mG3jFz/Produced-by-eliasbenb.png" width="180"></h3>
+<a href="https://eliasbenb.github.io"><h3 align="center"><img src="https://i.ibb.co/6mG3jFz/Produced-by-eliasbenb.png" width="180"></h3>
 
 # What is this repo?
 MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to scrape torrent magnet links from a range of torrent indexers. I decided to make this app to improve my Python skills.

@@ -10,16 +10,16 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 
 
 ## Features supported:
-- Scraping magnet links using specific keywords
-- Choosing multiple categories/subcategories to scrape magnet links from
-- Exporting magnet links to .txt file in local directory
-- Copying magnet links to the clipboard
-- Config files to save preferred settings
 - Supported torrent indexers:
 	- Kick Ass Torrents
 	- The Pirate Bay
 	- RARBG
 	- 1377x
+- Scraping magnet links using specific keywords
+- Choosing multiple categories/subcategories to scrape magnet links from
+- Exporting magnet links to .txt file in local directory
+- Copying magnet links to the clipboard
+- Config files to save preferred settings
 
 # Installation
 - To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).

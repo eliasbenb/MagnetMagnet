@@ -25,9 +25,28 @@ def search():
                 if title not in magnet_combobox['values']:
                     magnet_combobox['values'] += (title.text,)
             links = soup.findAll('a', title="Torrent magnet link")
-            for m in links:
-                magnets.append(m['href'])
+            for link in links:
+                magnets.append(link['href'])
         
+        def nyaa():
+            nyaa_link = 'https://nyaa.si/?q=' + query
+            try:
+                request = requests.get(nyaa_link, headers={'User-Agent': 'Mozilla/5.0'})
+            except:
+                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+            source = request.content
+            soup = BeautifulSoup(source, 'lxml')
+            rows = soup.findAll("td", colspan="2")
+            for row in rows:
+                if 'comment' in row.find('a')['title']:
+                    title = row.findAll('a', title=True)[1].text
+                    magnet_combobox['values'] += (title,)
+                else:
+                    title = row.find('a')['title']
+                    magnet_combobox['values'] += (title,)
+            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                magnets.append(link.get('href'))
+
         def rarbg():
             rarbg_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
             try:
@@ -179,6 +198,12 @@ def search():
             kat()
             messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
 
+        elif 'selected' in nyaa_domain_checkbutton.state():
+            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
+            magnets = []
+            nyaa()
+            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
+
         elif 'selected' in rarbg_domain_checkbutton.state():
             magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
             magnets = []
@@ -206,19 +231,27 @@ def search():
 
     kat_domain_int = StringVar()
     kat_domain_checkbutton = ttk.Checkbutton(app, text="KAT", variable=kat_domain_int)
-    kat_domain_checkbutton.place(relx=(1/5), rely=(1/20), anchor="center")
+    kat_domain_checkbutton.place(relx=(1/6), rely=(1/20), anchor="center")
     kat_domain_checkbutton.state(['!disabled','selected'])
+
+    nyaa_domain_int = StringVar()
+    nyaa_domain_checkbutton = ttk.Checkbutton(app, text="Nyaa", variable=nyaa_domain_int)
+    nyaa_domain_checkbutton.place(relx=(2/6), rely=(1/20), anchor="center")
+    nyaa_domain_checkbutton.state(['!disabled','selected'])
+
     rarbg_domain_int = StringVar()
     rarbg_domain_checkbutton = ttk.Checkbutton(app, text="RARBG", variable=rarbg_domain_int)
-    rarbg_domain_checkbutton.place(relx=(2/5), rely=(1/20), anchor="center")
+    rarbg_domain_checkbutton.place(relx=(3/6), rely=(1/20), anchor="center")
     rarbg_domain_checkbutton.state(['!disabled','selected'])
+
     tpb_domain_int = StringVar()
     tpb_domain_checkbutton = ttk.Checkbutton(app, text="TPB", variable=tpb_domain_int)
-    tpb_domain_checkbutton.place(relx=(3/5), rely=(1/20), anchor="center")
+    tpb_domain_checkbutton.place(relx=(4/6), rely=(1/20), anchor="center")
     tpb_domain_checkbutton.state(['!disabled','selected'])
+
     x1377_domain_int = StringVar()
     x1377_domain_checkbutton = ttk.Checkbutton(app, text="1377x", variable=x1377_domain_int)
-    x1377_domain_checkbutton.place(relx=(4/5), rely=(1/20), anchor="center")
+    x1377_domain_checkbutton.place(relx=(5/6), rely=(1/20), anchor="center")
     x1377_domain_checkbutton.state(['!disabled','selected'])
 
     query_string = StringVar()
@@ -228,14 +261,14 @@ def search():
     query_entry.place(relx=(1/2), rely=(1/4), anchor="center", width=300)
 
     magnet_combobox = ttk.Combobox(app, values=['-- SELECT A MAGNET LINK TO COPY --'], state='readonly')
-    magnet_combobox.place(relx=(1/2), rely=(2/5), anchor="center", width = 300)
+    magnet_combobox.place(relx=(1/2), rely=(2/5), anchor="center", width = 600)
     
     search_button = Button(app, text="Search", command=callback)
     search_button.place(relx=(1/2), rely=(9/10), anchor="center")
 
     app.title('Search @eliasbenb')
     app.iconbitmap(path+'\\icon.ico')
-    app.geometry('400x300')
+    app.geometry('700x300')
     app.resizable(False, False)
     
     app.mainloop()

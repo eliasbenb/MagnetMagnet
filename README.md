@@ -13,19 +13,18 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 
 ## Features supported:
 - Supported torrent indexers:
-	- Kick Ass Torrents
-	- The Pirate Bay
-	- RARBG
 	- 1377x
+	- Kick Ass Torrents
+	- Nyaa
+	- RARBG
+	- The Pirate Bay
 - Scraping magnet links using specific keywords
-- Choosing multiple categories/subcategories to scrape magnet links from
+- Choosing the category/subcategory to scrape magnet links from
 - Exporting magnet links to .txt file in local directory
-- Copying magnet links to the clipboard
-- Config files to save preferred settings
 
 # Installation
 - To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).
-- Or you can download the entire repository above and run [app.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/app.py) using python (dependencies must be installed using `pip install -r requirements.txt`)
+- Or you can download the entire repository above and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python (dependencies must be installed using `pip install -r requirements.txt`)
 
 # Usage:
 ### Home Screen:

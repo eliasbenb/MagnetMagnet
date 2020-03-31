@@ -23,8 +23,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Exporting magnet links to .txt file in local directory
 
 # Installation
-- To install MagnetMagnet either download the executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).
-- Or you can download the entire repository above and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python (dependencies must be installed using `pip install -r requirements.txt`)
+- To install MagnetMagnet either download the latest executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).
+- Or you can download the entire repository from [here](https://github.com/eliasbenb/MagnetMagnet/archive/master.zip) and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python (dependencies must be installed using `pip install -r requirements.txt`)
 
 # Usage:
 ### Home Screen:

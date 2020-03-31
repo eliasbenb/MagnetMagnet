@@ -1,58 +1,102 @@
-from tkinter import Button, Checkbutton, Entry, IntVar, Label, messagebox, StringVar, Tk, ttk
-import os, pyperclip, requests, re, tkinter.ttk, time
+from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
+import os, requests, re
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
-def search():
-    def callback():
-        def magnet_copy(event):
-            choice = magnet_combobox.current()
-            magnet_choice = magnets[choice-1]
-            pyperclip.copy(magnet_choice)
-            messagebox.showinfo("Search Scraper @eliasbenb", "The selected magnet link was successfully copied to the clipboard")
-        query = query_entry.get()
+class Ui_searchMainWindow(object):
+    def callback(self):
+        query = self.queryLineEdit.text()
+        def resize():
+            self.tableTableWidget.resizeColumnToContents(0)
+            self.tableTableWidget.resizeColumnToContents(1)
+            self.tableTableWidget.setFixedWidth(self.tableTableWidget.columnWidth(0) + self.tableTableWidget.columnWidth(1))
+        def x1377():
+            x1377_link = 'https://www.1377x.to/search/' + query + '/1/'
+            try:
+                request = requests.get(x1377_link)
+            except:
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
+            source = request.text
+            soup = BeautifulSoup(source, 'lxml')
+            for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
+                page_link = 'https://www.1377x.to/' + page_link.get('href')
+                try:
+                    page_request = requests.get(page_link)
+                except:
+                    ErrorMessage = QtWidgets.QErrorMessage()
+                    ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
+
+                page_source = page_request.content
+                page_soup = BeautifulSoup(page_source, 'lxml')
+                link = page_soup.find('a', attrs={'href': re.compile("^magnet")})
+                magnet = link.get('href')
+                title = page_soup.find('h1').text
+                rowPosition = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(rowPosition)
+                self.tableTableWidget.setItem(rowPosition-1, 0, QtWidgets.QTableWidgetItem(str(title)))
+                self.tableTableWidget.setItem(rowPosition-1, 1, QtWidgets.QTableWidgetItem(str(magnet)))
         def kat():
             kat_link = 'http://kat.rip/usearch/' + query
             try:
                 request = requests.get(kat_link)
             except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
             source = request.text
             soup = BeautifulSoup(source, 'lxml')
             titles_all = soup.findAll('a', class_="cellMainLink")
+            titles = []
+            rowPositionBefore = self.tableTableWidget.rowCount()
             for title in titles_all:
-                if title not in magnet_combobox['values']:
-                    magnet_combobox['values'] += (title.text,)
+                title = title.text
+                rowPosition = self.tableTableWidget.rowCount()
+                if title not in titles:
+                    titles.append(title)
+                    self.tableTableWidget.insertRow(rowPosition)
+                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
+                else:
+                    pass
             links = soup.findAll('a', title="Torrent magnet link")
+            n = rowPositionBefore
             for link in links:
-                magnets.append(link['href'])
-        
+                link = link['href']
+                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link))
+                n = n + 1
         def nyaa():
             nyaa_link = 'https://nyaa.si/?q=' + query
             try:
                 request = requests.get(nyaa_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
             source = request.content
             soup = BeautifulSoup(source, 'lxml')
             rows = soup.findAll("td", colspan="2")
+            rowPositionBefore = self.tableTableWidget.rowCount()
             for row in rows:
                 if 'comment' in row.find('a')['title']:
                     title = row.findAll('a', title=True)[1].text
-                    magnet_combobox['values'] += (title,)
+                    rowPosition = self.tableTableWidget.rowCount()
+                    self.tableTableWidget.insertRow(rowPosition)
+                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
                 else:
                     title = row.find('a')['title']
-                    magnet_combobox['values'] += (title,)
+                    rowPosition = self.tableTableWidget.rowCount()
+                    self.tableTableWidget.insertRow(rowPosition)
+                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
+            n = rowPositionBefore
             for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-                magnets.append(link.get('href'))
-
+                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link.get('href')))
+                n = n + 1
         def rarbg():
             rarbg_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
             try:
                 request = requests.get(rarbg_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain/category you inputed.\nMake sure that the domain ends with trailing '/'")
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
             source = request.text
             soup = str(BeautifulSoup(source, 'lxml'))
             soup = soup.replace('<html><body><p>{"torrent_results":[', '')
@@ -62,213 +106,297 @@ def search():
             titles = titles.replace('"', '')
             titles = titles.split("', '")
             titles[0] = titles[0].replace("['", "")
+            rowPositionBefore = self.tableTableWidget.rowCount()
             for title in titles:
-                magnet_combobox['values'] += (title,)
+                rowPosition = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(rowPosition)
+                self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
             links = str([i for i in soup if i.startswith('"download":')])
             links = links.replace('"download":"', '')
             links = links.replace('"', '')
+            links = links.replace("['", "")
+            links = links.replace("']", "")
             links = links.split("', '")
+            n = rowPositionBefore
             for link in links:
-                magnets.append(link)
-        
+                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link))
+                n = n + 1
         def tpb():
             tpb_link = 'https://tpb.party/search/' + query + '/1/99/0/'
             try:
                 request = requests.get(tpb_link)
             except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
             source = request.text
             soup = BeautifulSoup(source, 'lxml')
             titles_all = soup.findAll('div', class_="detName")
+            titles = []
+            rowPositionBefore = self.tableTableWidget.rowCount()
             for title in titles_all:
-                if title not in magnet_combobox['values']:
-                    magnet_combobox['values'] += (title.text,)
+                title = title.text
+                rowPosition = self.tableTableWidget.rowCount()
+                if title not in titles:
+                    titles.append(title)
+                    self.tableTableWidget.insertRow(rowPosition)
+                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
+                else:
+                    pass
             links = soup.findAll('a', title="Download this torrent using magnet")
+            n = rowPositionBefore
             for m in links:
-                magnets.append(m['href'])
+                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(m['href']))
+                n = n + 1
 
-        def x1377():
-            x1377_link = 'https://www.1377x.to/search/' + query + '/1/'
-            try:
-                request = requests.get(x1377_link)
-            except:
-                messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
-            source = request.text
-            soup = BeautifulSoup(source, 'lxml')
-            for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
-                page_link = 'https://www.1377x.to/' + page_link.get('href')
-                try:
-                    page_request = requests.get(page_link)
-                except:
-                    messagebox.showinfo("Search Scraper @eliasbenb", "Something went wrong!")
-
-                page_source = page_request.content
-                page_soup = BeautifulSoup(page_source, 'lxml')
-                link = page_soup.find('a', attrs={'href': re.compile("^magnet")})
-                magnets.append(link.get('href'))
-                title = page_soup.find('h1')
-                magnet_combobox['values'] += (title.text,)
-
-        if ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            rarbg()
-            tpb()
+        if (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
             x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")            
-
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
             kat()
-            rarbg()
-            tpb()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-        
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            rarbg()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            tpb()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            rarbg()
-            tpb()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in rarbg_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            rarbg()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            tpb()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-        
-        elif ('selected' in kat_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-    
-        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in tpb_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            rarbg()
-            tpb()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in rarbg_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            rarbg()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif ('selected' in tpb_domain_checkbutton.state()) and ('selected' in x1377_domain_checkbutton.state()):
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            tpb()
-            x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif 'selected' in kat_domain_checkbutton.state():
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
-            kat()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif 'selected' in nyaa_domain_checkbutton.state():
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
             nyaa()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif 'selected' in rarbg_domain_checkbutton.state():
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
             rarbg()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif 'selected' in tpb_domain_checkbutton.state():
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
             tpb()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
-
-        elif 'selected' in x1377_domain_checkbutton.state():
-            magnet_combobox['values'] = ['-- SELECT A MAGNET LINK TO COPY --']
-            magnets = []
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
             x1377()
-            messagebox.showinfo("Search Scraper @eliasbenb", "The Search was Completed Successfully!")
+            kat()
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            nyaa()
+            tpb()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            rarbg()
+            tpb()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            nyaa()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            rarbg()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            tpb()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            nyaa()
+            tpb()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            rarbg()
+            tpb()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            nyaa()
+            tpb()
+            resize()
+        elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            nyaa()
+            rarbg()
+            tpb()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            kat()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            nyaa()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            rarbg()
+            resize()
+        elif (self.x1377CheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            tpb()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            nyaa()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            rarbg()
+            resize()
+        elif (self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            tpb()
+            resize()
+        elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            nyaa()
+            rarbg()
+            resize()
+        elif (self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            nyaa()
+            tpb()
+            resize()
+        elif (self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
+            self.tableTableWidget.setRowCount(0)
+            rarbg()
+            tpb()
+            resize()
+        elif self.x1377CheckBox.isChecked():
+            self.tableTableWidget.setRowCount(0)
+            x1377()
+            resize()
+        elif self.katCheckBox.isChecked():
+            self.tableTableWidget.setRowCount(0)
+            kat()
+            resize()
+        elif self.nyaaCheckBox.isChecked():
+            self.tableTableWidget.setRowCount(0)
+            nyaa()
+            resize()
+        elif self.rarbgCheckBox.isChecked():
+            self.tableTableWidget.setRowCount(0)
+            rarbg()
+            resize()
+        elif self.tpbCheckBox.isChecked():
+            self.tableTableWidget.setRowCount(0)
+            tpb()
+            resize()
 
-        else:
-            messagebox.showinfo("Search Scraper @eliasbenb", "Something is wrong with the domain, please kindly inform me on my GitHub.")
+    def setupUi(self, searchMainWindow):
+        searchMainWindow.setObjectName("searchMainWindow")
+        searchMainWindow.setWindowModality(QtCore.Qt.NonModal)
+        searchMainWindow.setEnabled(True)
+        searchMainWindow.setFixedSize(1500, 400)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light")
+        font.setPointSize(8)
+        font.setBold(False)
+        font.setWeight(50)
+        searchMainWindow.setFont(font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        searchMainWindow.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(searchMainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.x1377CheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.x1377CheckBox.setGeometry(QtCore.QRect(40, 100, 70, 20))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.x1377CheckBox.setFont(font)
+        self.x1377CheckBox.setObjectName("x1377CheckBox")
+        self.katCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.katCheckBox.setGeometry(QtCore.QRect(40, 140, 70, 17))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.katCheckBox.setFont(font)
+        self.katCheckBox.setObjectName("katCheckBox")
+        self.nyaaCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.nyaaCheckBox.setGeometry(QtCore.QRect(40, 180, 70, 17))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.nyaaCheckBox.setFont(font)
+        self.nyaaCheckBox.setObjectName("nyaaCheckBox")
+        self.rarbgCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.rarbgCheckBox.setGeometry(QtCore.QRect(40, 220, 70, 17))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.rarbgCheckBox.setFont(font)
+        self.rarbgCheckBox.setObjectName("rarbgCheckBox")
+        self.tpbCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.tpbCheckBox.setGeometry(QtCore.QRect(40, 260, 70, 17))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.tpbCheckBox.setFont(font)
+        self.tpbCheckBox.setObjectName("tpbCheckBox")
+        self.tableTableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableTableWidget.setGeometry(QtCore.QRect(279, 40, 1190, 321))
+        self.tableTableWidget.setObjectName("tableTableWidget")
+        self.tableTableWidget.setColumnCount(2)
+        self.tableTableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableTableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableTableWidget.setHorizontalHeaderItem(1, item)
+        self.searchButton = QtWidgets.QPushButton(self.centralwidget)
+        self.searchButton.setGeometry(QtCore.QRect(40, 340, 75, 23))
+        self.searchButton.setObjectName("searchButton")
+        self.queryLineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.queryLineEdit.setGeometry(QtCore.QRect(40, 40, 201, 20))
+        self.queryLineEdit.setText("")
+        self.queryLineEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.queryLineEdit.setObjectName("queryLineEdit")
+        searchMainWindow.setCentralWidget(self.centralwidget)
 
-        magnet_combobox.bind("<<ComboboxSelected>>", magnet_copy)
+        self.searchButton.clicked.connect(self.callback)
 
-    app = Tk()
+        self.retranslateUi(searchMainWindow)
+        QtCore.QMetaObject.connectSlotsByName(searchMainWindow)
 
-    kat_domain_int = StringVar()
-    kat_domain_checkbutton = ttk.Checkbutton(app, text="KAT", variable=kat_domain_int)
-    kat_domain_checkbutton.place(relx=(1/6), rely=(1/20), anchor="center")
-    kat_domain_checkbutton.state(['!disabled','selected'])
-
-    nyaa_domain_int = StringVar()
-    nyaa_domain_checkbutton = ttk.Checkbutton(app, text="Nyaa", variable=nyaa_domain_int)
-    nyaa_domain_checkbutton.place(relx=(2/6), rely=(1/20), anchor="center")
-    nyaa_domain_checkbutton.state(['!disabled','selected'])
-
-    rarbg_domain_int = StringVar()
-    rarbg_domain_checkbutton = ttk.Checkbutton(app, text="RARBG", variable=rarbg_domain_int)
-    rarbg_domain_checkbutton.place(relx=(3/6), rely=(1/20), anchor="center")
-    rarbg_domain_checkbutton.state(['!disabled','selected'])
-
-    tpb_domain_int = StringVar()
-    tpb_domain_checkbutton = ttk.Checkbutton(app, text="TPB", variable=tpb_domain_int)
-    tpb_domain_checkbutton.place(relx=(4/6), rely=(1/20), anchor="center")
-    tpb_domain_checkbutton.state(['!disabled','selected'])
-
-    x1377_domain_int = StringVar()
-    x1377_domain_checkbutton = ttk.Checkbutton(app, text="1377x", variable=x1377_domain_int)
-    x1377_domain_checkbutton.place(relx=(5/6), rely=(1/20), anchor="center")
-    x1377_domain_checkbutton.state(['!disabled','selected'])
-
-    query_string = StringVar()
-    query_label = Label(app, text="Enter a Search Query:")
-    query_label.place(relx=(1/2), rely=(3/20), anchor="center")
-    query_entry = Entry(app, textvariable=query_string)
-    query_entry.place(relx=(1/2), rely=(1/4), anchor="center", width=300)
-
-    magnet_combobox = ttk.Combobox(app, values=['-- SELECT A MAGNET LINK TO COPY --'], state='readonly')
-    magnet_combobox.place(relx=(1/2), rely=(2/5), anchor="center", width = 600)
-    
-    search_button = Button(app, text="Search", command=callback)
-    search_button.place(relx=(1/2), rely=(9/10), anchor="center")
-
-    app.title('Search @eliasbenb')
-    app.iconbitmap(path+'\\icon.ico')
-    app.geometry('700x300')
-    app.resizable(False, False)
-    
-    app.mainloop()
+    def retranslateUi(self, searchMainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        searchMainWindow.setWindowTitle(_translate("searchMainWindow", "MagnetMagnet - Search"))
+        self.x1377CheckBox.setText(_translate("searchMainWindow", "1377x"))
+        self.katCheckBox.setText(_translate("searchMainWindow", "KAT"))
+        self.nyaaCheckBox.setText(_translate("searchMainWindow", "Nyaa"))
+        self.rarbgCheckBox.setText(_translate("searchMainWindow", "RARBG"))
+        self.tpbCheckBox.setText(_translate("searchMainWindow", "TPB"))
+        item = self.tableTableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("searchMainWindow", "Title"))
+        item = self.tableTableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("searchMainWindow", "Magnet"))
+        self.searchButton.setText(_translate("searchMainWindow", "Search"))

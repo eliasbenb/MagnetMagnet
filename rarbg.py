@@ -1,21 +1,41 @@
-from tkinter import Button, Entry, Label, messagebox, StringVar, Tk, ttk
-import os, pyperclip, requests, re, tkinter.ttk, time
+from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
+import os, requests, re, time
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
-def rarbg():
-    def callback():
-        domain = domain_entry.get()
-        if not domain.endswith('/'):
-            domain += '/'
-        category = category_entry.get()
-        clipboard = clipboard_combobox.get()
+class Ui_rarbgMainWindow(object):
+    def callback(self):
+        domain = str(self.domainComboBox.currentText())
+        category = str(self.categoryComboBox.currentText())
+
+        if category == "All":
+            category = ""
+        if category == "Movies - All":
+            category = "movies"
+        if category == "Movies - UHD":
+            category = "50;51;52"
+        if category == "Movies - HD":
+            category = "44;42;46;54"
+        if category == "Movies - Not HD":
+            category = "14;48;17;45"
+        if category == "TV - All":
+            category = "2;18;41;49"
+        if category == "TV - UHD":
+            category = "49"
+        if category == "TV - HD":
+            category = "41"
+        if category == "Music - All":
+            category = "2;23;24;25;26"            
+        if category == "XXX - All":
+            category = "2;4"
+
         link = domain + 'rssdd.php?category=' + category
         try:
             request = requests.get(link)
         except:
-            messagebox.showinfo("RARBG Scraper @eliasbenb", "Something went wrong!")
+            ErrorMessage = QtWidgets.QErrorMessage()
+            ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
 
         source = request.content
         soup = BeautifulSoup(source, 'xml')
@@ -28,65 +48,76 @@ def rarbg():
         with open(file_name,'w') as w1:
             for magnet in magnets:
                 w1.write(magnet)
-        messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnet links successfully exported to local directory")
 
-        if clipboard == "Yes":
-            magnets_clipboard = str(magnets)
-            magnets_clipboard = magnets_clipboard.replace(r"', '\n", "\n")
-            magnets_clipboard = magnets_clipboard.replace("['", "")
-            magnets_clipboard = magnets_clipboard.replace("']", "")
-            pyperclip.copy(magnets_clipboard)
-            messagebox.showinfo("RARBG Scraper @eliasbenb", "Magnets links successfully copied to clipboard")
-        else:
-            pass
+    def setupUi(self, rarbgMainWindow):
+        rarbgMainWindow.setObjectName("rarbgMainWindow")
+        rarbgMainWindow.setFixedSize(600, 330)
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light")
+        rarbgMainWindow.setFont(font)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        rarbgMainWindow.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(rarbgMainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.domainComboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.domainComboBox.setGeometry(QtCore.QRect(150, 60, 300, 22))
+        self.domainComboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.domainComboBox.setObjectName("domainComboBox")
+        self.domainComboBox.addItem("")
+        self.domainComboBox.addItem("")
+        self.domainLabel = QtWidgets.QLabel(self.centralwidget)
+        self.domainLabel.setGeometry(QtCore.QRect(200, 30, 200, 16))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.domainLabel.setFont(font)
+        self.domainLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.domainLabel.setObjectName("domainLabel")
+        self.categoryComboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.categoryComboBox.setGeometry(QtCore.QRect(150, 180, 300, 22))
+        self.categoryComboBox.setObjectName("categoryComboBox")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryComboBox.addItem("")
+        self.categoryLabel = QtWidgets.QLabel(self.centralwidget)
+        self.categoryLabel.setGeometry(QtCore.QRect(200, 150, 200, 16))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.categoryLabel.setFont(font)
+        self.categoryLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.categoryLabel.setObjectName("categoryLabel")
+        self.scrapeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.scrapeButton.setGeometry(QtCore.QRect(262, 260, 75, 30))
+        self.scrapeButton.setObjectName("scrapeButton")
+        rarbgMainWindow.setCentralWidget(self.centralwidget)
 
-    def load_config():
-        domain_entry.delete(0,tkinter.END)
-        category_entry.delete(0,tkinter.END)
-        with open(path+"\\rarbg_config.env", "r") as r1:
-            saved_config = [line.rstrip('\n') for line in r1]
-        domain_entry.insert(0,saved_config[0])
-        category_entry.insert(0,saved_config[1])
-        clipboard_combobox.insert(0, saved_config[2])
+        self.scrapeButton.clicked.connect(self.callback)
 
-    def save_config():
-        domain = domain_entry.get()
-        category = category_entry.get()
-        clipboard = clipboard_combobox.get()
-        with open(path+"\\rarbg_config.env", "w") as w2:
-            w2.write(domain+'\n'+category+'\n'+clipboard)
-    
-    app = Tk()
+        self.retranslateUi(rarbgMainWindow)
+        QtCore.QMetaObject.connectSlotsByName(rarbgMainWindow)
 
-    domain_text = StringVar(app, value="https://rarbgmirror.com/")
-    domain_label = Label(app, text="Enter RARBG Domain Link:")
-    domain_label.place(relx=(1/2), rely=(1/10), anchor="center")
-    domain_entry = Entry(app, textvariable=domain_text)
-    domain_entry.place(relx=(1/2), rely=(1/5), anchor="center", width=300)
-
-    category_text = StringVar()
-    category_label = Label(app, text="Enter Category String:")
-    category_label.place(relx=(1/2), rely=(7/20), anchor="center")
-    category_entry = Entry(app, textvariable=category_text)
-    category_entry.place(relx=(1/2), rely=(9/20), anchor="center")
-
-    clipboard_label = Label(app, text="Copy to Clipboard?")
-    clipboard_label.place(relx=(1/2), rely=(3/5), anchor="center")
-    clipboard_combobox = ttk.Combobox(app, values=['Yes', 'No'], state='readonly')
-    clipboard_combobox.place(relx=(1/2), rely=(7/10), anchor="center")
-
-    ok_button = Button(app, text="OK", command=callback)
-    ok_button.place(relx=(1/2), rely=(9/10), anchor="center")
-
-    load_config_button = Button(app, text ="Load Config", command=load_config)
-    load_config_button.place(relx=(1/5), rely=(9/20), anchor="center")
-
-    save_config_button = Button(app, text ="Save Config", command=save_config)
-    save_config_button.place(relx=(4/5), rely=(9/20), anchor="center")
-    
-    app.title('RARBG @eliasbenb')
-    app.iconbitmap(path+'\\icon.ico')
-    app.geometry('500x225')
-    app.resizable(False, False)
-    
-    app.mainloop()
+    def retranslateUi(self, rarbgMainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        rarbgMainWindow.setWindowTitle(_translate("rarbgMainWindow", "MagnetMagnet - RARBG"))
+        self.domainComboBox.setItemText(0, _translate("rarbgMainWindow", "https://rarbg.to/"))
+        self.domainComboBox.setItemText(1, _translate("rarbgMainWindow", "https://rarbgmirror.com/"))
+        self.domainLabel.setText(_translate("rarbgMainWindow", "Choose a RARBG domain:"))
+        self.categoryComboBox.setItemText(0, _translate("rarbgMainWindow", "All"))
+        self.categoryComboBox.setItemText(1, _translate("rarbgMainWindow", "Movies - All"))
+        self.categoryComboBox.setItemText(2, _translate("rarbgMainWindow", "Movies - UHD"))
+        self.categoryComboBox.setItemText(3, _translate("rarbgMainWindow", "Movies - HD"))
+        self.categoryComboBox.setItemText(4, _translate("rarbgMainWindow", "Movies - Not HD"))
+        self.categoryComboBox.setItemText(5, _translate("rarbgMainWindow", "TV - All"))
+        self.categoryComboBox.setItemText(6, _translate("rarbgMainWindow", "TV - UHD"))
+        self.categoryComboBox.setItemText(7, _translate("rarbgMainWindow", "TV - HD"))
+        self.categoryComboBox.setItemText(8, _translate("rarbgMainWindow", "Music - All"))
+        self.categoryComboBox.setItemText(9, _translate("rarbgMainWindow", "XXX - All"))
+        self.categoryLabel.setText(_translate("rarbgMainWindow", "Choose a category:"))
+        self.scrapeButton.setText(_translate("rarbgMainWindow", "Scrape"))

@@ -1,10 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import os, requests, re
+import os, pyperclip, re, requests
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_searchMainWindow(object):
+    def copy(self):
+        choice_row = self.tableTableWidget.currentRow()
+        choice_magnet = self.magnets[choice_row]
+        pyperclip.copy(choice_magnet)
     def callback(self):
         query = self.queryLineEdit.text()
         def resize():
@@ -12,144 +16,118 @@ class Ui_searchMainWindow(object):
             self.tableTableWidget.resizeColumnToContents(1)
             self.tableTableWidget.setFixedWidth(self.tableTableWidget.columnWidth(0) + self.tableTableWidget.columnWidth(1))
         def x1377():
-            x1377_link = 'https://www.1377x.to/search/' + query + '/1/'
+            main_link = "https://www.1377x.to/search/" + query + '/1/'
             try:
-                request = requests.get(x1377_link)
+                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
                 ErrorMessage = QtWidgets.QErrorMessage()
                 ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-            source = request.text
-            soup = BeautifulSoup(source, 'lxml')
-            for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
-                page_link = 'https://www.1377x.to/' + page_link.get('href')
+            main_source = main_request.text
+            main_soup = BeautifulSoup(main_source, 'lxml')
+            for page_link in main_soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
+                page_link = "https://www.1377x.to/" + page_link.get('href')
                 try:
                     page_request = requests.get(page_link)
                 except:
                     ErrorMessage = QtWidgets.QErrorMessage()
                     ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-
                 page_source = page_request.content
                 page_soup = BeautifulSoup(page_source, 'lxml')
-                link = page_soup.find('a', attrs={'href': re.compile("^magnet")})
-                magnet = link.get('href')
-                title = page_soup.find('h1').text
-                rowPosition = self.tableTableWidget.rowCount()
-                self.tableTableWidget.insertRow(rowPosition)
-                self.tableTableWidget.setItem(rowPosition-1, 0, QtWidgets.QTableWidgetItem(str(title)))
-                self.tableTableWidget.setItem(rowPosition-1, 1, QtWidgets.QTableWidgetItem(str(magnet)))
+                self.magnets.append(page_soup.find('a', attrs={'href': re.compile("^magnet")}).get('href'))
+                row_position = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(row_position)
+                self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(page_soup.find('h1').text))
+
         def kat():
-            kat_link = 'http://kat.rip/usearch/' + query
+            main_link = "https://kat.rip/usearch/" + query
             try:
-                request = requests.get(kat_link)
+                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
                 ErrorMessage = QtWidgets.QErrorMessage()
                 ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-            source = request.text
-            soup = BeautifulSoup(source, 'lxml')
-            titles_all = soup.findAll('a', class_="cellMainLink")
-            titles = []
-            rowPositionBefore = self.tableTableWidget.rowCount()
-            for title in titles_all:
-                title = title.text
-                rowPosition = self.tableTableWidget.rowCount()
-                if title not in titles:
-                    titles.append(title)
-                    self.tableTableWidget.insertRow(rowPosition)
-                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
-                else:
-                    pass
-            links = soup.findAll('a', title="Torrent magnet link")
-            n = rowPositionBefore
-            for link in links:
-                link = link['href']
-                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link))
-                n = n + 1
+            main_source = main_request.text
+            main_soup = BeautifulSoup(main_source, 'lxml')
+            for page_link in main_soup.findAll('a', class_="cellMainLink"):
+                page_link = "https://kat.rip/" + page_link.get('href')
+                try:
+                    page_request = requests.get(page_link)
+                except:
+                    ErrorMessage = QtWidgets.QErrorMessage()
+                    ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
+                page_source = page_request.content
+                page_soup = BeautifulSoup(page_source, 'lxml')
+                self.magnets.append(page_soup.find('a', attrs={'href': re.compile("^magnet")}).get('href'))
+                row_position = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(row_position)
+                self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(page_soup.find('h1').text))
+
         def nyaa():
-            nyaa_link = 'https://nyaa.si/?q=' + query
+            main_link = 'https://nyaa.si/?q=' + query
             try:
-                request = requests.get(nyaa_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
                 ErrorMessage = QtWidgets.QErrorMessage()
                 ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-            source = request.content
-            soup = BeautifulSoup(source, 'lxml')
-            rows = soup.findAll("td", colspan="2")
-            rowPositionBefore = self.tableTableWidget.rowCount()
+            main_source = main_request.content
+            main_soup = BeautifulSoup(main_source, 'lxml')
+            rows = main_soup.findAll("td", colspan="2")
             for row in rows:
+                row_position = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(row_position)
                 if 'comment' in row.find('a')['title']:
-                    title = row.findAll('a', title=True)[1].text
-                    rowPosition = self.tableTableWidget.rowCount()
-                    self.tableTableWidget.insertRow(rowPosition)
-                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
+                    self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(row.findAll('a', title=True)[1].text))
                 else:
-                    title = row.find('a')['title']
-                    rowPosition = self.tableTableWidget.rowCount()
-                    self.tableTableWidget.insertRow(rowPosition)
-                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
-            n = rowPositionBefore
-            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link.get('href')))
-                n = n + 1
+                    self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(row.find('a')['title']))
+            for magnet in main_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                self.magnets.append(magnet.get('href'))
+
         def rarbg():
-            rarbg_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
+            main_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
             try:
-                request = requests.get(rarbg_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
             except:
                 ErrorMessage = QtWidgets.QErrorMessage()
                 ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-            source = request.text
-            soup = str(BeautifulSoup(source, 'lxml'))
-            soup = soup.replace('<html><body><p>{"torrent_results":[', '')
-            soup = soup.split(',')
-            titles = str([i for i in soup if i.startswith('{"title":')])
-            titles = titles.replace('{"title":"', '')
-            titles = titles.replace('"', '')
-            titles = titles.split("', '")
-            titles[0] = titles[0].replace("['", "")
-            rowPositionBefore = self.tableTableWidget.rowCount()
-            for title in titles:
-                rowPosition = self.tableTableWidget.rowCount()
-                self.tableTableWidget.insertRow(rowPosition)
-                self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
-            links = str([i for i in soup if i.startswith('"download":')])
-            links = links.replace('"download":"', '')
-            links = links.replace('"', '')
-            links = links.replace("['", "")
-            links = links.replace("']", "")
-            links = links.split("', '")
-            n = rowPositionBefore
-            for link in links:
-                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(link))
-                n = n + 1
-        def tpb():
-            tpb_link = 'https://tpb.party/search/' + query + '/1/99/0/'
-            try:
-                request = requests.get(tpb_link)
-            except:
-                ErrorMessage = QtWidgets.QErrorMessage()
-                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-            source = request.text
-            soup = BeautifulSoup(source, 'lxml')
-            titles_all = soup.findAll('div', class_="detName")
-            titles = []
-            rowPositionBefore = self.tableTableWidget.rowCount()
-            for title in titles_all:
-                title = title.text
-                rowPosition = self.tableTableWidget.rowCount()
-                if title not in titles:
-                    titles.append(title)
-                    self.tableTableWidget.insertRow(rowPosition)
-                    self.tableTableWidget.setItem(rowPosition, 0, QtWidgets.QTableWidgetItem(title))
+            main_source = main_request.content
+            main_soup = BeautifulSoup(main_source, 'lxml').text
+            magnets_soup = main_soup.split('"')
+            titles_soup = main_soup.split(",")
+            for magnet in magnets_soup:
+                if magnet.startswith("magnet:?"):
+                    self.magnets.append(magnet)
                 else:
                     pass
-            links = soup.findAll('a', title="Download this torrent using magnet")
-            n = rowPositionBefore
-            for m in links:
-                self.tableTableWidget.setItem(n, 1, QtWidgets.QTableWidgetItem(m['href']))
-                n = n + 1
+            for title in titles_soup:
+                if title.startswith('{"title":') or title.startswith('{"torrent_results":[{"title":'):
+                    row_position = self.tableTableWidget.rowCount()
+                    self.tableTableWidget.insertRow(row_position)
+                    title = title.replace('"', '')
+                    title = title.replace("{torrent_results:[{title:", '')
+                    title = title.replace('{title:', '')
+                    self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(title))
+                else:
+                    pass
+
+        def tpb():
+            main_link = 'https://tpb.party/search/' + query + '/1/99/0/'
+            try:
+                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
+            except:
+                ErrorMessage = QtWidgets.QErrorMessage()
+                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
+            main_source = main_request.content
+            main_soup = BeautifulSoup(main_source, 'lxml')
+            for magnet in main_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                self.magnets.append(magnet.get('href'))
+            for title in main_soup.findAll('div', class_="detName"):
+                row_position = self.tableTableWidget.rowCount()
+                self.tableTableWidget.insertRow(row_position)
+                title = title.text.replace("\n", "")
+                self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(title))
 
         if (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             nyaa()
@@ -158,6 +136,7 @@ class Ui_searchMainWindow(object):
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             nyaa()
@@ -165,6 +144,7 @@ class Ui_searchMainWindow(object):
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             nyaa()
@@ -172,6 +152,7 @@ class Ui_searchMainWindow(object):
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             rarbg()
@@ -179,138 +160,164 @@ class Ui_searchMainWindow(object):
             resize()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             nyaa()
             rarbg()
             resize()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             nyaa()
             rarbg()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             nyaa()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             rarbg()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             tpb()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             nyaa()
             rarbg()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             nyaa()
             tpb()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             rarbg()
             tpb()
             resize()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             nyaa()
             rarbg()
             resize()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             nyaa()
             tpb()
             resize()
         elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             nyaa()
             rarbg()
             tpb()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             kat()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             nyaa()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             rarbg()
             resize()
         elif (self.x1377CheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             tpb()
             resize()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             nyaa()
             resize()
         elif (self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             rarbg()
             resize()
         elif (self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             tpb()
             resize()
         elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             nyaa()
             rarbg()
             resize()
         elif (self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             nyaa()
             tpb()
             resize()
         elif (self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             rarbg()
             tpb()
             resize()
         elif self.x1377CheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             x1377()
             resize()
         elif self.katCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             kat()
             resize()
         elif self.nyaaCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             nyaa()
             resize()
         elif self.rarbgCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             rarbg()
             resize()
         elif self.tpbCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
+            self.magnets = []
             tpb()
             resize()
 
@@ -366,7 +373,7 @@ class Ui_searchMainWindow(object):
         self.tableTableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableTableWidget.setGeometry(QtCore.QRect(279, 40, 1190, 321))
         self.tableTableWidget.setObjectName("tableTableWidget")
-        self.tableTableWidget.setColumnCount(2)
+        self.tableTableWidget.setColumnCount(1)
         self.tableTableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableTableWidget.setHorizontalHeaderItem(0, item)
@@ -383,6 +390,7 @@ class Ui_searchMainWindow(object):
         searchMainWindow.setCentralWidget(self.centralwidget)
 
         self.searchButton.clicked.connect(self.callback)
+        self.tableTableWidget.itemClicked.connect(self.copy)
 
         self.retranslateUi(searchMainWindow)
         QtCore.QMetaObject.connectSlotsByName(searchMainWindow)
@@ -397,6 +405,4 @@ class Ui_searchMainWindow(object):
         self.tpbCheckBox.setText(_translate("searchMainWindow", "TPB"))
         item = self.tableTableWidget.horizontalHeaderItem(0)
         item.setText(_translate("searchMainWindow", "Title"))
-        item = self.tableTableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("searchMainWindow", "Magnet"))
         self.searchButton.setText(_translate("searchMainWindow", "Search"))

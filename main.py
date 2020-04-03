@@ -1,5 +1,5 @@
-import sys, webbrowser
 from PyQt5.QtWidgets import QMainWindow, QApplication
+import sys, webbrowser
 
 from home import Ui_homeMainWindow
 from search import Ui_searchMainWindow
@@ -36,36 +36,32 @@ class HomeWindow(QMainWindow):
         webbrowser.open('http://eliasbenb.github.io/')
     def github(self):
         webbrowser.open('http://github.com/eliasbenb/MagnetMagnet')
+
 class SearchWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_searchMainWindow()
         self.ui.setupUi(self)
-
 class x1377Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_x1337MainWindow()
         self.ui.setupUi(self)
-
 class katWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_katMainWindow()
         self.ui.setupUi(self)
-
 class nyaaWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_nyaaMainWindow()
         self.ui.setupUi(self)
-
 class rarbgWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_rarbgMainWindow()
         self.ui.setupUi(self)
-
 class tpbWindow(QMainWindow):
     def __init__(self):
         super().__init__()

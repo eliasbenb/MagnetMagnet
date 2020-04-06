@@ -24,7 +24,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 
 # Installation
 - To install MagnetMagnet either download the latest executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).
-- Or you can download the entire repository from [here](https://github.com/eliasbenb/MagnetMagnet/archive/master.zip) and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python (dependencies must be installed using `pip install -r requirements.txt`)
+- Or you can download the entire repository from [here](https://github.com/eliasbenb/MagnetMagnet/archive/master.zip) and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python, dependencies must be installed using `pip install -r requirements.txt`
 
 # Usage:
 ### Home Screen:
@@ -36,12 +36,12 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - In the Search app you have two user editable fields:
 - **Checkboxes:** you can select/deselect the torrent indexers you would like to search from
 - **Search box:** here you enter the search query you would like to scrape
-- **Table:** the table displays all the title names and magnet links for the torrents scraped, here you can copy the magnet link you would like by selecting it
+- **Table:** the table displays the title names, seeders and leechers for the torrents scraped, here you can copy the magnet link you would like by selecting a row
 
 ![Search](https://user-images.githubusercontent.com/54410649/78527131-2c281400-77ed-11ea-815b-7dea0bbd79dc.PNG)
 ### Scrapers:
 - There are only two user changeable fields in the scraper apps:
-- **Domain:** the first field is for the domain, here just choose the torrent indexer's domain.
+- **Domain:** the first field is for the domain, here just choose the torrent indexer's domain
 - **Category:** the second field is for the category which you can choose from the drop down box
 
 ![Scrapers](https://user-images.githubusercontent.com/54410649/78007445-5b530700-734f-11ea-9e5c-575d851a04cd.PNG)

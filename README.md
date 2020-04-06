@@ -25,8 +25,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 
 ## To do list:
 - ~~Add Nyaa support~~
-- Make scraping asynchronous
 - Add maximum scraping limit
+- ~~Make scraping asynchronous~~
 
 # Installation
 - To install MagnetMagnet either download the latest executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).

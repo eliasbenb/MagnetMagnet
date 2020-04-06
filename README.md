@@ -31,14 +31,14 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - On launch you get four options of torrent indexers to scrape from: 1377x, KAT, Nyaa, RARBG and TPB,
 - There is also a fifth tab named 'Search' which allows you to scrape the aforementioned torrent indexers for specific words
 
-![Home Screen](https://user-images.githubusercontent.com/54410649/78363315-96ae3980-75cc-11ea-9d46-b5ad969a9bbd.PNG)
+![Home Screen](https://user-images.githubusercontent.com/54410649/78527138-2df1d780-77ed-11ea-828b-bf47162f7e0d.PNG)
 ### Search:
 - In the Search app you have two user editable fields:
 - **Checkboxes:** you can select/deselect the torrent indexers you would like to search from
 - **Search box:** here you enter the search query you would like to scrape
 - **Table:** the table displays all the title names and magnet links for the torrents scraped, here you can copy the magnet link you would like by selecting it
 
-![Search](https://user-images.githubusercontent.com/54410649/78363305-94e47600-75cc-11ea-9982-64143e1a1c97.PNG)
+![Search](https://user-images.githubusercontent.com/54410649/78527136-2d594100-77ed-11ea-8ddd-00c985b880b8.PNG)
 ### Scrapers:
 - There are only two user changeable fields in the scraper apps:
 - **Domain:** the first field is for the domain, here just choose the torrent indexer's domain.

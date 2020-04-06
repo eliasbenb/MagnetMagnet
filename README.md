@@ -1,4 +1,3 @@
-
 <a href="#"><h3 align="center"><img src="https://i.ibb.co/w4drV5g/Magnet-Magnet-Header.png" width="600px"></h3></a>
 <p align="center">
   <a href="https://github.com/eliasbenb/MagnetMagnet/releases"><img src="https://img.shields.io/github/downloads/eliasbenb/MagnetMagnet/total?color=%234197fe&style=for-the-badge"></a>
@@ -21,7 +20,8 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 	- The Pirate Bay
 - Scraping magnet links using specific keywords
 - Choosing the category/subcategory to scrape magnet links from
-- Exporting magnet links to .txt file in local directory
+- Exporting magnet links to a .txt file in local directory
+- Copy specific magnet links to the clipboard on click
 
 ## To do list:
 - ~~Add Nyaa support~~
@@ -37,17 +37,18 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - On launch you get five options of torrent indexers to scrape from: 1377x, KAT, Nyaa, RARBG and TPB,
 - There is also a sixth tab named 'Search' which allows you to scrape the aforementioned torrent indexers for specific words
 
-![Home Screen](https://user-images.githubusercontent.com/54410649/78527138-2df1d780-77ed-11ea-828b-bf47162f7e0d.PNG)
+![Home Screen]((https://user-images.githubusercontent.com/54410649/78558052-fdc52b80-7822-11ea-939f-cd7868a084bd.PNG)
 ### Search:
-- In the Search app you have three user editable fields:
+- In the Search app you have four user editable fields:
 - **Checkboxes:** you can select/deselect the torrent indexers you would like to search from
 - **Search box:** here you enter the search query you would like to scrape
 - **Table:** the table displays the title names, seeders and leechers for the torrents scraped, here you can copy the magnet link you would like by selecting a row
+- **Slider** the slider allows you to limit the amount of torrents scraped per torrent indexer
 
-![Search](https://user-images.githubusercontent.com/54410649/78527131-2c281400-77ed-11ea-815b-7dea0bbd79dc.PNG)
+![Search](https://user-images.githubusercontent.com/54410649/78558044-fbfb6800-7822-11ea-9a36-ed6b0eff4a31.PNG)
 ### Scrapers:
 - There are only two user changeable fields in the scraper apps:
 - **Domain:** the first field is for the domain, here just choose the torrent indexer's domain
 - **Category:** the second field is for the category which you can choose from the drop down box
 
-![Scrapers](https://user-images.githubusercontent.com/54410649/78548005-090f5b80-7811-11ea-8631-91cb02940d7d.PNG)
+![Scrapers](https://user-images.githubusercontent.com/54410649/78558049-fdc52b80-7822-11ea-94e1-4cc48413ef75.PNG)

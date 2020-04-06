@@ -26,6 +26,8 @@ class Ui_searchMainWindow(object):
 
     def callback(self):
         query = self.queryLineEdit.text()
+        limit = self.limitSlider.value()
+
         def resize():
             self.tableTableWidget.resizeColumnToContents(0)
             self.tableTableWidget.resizeColumnToContents(1)
@@ -52,27 +54,30 @@ class Ui_searchMainWindow(object):
             main_source = main_request.content
             main_soup = BeautifulSoup(main_source, 'lxml')
             
+            limit_counter = 0
             page_links_soup = main_soup.findAll('a', attrs={'href': re.compile("^/torrent/")})
             for page_link in page_links_soup:
-                page_link = "https://1377x.to" + page_link.get('href')
-                page_request = requests.get(page_link, headers={'User-Agent': 'Mozilla/5.0'})
-                page_source = page_request.content
-                page_soup = BeautifulSoup(page_source, 'lxml')
+                if limit_counter < limit:
+                    page_link = "https://1377x.to" + page_link.get('href')
+                    page_request = requests.get(page_link, headers={'User-Agent': 'Mozilla/5.0'})
+                    page_source = page_request.content
+                    page_soup = BeautifulSoup(page_source, 'lxml')
 
-                title = page_soup.find('h1').text
-                seeder = page_soup.find('span', class_="seeds").text
-                leecher = page_soup.find('span', class_="leeches").text
-                size = page_soup.findAll('span')[15].text
-                magnet = page_soup.find('a', attrs={'href': re.compile("^magnet:?")}).get('href')
+                    title = page_soup.find('h1').text
+                    seeder = page_soup.find('span', class_="seeds").text
+                    leecher = page_soup.find('span', class_="leeches").text
+                    size = page_soup.findAll('span')[15].text
+                    magnet = page_soup.find('a', attrs={'href': re.compile("^magnet:?")}).get('href')
 
-                row_position = self.tableTableWidget.rowCount()
-                self.tableTableWidget.insertRow(row_position)
-                self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(title))
-                self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeder))
-                self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leecher))
-                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(size))
-                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("1377x"))
-                self.magnets.append(magnet)
+                    row_position = self.tableTableWidget.rowCount()
+                    self.tableTableWidget.insertRow(row_position)
+                    self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(title))
+                    self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeder))
+                    self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leecher))
+                    self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(size))
+                    self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("1377x"))
+                    self.magnets.append(magnet)
+                    limit_counter = limit_counter + 1
 
         def kat():
             main_link = "https://kat.rip/usearch/" + query
@@ -90,18 +95,33 @@ class Ui_searchMainWindow(object):
             seeders = []
             leechers = []
             sizes = []
+            limit_counter = 0
             for title in titles_soup:
-                titles.append(title.text)
+                if limit_counter < limit:
+                    titles.append(title.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for seeder in seeders_soup:
-                seeders.append(seeder.text)
+                if limit_counter < limit:
+                    seeders.append(seeder.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for leecher in leechers_soup:
-                leechers.append(leecher.text)
+                if limit_counter < limit:
+                    leechers.append(leecher.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for size in sizes_soup:
-                sizes.append(size.text)
+                if limit_counter < limit:
+                    sizes.append(size.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             count1 = 0
             for magnet in magnets_soup:
-                self.magnets.append(magnet.get('href'))
-                count1 = count1 + 1
+                if limit_counter < limit:
+                    self.magnets.append(magnet.get('href'))
+                    limit_counter = limit_counter + 1
+                    count1 = count1 + 1
             
             count2 = 0
             while count2 < count1:
@@ -130,18 +150,33 @@ class Ui_searchMainWindow(object):
             seeders = []
             leechers = []
             sizes = []
+            limit_counter = 0
             for title in titles_soup:
-                titles.append(title.text)
+                if limit_counter < limit:
+                    titles.append(title.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for seeder in seeders_soup:
-                seeders.append(seeder.text)
+                if limit_counter < limit*6:
+                    seeders.append(seeder.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for leecher in leechers_soup:
-                leechers.append(leecher.text)
+                if limit_counter < limit*6:
+                    leechers.append(leecher.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for size in sizes_soup:
-                sizes.append(size.text)
+                if limit_counter < limit*6:
+                    sizes.append(size.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             count1 = 0
             for magnet in magnets_soup:
-                self.magnets.append(magnet.get('href'))
-                count1 = count1 + 1
+                if limit_counter < limit:
+                    self.magnets.append(magnet.get('href'))
+                    limit_counter = limit_counter + 1
+                    count1 = count1 + 1
 
             seeder1 = seeders[3]
             seeders.pop(0)
@@ -193,39 +228,54 @@ class Ui_searchMainWindow(object):
             seeders = []
             leechers = []
             sizes = []
+            limit_counter = 0
             for title in titles_soup:
-                if title.startswith('{"title":') or title.startswith('{"torrent_results":[{"title":'):
-                    title = title.replace('"', '')
-                    title = title.replace("{torrent_results:[{title:", '')
-                    title = title.replace('{title:', '')
-                    titles.append(title)
+                if limit_counter < limit:
+                    if title.startswith('{"title":') or title.startswith('{"torrent_results":[{"title":'):
+                        title = title.replace('"', '')
+                        title = title.replace("{torrent_results:[{title:", '')
+                        title = title.replace('{title:', '')
+                        titles.append(title)
+                        limit_counter = limit_counter + 1
+            limit_counter = 0
             for seeder in seeders_soup:
-                if seeder.startswith('seeders":'):
-                    seeder = seeder.replace('seeders":', '')
-                    seeders.append(seeder)
+                if limit_counter < limit:
+                    if seeder.startswith('seeders":'):
+                        seeder = seeder.replace('seeders":', '')
+                        seeders.append(seeder)
+                        limit_counter = limit_counter + 1
+            limit_counter = 0
             for leecher in leechers_soup:
-                if leecher.startswith('leechers":'):
-                    leecher = leecher.replace('leechers":', '')
-                    leechers.append(leecher)
+                if limit_counter < limit:
+                    if leecher.startswith('leechers":'):
+                        leecher = leecher.replace('leechers":', '')
+                        leechers.append(leecher)
+                        limit_counter = limit_counter + 1
+            limit_counter = 0
             for size in sizes_soup:
-                if size.startswith('size":'):
-                    def convert_size(size):
-                        if size == 0:
-                            return "0B"
-                        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-                        i = int(math.floor(math.log(size, 1024)))
-                        p = math.pow(1024, i)
-                        s = round(size / p, 2)
-                        size = "%s %s" % (s, size_name[i])
-                        sizes.append(size)
-                    size = int(size.replace('size":', ''))
-                    convert_size(size)
+                if limit_counter < limit:
+                    if size.startswith('size":'):
+                        def convert_size(size):
+                            if size == 0:
+                                return "0B"
+                            size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+                            i = int(math.floor(math.log(size, 1024)))
+                            p = math.pow(1024, i)
+                            s = round(size / p, 2)
+                            size = "%s %s" % (s, size_name[i])
+                            sizes.append(size)
+                        size = int(size.replace('size":', ''))
+                        convert_size(size)
+                        limit_counter = limit_counter + 1
 
+            limit_counter = 0
             count1 = 0
             for magnet in magnets_soup:
-                if magnet.startswith("magnet:?"):
-                    self.magnets.append(magnet.startswith("magnet:?"))
-                    count1 = count1 + 1
+                if limit_counter < limit:
+                    if magnet.startswith("magnet:?"):
+                        self.magnets.append(magnet.startswith("magnet:?"))
+                        limit_counter = limit_counter + 1
+                        count1 = count1 + 1
 
             count2 = 0
             while count2 < count1:
@@ -256,21 +306,36 @@ class Ui_searchMainWindow(object):
             seeders = []
             leechers = []
             sizes = []
+            limit_counter = 0
             for title in titles_soup:
-                title = title.text.replace("\n", "")
-                titles.append(title)
+                if limit_counter < limit:
+                    title = title.text.replace("\n", "")
+                    titles.append(title)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for seeder in seeders_soup:
-                seeders.append(seeder.text)
+                if limit_counter < limit:
+                    seeders.append(seeder.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for leecher in leechers_soup:
-                leechers.append(leecher.text)
+                if limit_counter < limit:
+                    leechers.append(leecher.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
             for size in sizes_soup:
-                size = size.text.split(", ")
-                size = size[1].replace("Size ", "")
-                sizes.append(size)
+                if limit_counter < limit:
+                    size = size.text.split(", ")
+                    size = size[1].replace("Size ", "")
+                    sizes.append(size)
+                    limit_counter = limit_counter + 1
             count1 = 0
+            limit_counter = 0
             for magnet in magnets_soup:
-                self.magnets.append(magnet.get('href'))
-                count1 = count1 + 1
+                if limit_counter < limit:
+                    self.magnets.append(magnet.get('href'))
+                    count1 = count1 + 1
+                    limit_counter = limit_counter + 1
 
             count2 = 0
             while count2 < count1:
@@ -334,6 +399,7 @@ class Ui_searchMainWindow(object):
             kat()
             nyaa()
             rarbg()
+            tpb()
             resize()
             searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
@@ -511,7 +577,7 @@ class Ui_searchMainWindow(object):
 
     def setupUi(self, searchMainWindow):
         searchMainWindow.setObjectName("searchMainWindow")
-        searchMainWindow.setFixedSize(1500, 400)
+        searchMainWindow.resize(1500, 400)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light")
         font.setPointSize(11)
@@ -531,7 +597,7 @@ class Ui_searchMainWindow(object):
         self.x1377CheckBox.setGeometry(QtCore.QRect(30, 70, 90, 20))
         self.x1377CheckBox.setObjectName("x1377CheckBox")
         self.tableTableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableTableWidget.setGeometry(QtCore.QRect(260, 20, 1210, 360))
+        self.tableTableWidget.setGeometry(QtCore.QRect(260, 20, 1161, 360))
         self.tableTableWidget.setObjectName("tableTableWidget")
         self.tableTableWidget.setColumnCount(5)
         self.tableTableWidget.setRowCount(0)
@@ -563,6 +629,27 @@ class Ui_searchMainWindow(object):
         font.setPointSize(8)
         self.searchPushButton.setFont(font)
         self.searchPushButton.setObjectName("searchPushButton")
+        self.limitSlider = QtWidgets.QSlider(self.centralwidget)
+        self.limitSlider.setGeometry(QtCore.QRect(1450, 40, 22, 320))
+        self.limitSlider.setMaximum(20)
+        self.limitSlider.setPageStep(2)
+        self.limitSlider.setSliderPosition(10)
+        self.limitSlider.setOrientation(QtCore.Qt.Vertical)
+        self.limitSlider.setObjectName("limitSlider")
+        self.minimumLabel = QtWidgets.QLabel(self.centralwidget)
+        self.minimumLabel.setGeometry(QtCore.QRect(1452, 365, 16, 16))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.minimumLabel.setFont(font)
+        self.minimumLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.minimumLabel.setObjectName("minimumLabel")
+        self.maximumLabel = QtWidgets.QLabel(self.centralwidget)
+        self.maximumLabel.setGeometry(QtCore.QRect(1452, 20, 16, 16))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.maximumLabel.setFont(font)
+        self.maximumLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.maximumLabel.setObjectName("maximumLabel")
         searchMainWindow.setCentralWidget(self.centralwidget)
 
         self.searchPushButton.clicked.connect(self.callback)
@@ -590,3 +677,5 @@ class Ui_searchMainWindow(object):
         self.rarbgCheckBox.setText(_translate("searchMainWindow", "RARBG"))
         self.tpbCheckBox.setText(_translate("searchMainWindow", "TPB"))
         self.searchPushButton.setText(_translate("searchMainWindow", "Search"))
+        self.minimumLabel.setText(_translate("searchMainWindow", "0"))
+        self.maximumLabel.setText(_translate("searchMainWindow", "20"))

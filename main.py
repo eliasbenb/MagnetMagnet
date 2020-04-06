@@ -16,7 +16,7 @@ class HomeWindow(QMainWindow):
         self.ui.setupUi(self)
     def search(self):
         self.SearchWindow = SearchWindow()
-        self.SearchWindow.show()   
+        self.SearchWindow.show()
     def x1377(self):
         self.x1377Window = x1377Window()
         self.x1377Window.show()

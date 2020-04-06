@@ -6,6 +6,32 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_rarbgMainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QtWidgets.QMessageBox()
+            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+                
+            successMessageBox.exec_()
+
+        def error_message():
+            errorMessageBox = QtWidgets.QMessageBox()
+            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+                
+            errorMessageBox.exec_()  
+
         domain = str(self.domainComboBox.currentText())
         category = str(self.categoryComboBox.currentText())
 
@@ -34,11 +60,10 @@ class Ui_rarbgMainWindow(object):
         try:
             request = requests.get(link)
         except:
-            ErrorMessage = QtWidgets.QErrorMessage()
-            ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-
+            error_message()
         source = request.content
         soup = BeautifulSoup(source, 'xml')
+
         magnets = ['==== Made by @eliasbenb ====']
         for item in soup.findAll('item'):
             magnets.append('\n'+item.link.text)
@@ -48,6 +73,7 @@ class Ui_rarbgMainWindow(object):
         with open(file_name,'w') as w1:
             for magnet in magnets:
                 w1.write(magnet)
+        exported_sucess_message()
 
     def setupUi(self, rarbgMainWindow):
         rarbgMainWindow.setObjectName("rarbgMainWindow")

@@ -6,6 +6,32 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_x1337MainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QtWidgets.QMessageBox()
+            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+                
+            successMessageBox.exec_()  
+        
+        def error_message():
+            errorMessageBox = QtWidgets.QMessageBox()
+            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+                
+            errorMessageBox.exec_()  
+
         domain = str(self.domainComboBox.currentText())
         category = str(self.categoryComboBox.currentText())
 
@@ -32,22 +58,20 @@ class Ui_x1337MainWindow(object):
         try:
             request = requests.get(link)
         except:
-            ErrorMessage = QtWidgets.QErrorMessage()
-            ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
+            error_message()
 
         source = request.content
         soup = BeautifulSoup(source, 'lxml')
         magnets = ['==== Made by @eliasbenb ====']
         for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
-            page_link = 'https://www.1377x.to/' + page_link.get('href')
+            page_link = 'https://1377x.to/' + page_link.get('href')
             try:
                 page_request = requests.get(page_link)
             except:
-                ErrorMessage = QtWidgets.QErrorMessage()
-                ErrorMessage.showMessage('Something went wrong! Please message me on GitHub!')
-
+                error_message()
             page_source = page_request.content
             page_soup = BeautifulSoup(page_source, 'lxml')
+
             for link in page_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
                 magnets.append('\n'+link.get('href'))
             magnets = list(dict.fromkeys(magnets))
@@ -57,6 +81,7 @@ class Ui_x1337MainWindow(object):
         with open(file_name,'w') as w1:
             for magnet in magnets:
                 w1.write(magnet)
+        exported_sucess_message()
 
     def setupUi(self, x1337MainWindow):
         x1337MainWindow.setObjectName("x1337MainWindow")
@@ -73,7 +98,6 @@ class Ui_x1337MainWindow(object):
         self.domainComboBox.setGeometry(QtCore.QRect(150, 60, 300, 22))
         self.domainComboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.domainComboBox.setObjectName("domainComboBox")
-        self.domainComboBox.addItem("")
         self.domainComboBox.addItem("")
         self.domainLabel = QtWidgets.QLabel(self.centralwidget)
         self.domainLabel.setGeometry(QtCore.QRect(200, 30, 200, 16))
@@ -111,7 +135,6 @@ class Ui_x1337MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         x1337MainWindow.setWindowTitle(_translate("x1337MainWindow", "MagnetMagnet - 1377x"))
         self.domainComboBox.setItemText(0, _translate("x1337MainWindow", "https://1377x.to/"))
-        self.domainComboBox.setItemText(1, _translate("x1337MainWindow", "https://www.1377x.is/"))
         self.domainLabel.setText(_translate("x1337MainWindow", "Choose a 1377x domain:"))
         self.categoryComboBox.setItemText(0, _translate("x1337MainWindow", "Movies"))
         self.categoryComboBox.setItemText(1, _translate("x1337MainWindow", "TV"))

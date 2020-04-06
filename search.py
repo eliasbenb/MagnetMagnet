@@ -1,22 +1,53 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import os, pyperclip, re, requests
+import os, math, pyperclip, re, requests
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_searchMainWindow(object):
+    def copied_success_message(self):
+        successMessageBox = QtWidgets.QMessageBox()
+        successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+        successMessageBox.setText("Magnet links have been successfully copied to the clipboard.")
+        successMessageBox.setWindowTitle("Task Completed!")
+        successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        successMessageBox.setWindowIcon(icon)
+            
+        successMessageBox.exec_()   
+
     def copy(self):
         choice_row = self.tableTableWidget.currentRow()
         choice_magnet = self.magnets[choice_row]
         pyperclip.copy(choice_magnet)
+        self.copied_success_message()
+
     def callback(self):
         query = self.queryLineEdit.text()
         def resize():
             self.tableTableWidget.resizeColumnToContents(0)
             self.tableTableWidget.resizeColumnToContents(1)
             self.tableTableWidget.resizeColumnToContents(2)
+            self.tableTableWidget.resizeColumnToContents(3)
+            self.tableTableWidget.resizeColumnToContents(4)
+        
+        def searched_success_message():
+            successMessageBox = QtWidgets.QMessageBox()
+            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            successMessageBox.setText("Magnet links have been successfully scraped.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+                
+            successMessageBox.exec_()                
+
         def x1377():
-            main_link = "https://www.1377x.to/search/" + query + '/1/'
+            main_link = "https://1377x.to/search/" + query + '/1/'
             main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
             main_source = main_request.content
             main_soup = BeautifulSoup(main_source, 'lxml')
@@ -29,15 +60,18 @@ class Ui_searchMainWindow(object):
                 page_soup = BeautifulSoup(page_source, 'lxml')
 
                 title = page_soup.find('h1').text
-                seeders = page_soup.find('span', class_="seeds").text
-                leechers = page_soup.find('span', class_="leeches").text
+                seeder = page_soup.find('span', class_="seeds").text
+                leecher = page_soup.find('span', class_="leeches").text
+                size = page_soup.findAll('span')[15].text
                 magnet = page_soup.find('a', attrs={'href': re.compile("^magnet:?")}).get('href')
 
                 row_position = self.tableTableWidget.rowCount()
                 self.tableTableWidget.insertRow(row_position)
                 self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(title))
-                self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders))
-                self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers))
+                self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeder))
+                self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leecher))
+                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(size))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("1377x"))
                 self.magnets.append(magnet)
 
         def kat():
@@ -49,17 +83,21 @@ class Ui_searchMainWindow(object):
             titles_soup = main_soup.findAll('a', class_="cellMainLink")
             seeders_soup = main_soup.findAll('td', class_="green center")
             leechers_soup = main_soup.findAll('td', class_="red lasttd center")
+            sizes_soup = main_soup.findAll('td', class_="nobr center")
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?"), 'title': "Torrent magnet link"})
 
             titles = []
             seeders = []
             leechers = []
+            sizes = []
             for title in titles_soup:
                 titles.append(title.text)
             for seeder in seeders_soup:
                 seeders.append(seeder.text)
             for leecher in leechers_soup:
                 leechers.append(leecher.text)
+            for size in sizes_soup:
+                sizes.append(size.text)
             count1 = 0
             for magnet in magnets_soup:
                 self.magnets.append(magnet.get('href'))
@@ -72,6 +110,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(titles[count2]))
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
+                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("KAT"))
                 count2 = count2 + 1
 
         def nyaa():
@@ -83,17 +123,21 @@ class Ui_searchMainWindow(object):
             titles_soup = main_soup.findAll('a', title=True, class_=False, attrs={'href': re.compile("^/view/")})
             seeders_soup = main_soup.findAll('td', class_="text-center")
             leechers_soup = main_soup.findAll('td', class_="text-center")
+            sizes_soup = main_soup.findAll('td', class_="text-center")
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?")})
 
             titles = []
             seeders = []
             leechers = []
+            sizes = []
             for title in titles_soup:
                 titles.append(title.text)
             for seeder in seeders_soup:
                 seeders.append(seeder.text)
             for leecher in leechers_soup:
                 leechers.append(leecher.text)
+            for size in sizes_soup:
+                sizes.append(size.text)
             count1 = 0
             for magnet in magnets_soup:
                 self.magnets.append(magnet.get('href'))
@@ -105,7 +149,7 @@ class Ui_searchMainWindow(object):
             seeders.pop(2)
             seeders.pop(3)
             seeders = seeders[6-1::6]
-            seeders.insert(0,seeder1)
+            seeders.insert(0, seeder1)
 
             leecher1 = leechers[4]
             leechers.pop(0)
@@ -114,7 +158,13 @@ class Ui_searchMainWindow(object):
             leechers.pop(3)
             leechers.pop(4)
             leechers = leechers[6-1::6]
-            leechers.insert(0,leecher1)
+            leechers.insert(0, leecher1)
+
+            size1 = sizes[1]
+            sizes.pop(0)
+            sizes.pop(1)
+            sizes = sizes[6-1::6]
+            sizes.insert(0, size1)
 
             count2 = 0
             while count2 < count1:
@@ -123,6 +173,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(titles[count2]))
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
+                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("Nyaa"))
                 count2 = count2 + 1
 
         def rarbg():
@@ -134,11 +186,13 @@ class Ui_searchMainWindow(object):
             titles_soup = main_soup.split(",")
             seeders_soup = main_soup.split(',"')
             leechers_soup = main_soup.split(',"')
+            sizes_soup = main_soup.split(',"')
             magnets_soup = main_soup.split('"')
 
             titles = []
             seeders = []
             leechers = []
+            sizes = []
             for title in titles_soup:
                 if title.startswith('{"title":') or title.startswith('{"torrent_results":[{"title":'):
                     title = title.replace('"', '')
@@ -153,6 +207,20 @@ class Ui_searchMainWindow(object):
                 if leecher.startswith('leechers":'):
                     leecher = leecher.replace('leechers":', '')
                     leechers.append(leecher)
+            for size in sizes_soup:
+                if size.startswith('size":'):
+                    def convert_size(size):
+                        if size == 0:
+                            return "0B"
+                        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+                        i = int(math.floor(math.log(size, 1024)))
+                        p = math.pow(1024, i)
+                        s = round(size / p, 2)
+                        size = "%s %s" % (s, size_name[i])
+                        sizes.append(size)
+                    size = int(size.replace('size":', ''))
+                    convert_size(size)
+
             count1 = 0
             for magnet in magnets_soup:
                 if magnet.startswith("magnet:?"):
@@ -166,6 +234,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(titles[count2]))
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
+                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("RARBG"))
                 count2 = count2 + 1
 
         def tpb():
@@ -179,11 +249,13 @@ class Ui_searchMainWindow(object):
             seeders_soup = seeders_soup[0::2]
             leechers_soup = main_soup.findAll('td', attrs={'align': "right"})
             leechers_soup = leechers_soup[1::2]
+            sizes_soup = main_soup.findAll('font', class_="detDesc")
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet")})
 
             titles = []
             seeders = []
             leechers = []
+            sizes = []
             for title in titles_soup:
                 title = title.text.replace("\n", "")
                 titles.append(title)
@@ -191,15 +263,14 @@ class Ui_searchMainWindow(object):
                 seeders.append(seeder.text)
             for leecher in leechers_soup:
                 leechers.append(leecher.text)
+            for size in sizes_soup:
+                size = size.text.split(", ")
+                size = size[1].replace("Size ", "")
+                sizes.append(size)
             count1 = 0
             for magnet in magnets_soup:
                 self.magnets.append(magnet.get('href'))
                 count1 = count1 + 1
-
-            print(len(titles))
-            print(len(seeders))
-            print(len(leechers))
-            print(len(self.magnets))
 
             count2 = 0
             while count2 < count1:
@@ -208,6 +279,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(titles[count2]))
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
+                self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("TPB"))
                 count2 = count2 + 1
 
         if (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
@@ -219,6 +292,7 @@ class Ui_searchMainWindow(object):
             rarbg()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -227,6 +301,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -235,6 +310,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -243,6 +319,7 @@ class Ui_searchMainWindow(object):
             rarbg()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -250,6 +327,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -257,6 +335,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -264,6 +343,7 @@ class Ui_searchMainWindow(object):
             kat()
             nyaa()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -271,6 +351,7 @@ class Ui_searchMainWindow(object):
             kat()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -278,6 +359,7 @@ class Ui_searchMainWindow(object):
             kat()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -285,6 +367,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -292,6 +375,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -299,6 +383,7 @@ class Ui_searchMainWindow(object):
             rarbg()
             tpb()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -306,6 +391,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -313,6 +399,7 @@ class Ui_searchMainWindow(object):
             nyaa()
             tpb()
             resize()
+            searched_success_message()
         elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
@@ -320,91 +407,107 @@ class Ui_searchMainWindow(object):
             rarbg()
             tpb()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             x1377()
             kat()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             x1377()
             nyaa()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             x1377()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.x1377CheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             x1377()
             tpb()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             kat()
             nyaa()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             kat()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.katCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             kat()
             tpb()
             resize()
+            searched_success_message()
         elif (self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             nyaa()
             rarbg()
             resize()
+            searched_success_message()
         elif (self.nyaaCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             nyaa()
             tpb()
             resize()
+            searched_success_message()
         elif (self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             rarbg()
             tpb()
             resize()
+            searched_success_message()
         elif self.x1377CheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             x1377()
             resize()
+            searched_success_message()
         elif self.katCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             kat()
             resize()
+            searched_success_message()
         elif self.nyaaCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             nyaa()
             resize()
+            searched_success_message()
         elif self.rarbgCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             rarbg()
             resize()
+            searched_success_message()
         elif self.tpbCheckBox.isChecked():
             self.tableTableWidget.setRowCount(0)
             self.magnets = []
             tpb()
             resize()
+            searched_success_message()
 
     def setupUi(self, searchMainWindow):
         searchMainWindow.setObjectName("searchMainWindow")
@@ -430,7 +533,7 @@ class Ui_searchMainWindow(object):
         self.tableTableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableTableWidget.setGeometry(QtCore.QRect(260, 20, 1210, 360))
         self.tableTableWidget.setObjectName("tableTableWidget")
-        self.tableTableWidget.setColumnCount(3)
+        self.tableTableWidget.setColumnCount(5)
         self.tableTableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableTableWidget.setHorizontalHeaderItem(0, item)
@@ -438,6 +541,10 @@ class Ui_searchMainWindow(object):
         self.tableTableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableTableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableTableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableTableWidget.setHorizontalHeaderItem(4, item)
         self.katCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.katCheckBox.setGeometry(QtCore.QRect(30, 110, 90, 20))
         self.katCheckBox.setObjectName("katCheckBox")
@@ -474,6 +581,10 @@ class Ui_searchMainWindow(object):
         item.setText(_translate("searchMainWindow", "Seeders"))
         item = self.tableTableWidget.horizontalHeaderItem(2)
         item.setText(_translate("searchMainWindow", "Leechers"))
+        item = self.tableTableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("searchMainWindow", "Sizes"))
+        item = self.tableTableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("searchMainWindow", "Source"))
         self.katCheckBox.setText(_translate("searchMainWindow", "KAT"))
         self.nyaaCheckBox.setText(_translate("searchMainWindow", "Nyaa"))
         self.rarbgCheckBox.setText(_translate("searchMainWindow", "RARBG"))

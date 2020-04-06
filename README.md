@@ -38,7 +38,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - **Search box:** here you enter the search query you would like to scrape
 - **Table:** the table displays all the title names and magnet links for the torrents scraped, here you can copy the magnet link you would like by selecting it
 
-![Search](https://user-images.githubusercontent.com/54410649/78527136-2d594100-77ed-11ea-8ddd-00c985b880b8.PNG)
+![Search](https://user-images.githubusercontent.com/54410649/78527131-2c281400-77ed-11ea-815b-7dea0bbd79dc.PNG)
 ### Scrapers:
 - There are only two user changeable fields in the scraper apps:
 - **Domain:** the first field is for the domain, here just choose the torrent indexer's domain.

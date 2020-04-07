@@ -67,6 +67,7 @@ class Ui_searchMainWindow(object):
                     seeder = page_soup.find('span', class_="seeds").text
                     leecher = page_soup.find('span', class_="leeches").text
                     size = page_soup.findAll('span')[15].text
+                    date = page_soup.findAll('span')[19].text
                     magnet = page_soup.find('a', attrs={'href': re.compile("^magnet:?")}).get('href')
 
                     row_position = self.tableTableWidget.rowCount()
@@ -75,7 +76,8 @@ class Ui_searchMainWindow(object):
                     self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeder))
                     self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leecher))
                     self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(size))
-                    self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("1377x"))
+                    self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem(date))
+                    self.tableTableWidget.setItem(row_position, 5, QtWidgets.QTableWidgetItem("1377x"))
                     self.magnets.append(magnet)
                     limit_counter = limit_counter + 1
 
@@ -89,12 +91,14 @@ class Ui_searchMainWindow(object):
             seeders_soup = main_soup.findAll('td', class_="green center")
             leechers_soup = main_soup.findAll('td', class_="red lasttd center")
             sizes_soup = main_soup.findAll('td', class_="nobr center")
+            dates_soup = main_soup.findAll('td', class_="center", title=True)
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?"), 'title': "Torrent magnet link"})
 
             titles = []
             seeders = []
             leechers = []
             sizes = []
+            dates = []
             limit_counter = 0
             for title in titles_soup:
                 if limit_counter < limit:
@@ -114,6 +118,11 @@ class Ui_searchMainWindow(object):
             for size in sizes_soup:
                 if limit_counter < limit:
                     sizes.append(size.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
+            for date in dates_soup:
+                if limit_counter < limit:
+                    dates.append(date.text)
                     limit_counter = limit_counter + 1
             limit_counter = 0
             count1 = 0
@@ -131,7 +140,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
                 self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
-                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("KAT"))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem(dates[count2]))
+                self.tableTableWidget.setItem(row_position, 5, QtWidgets.QTableWidgetItem("KAT"))
                 count2 = count2 + 1
 
         def nyaa():
@@ -144,12 +154,14 @@ class Ui_searchMainWindow(object):
             seeders_soup = main_soup.findAll('td', class_="text-center")
             leechers_soup = main_soup.findAll('td', class_="text-center")
             sizes_soup = main_soup.findAll('td', class_="text-center")
+            dates_soup = main_soup.findAll('td', class_="text-center")
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?")})
 
             titles = []
             seeders = []
             leechers = []
             sizes = []
+            dates = []
             limit_counter = 0
             for title in titles_soup:
                 if limit_counter < limit:
@@ -169,6 +181,11 @@ class Ui_searchMainWindow(object):
             for size in sizes_soup:
                 if limit_counter < limit*6:
                     sizes.append(size.text)
+                    limit_counter = limit_counter + 1
+            limit_counter = 0
+            for date in dates_soup:
+                if limit_counter < limit*6:
+                    dates.append(date.text)
                     limit_counter = limit_counter + 1
             limit_counter = 0
             count1 = 0
@@ -201,6 +218,13 @@ class Ui_searchMainWindow(object):
             sizes = sizes[6-1::6]
             sizes.insert(0, size1)
 
+            date1 = dates[2]
+            dates.pop(0)
+            dates.pop(1)
+            dates.pop(2)
+            dates = dates[6-1::6]
+            dates.insert(0, date1)
+
             count2 = 0
             while count2 < count1:
                 row_position = self.tableTableWidget.rowCount()
@@ -209,7 +233,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
                 self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
-                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("Nyaa"))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem(dates[count2]))
+                self.tableTableWidget.setItem(row_position, 5, QtWidgets.QTableWidgetItem("Nyaa"))
                 count2 = count2 + 1
 
         def rarbg():
@@ -222,12 +247,14 @@ class Ui_searchMainWindow(object):
             seeders_soup = main_soup.split(',"')
             leechers_soup = main_soup.split(',"')
             sizes_soup = main_soup.split(',"')
+            dates_soup = main_soup.split(',"')
             magnets_soup = main_soup.split('"')
 
             titles = []
             seeders = []
             leechers = []
             sizes = []
+            dates = []
             limit_counter = 0
             for title in titles_soup:
                 if limit_counter < limit:
@@ -267,7 +294,14 @@ class Ui_searchMainWindow(object):
                         size = int(size.replace('size":', ''))
                         convert_size(size)
                         limit_counter = limit_counter + 1
-
+            limit_counter = 0
+            for date in dates_soup:
+                if limit_counter < limit:
+                    if date.startswith('pubdate":'):
+                        date = date.replace('pubdate":"', '')
+                        date = date.replace('+0000"', '')
+                        dates.append(date)
+                        limit_counter = limit_counter + 1
             limit_counter = 0
             count1 = 0
             for magnet in magnets_soup:
@@ -285,7 +319,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
                 self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
-                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("RARBG"))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem(dates[count2]))
+                self.tableTableWidget.setItem(row_position, 5, QtWidgets.QTableWidgetItem("RARBG"))
                 count2 = count2 + 1
 
         def tpb():
@@ -300,12 +335,14 @@ class Ui_searchMainWindow(object):
             leechers_soup = main_soup.findAll('td', attrs={'align': "right"})
             leechers_soup = leechers_soup[1::2]
             sizes_soup = main_soup.findAll('font', class_="detDesc")
+            dates_soup = main_soup.findAll('font', class_="detDesc")
             magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet")})
 
             titles = []
             seeders = []
             leechers = []
             sizes = []
+            dates = []
             limit_counter = 0
             for title in titles_soup:
                 if limit_counter < limit:
@@ -329,6 +366,13 @@ class Ui_searchMainWindow(object):
                     size = size[1].replace("Size ", "")
                     sizes.append(size)
                     limit_counter = limit_counter + 1
+            limit_counter = 0
+            for date in dates_soup:
+                if limit_counter < limit:
+                    date = date.text.split(", ")
+                    date = date[0].replace("Uploaded ", "")
+                    dates.append(date)
+                    limit_counter = limit_counter + 1
             count1 = 0
             limit_counter = 0
             for magnet in magnets_soup:
@@ -345,7 +389,8 @@ class Ui_searchMainWindow(object):
                 self.tableTableWidget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(seeders[count2]))
                 self.tableTableWidget.setItem(row_position, 2, QtWidgets.QTableWidgetItem(leechers[count2]))
                 self.tableTableWidget.setItem(row_position, 3, QtWidgets.QTableWidgetItem(sizes[count2]))
-                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem("TPB"))
+                self.tableTableWidget.setItem(row_position, 4, QtWidgets.QTableWidgetItem(dates[count2]))
+                self.tableTableWidget.setItem(row_position, 5, QtWidgets.QTableWidgetItem("TPB"))
                 count2 = count2 + 1
 
         if (self.x1377CheckBox.isChecked() and self.katCheckBox.isChecked() and self.nyaaCheckBox.isChecked() and self.rarbgCheckBox.isChecked() and self.tpbCheckBox.isChecked()):
@@ -599,7 +644,7 @@ class Ui_searchMainWindow(object):
         self.tableTableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableTableWidget.setGeometry(QtCore.QRect(260, 20, 1161, 360))
         self.tableTableWidget.setObjectName("tableTableWidget")
-        self.tableTableWidget.setColumnCount(5)
+        self.tableTableWidget.setColumnCount(6)
         self.tableTableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableTableWidget.setHorizontalHeaderItem(0, item)
@@ -611,6 +656,8 @@ class Ui_searchMainWindow(object):
         self.tableTableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableTableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableTableWidget.setHorizontalHeaderItem(5, item)
         self.katCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.katCheckBox.setGeometry(QtCore.QRect(30, 110, 90, 20))
         self.katCheckBox.setObjectName("katCheckBox")
@@ -671,6 +718,8 @@ class Ui_searchMainWindow(object):
         item = self.tableTableWidget.horizontalHeaderItem(3)
         item.setText(_translate("searchMainWindow", "Sizes"))
         item = self.tableTableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("searchMainWindow", "Dates"))
+        item = self.tableTableWidget.horizontalHeaderItem(5)
         item.setText(_translate("searchMainWindow", "Source"))
         self.katCheckBox.setText(_translate("searchMainWindow", "KAT"))
         self.nyaaCheckBox.setText(_translate("searchMainWindow", "Nyaa"))

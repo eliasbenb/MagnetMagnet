@@ -22,11 +22,12 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Choosing the category/subcategory to scrape magnet links from
 - Exporting magnet links to a .txt file in local directory
 - Copy specific magnet links to the clipboard on click
+- Auto version checker
 
 ## To do list:
 - ~~Add Nyaa support~~
 - ~~Add maximum scraping limit~~
-- Add a self updater
+- ~~Add a self updater~~
 - Make scraping asynchronous
 
 # Installation
@@ -35,10 +36,10 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 
 # Usage:
 ### Home Screen:
-- On launch you get five options of torrent indexers to scrape from: 1377x, KAT, Nyaa, RARBG and TPB,
+- On launch you get five options of torrent indexers to scrape from: 1377x, Kick Ass Torrents, Nyaa, RARBG and The Pirate Bay
 - There is also a sixth tab named 'Search' which allows you to scrape the aforementioned torrent indexers for specific words
 
-![Home Screen](https://user-images.githubusercontent.com/54410649/78558052-fdc52b80-7822-11ea-939f-cd7868a084bd.PNG)
+![Home Screen](https://user-images.githubusercontent.com/54410649/78696205-30008700-7910-11ea-8c33-480725e58e36.PNG)
 ### Search:
 - In the Search app you have four user editable fields:
 - **Checkboxes:** you can select/deselect the torrent indexers you would like to search from
@@ -46,10 +47,10 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - **Table:** the table displays the title names, seeders and leechers for the torrents scraped, here you can copy the magnet link you would like by selecting a row
 - **Slider** the slider allows you to limit the amount of torrents scraped per torrent indexer
 
-![Search](https://user-images.githubusercontent.com/54410649/78558044-fbfb6800-7822-11ea-9a36-ed6b0eff4a31.PNG)
+![Search](https://user-images.githubusercontent.com/54410649/78696214-3131b400-7910-11ea-8306-5be6d2069886.PNG)
 ### Scrapers:
 - There are only two user changeable fields in the scraper apps:
 - **Domain:** the first field is for the domain, here just choose the torrent indexer's domain
 - **Category:** the second field is for the category which you can choose from the drop down box
 
-![Scrapers](https://user-images.githubusercontent.com/54410649/78558049-fdc52b80-7822-11ea-94e1-4cc48413ef75.PNG)
+![Scrapers](https://user-images.githubusercontent.com/54410649/78696217-31ca4a80-7910-11ea-8d2d-4b26cf67a256.PNG)

@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from search import Ui_searchMainWindow
 from imagebytes import *
-import os, requests, re
+import os, requests, re, webbrowser
 
 path = '%s\\eliasbenb' %  os.environ['APPDATA']
 if not os.path.exists(path):
@@ -9,29 +9,29 @@ if not os.path.exists(path):
 if not os.path.exists(path+r'\images'):
     os.makedirs(path+r'\images')
 if not os.path.exists(path+r'\images\github.png'):
-    with open(path+r'\images\github.png','wb') as w1:
-        w1.write(github_image_bytes)
+    with open(path+r'\images\github.png','wb') as w:
+        w.write(github_image_bytes)
 if not os.path.exists(path+r'\images\icon.png'):
-    with open(path+r'\images\icon.png','wb') as w2:
-        w2.write(icon_image_bytes)
+    with open(path+r'\images\icon.png','wb') as w:
+        w.write(icon_image_bytes)
 if not os.path.exists(path+r'\images\kat.png'):
-    with open(path+r'\images\kat.png','wb') as w3:
-        w3.write(kat_image_bytes)
+    with open(path+r'\images\kat.png','wb') as w:
+        w.write(kat_image_bytes)
 if not os.path.exists(path+r'\images\nyaa.png'):
-    with open(path+r'\images\nyaa.png','wb') as w4:
-        w4.write(nyaa_image_bytes)
+    with open(path+r'\images\nyaa.png','wb') as w:
+        w.write(nyaa_image_bytes)
 if not os.path.exists(path+r'\images\rarbg.png'):
-    with open(path+r'\images\rarbg.png','wb') as w5:
-        w5.write(rarbg_image_bytes)
+    with open(path+r'\images\rarbg.png','wb') as w:
+        w.write(rarbg_image_bytes)
 if not os.path.exists(path+r'\images\tpb.png'):
-    with open(path+r'\images\tpb.png','wb') as w6:
-        w6.write(tpb_image_bytes)
+    with open(path+r'\images\tpb.png','wb') as w:
+        w.write(tpb_image_bytes)
 if not os.path.exists(path+r'\images\website.png'):
-    with open(path+r'\images\website.png','wb') as w7:
-        w7.write(website_image_bytes)
+    with open(path+r'\images\website.png','wb') as w:
+        w.write(website_image_bytes)
 if not os.path.exists(path+r'\images\x1377.png'):
-    with open(path+r'\images\x1377.png','wb') as w8:
-        w8.write(x1377_image_bytes)
+    with open(path+r'\images\x1377.png','wb') as w:
+        w.write(x1377_image_bytes)
 
 class Ui_homeMainWindow(object):
     def setupUi(self, homeMainWindow):
@@ -118,6 +118,33 @@ class Ui_homeMainWindow(object):
 
         self.retranslateUi(homeMainWindow)
         QtCore.QMetaObject.connectSlotsByName(homeMainWindow)
+
+        def update_message():
+            updateMessageBox = QtWidgets.QMessageBox()
+            updateMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+            updateMessageBox.setText("There is a newer version of MagnetMagnet. Would you like to update?")
+            updateMessageBox.setWindowTitle("Update Available!")
+            updateMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            updateMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            updateMessageBox.setWindowIcon(icon)
+
+            updateMessageBox.buttonClicked.connect(update)
+                
+            updateMessageBox.exec_()
+
+        def update():
+            webbrowser.open("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
+        
+        __VERSION__ = "6.5"
+        version_request = requests.get("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
+        version_url = version_request.url
+        version_url = version_url.split("/")
+        latest_version = version_url[7]
+        if latest_version != __VERSION__:
+            update_message()
 
     def retranslateUi(self, homeMainWindow):
         _translate = QtCore.QCoreApplication.translate

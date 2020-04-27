@@ -6,70 +6,72 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_katMainWindow(object):
     def callback(self):
-        def exported_sucess_message():
-            successMessageBox = QtWidgets.QMessageBox()
-            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-            successMessageBox.setWindowTitle("Task Completed!")
-            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            successMessageBox.setWindowIcon(icon)
-                
-            successMessageBox.exec_()
-
-        def error_message():
-            errorMessageBox = QtWidgets.QMessageBox()
-            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-            errorMessageBox.setWindowTitle("Error!")
-            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            errorMessageBox.setWindowIcon(icon)
-                
-            errorMessageBox.exec_()  
-
-        domain = str(self.domainComboBox.currentText())
-        category = str(self.categoryComboBox.currentText())
-
-        if category == "Movies":
-            category = "movies"
-        if category == "TV":
-            category = "tv"
-        if category == "Anime":
-            category = "anime"
-        if category == "Music":
-            category = "music"
-        if category == "Books":
-            category = "Books"
-        if category == "XXX":
-            category = "xxx"
-        if category == "All":
-            category = "new"
-        
-        link = domain + category
         try:
-            request = requests.get(link)
+            def exported_sucess_message():
+                successMessageBox = QtWidgets.QMessageBox()
+                successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+                successMessageBox.setWindowTitle("Task Completed!")
+                successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                successMessageBox.setWindowIcon(icon)
+                    
+                successMessageBox.exec_()
+
+            def error_message():
+                errorMessageBox = QtWidgets.QMessageBox()
+                errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+                errorMessageBox.setWindowTitle("Error!")
+                errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                errorMessageBox.setWindowIcon(icon)
+                    
+                errorMessageBox.exec_()  
+
+            domain = str(self.domainComboBox.currentText())
+            category = str(self.categoryComboBox.currentText())
+
+            if category == "Movies":
+                category = "movies"
+            if category == "TV":
+                category = "tv"
+            if category == "Anime":
+                category = "anime"
+            if category == "Music":
+                category = "music"
+            if category == "Books":
+                category = "Books"
+            if category == "XXX":
+                category = "xxx"
+            if category == "All":
+                category = "new"
+            
+            link = domain + category
+            try:
+                request = requests.get(link)
+            except:
+                error_message()
+            source = request.content
+            soup = BeautifulSoup(source, 'lxml')
+
+            magnets = ['==== Made by @eliasbenb ====']
+            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                magnets.append('\n'+link.get('href'))
+            magnets = list(dict.fromkeys(magnets))
+
+            timestr = time.strftime(" %Y%m%d%H%M%S")
+            file_name = "KAT Results " + timestr + ".txt"
+            with open(file_name,'w') as w1:
+                for magnet in magnets:
+                    w1.write(magnet)
+            exported_sucess_message()
         except:
             error_message()
-        source = request.content
-        soup = BeautifulSoup(source, 'lxml')
-
-        magnets = ['==== Made by @eliasbenb ====']
-        for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-            magnets.append('\n'+link.get('href'))
-        magnets = list(dict.fromkeys(magnets))
-
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        file_name = "KAT Results " + timestr + ".txt"
-        with open(file_name,'w') as w1:
-            for magnet in magnets:
-                w1.write(magnet)
-        exported_sucess_message()
-
 
     def setupUi(self, katMainWindow):
         katMainWindow.setObjectName("katMainWindow")

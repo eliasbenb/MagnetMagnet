@@ -6,74 +6,74 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_rarbgMainWindow(object):
     def callback(self):
-        def exported_sucess_message():
-            successMessageBox = QtWidgets.QMessageBox()
-            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-            successMessageBox.setWindowTitle("Task Completed!")
-            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            successMessageBox.setWindowIcon(icon)
-                
-            successMessageBox.exec_()
-
-        def error_message():
-            errorMessageBox = QtWidgets.QMessageBox()
-            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-            errorMessageBox.setWindowTitle("Error!")
-            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            errorMessageBox.setWindowIcon(icon)
-                
-            errorMessageBox.exec_()  
-
-        domain = str(self.domainComboBox.currentText())
-        category = str(self.categoryComboBox.currentText())
-
-        if category == "All":
-            category = ""
-        if category == "Movies - All":
-            category = "movies"
-        if category == "Movies - UHD":
-            category = "50;51;52"
-        if category == "Movies - HD":
-            category = "44;42;46;54"
-        if category == "Movies - Not HD":
-            category = "14;48;17;45"
-        if category == "TV - All":
-            category = "2;18;41;49"
-        if category == "TV - UHD":
-            category = "49"
-        if category == "TV - HD":
-            category = "41"
-        if category == "Music - All":
-            category = "2;23;24;25;26"            
-        if category == "XXX - All":
-            category = "2;4"
-
-        link = domain + 'rssdd.php?category=' + category
         try:
+            def exported_sucess_message():
+                successMessageBox = QtWidgets.QMessageBox()
+                successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+                successMessageBox.setWindowTitle("Task Completed!")
+                successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                successMessageBox.setWindowIcon(icon)
+                    
+                successMessageBox.exec_()
+
+            def error_message():
+                errorMessageBox = QtWidgets.QMessageBox()
+                errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+                errorMessageBox.setWindowTitle("Error!")
+                errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                errorMessageBox.setWindowIcon(icon)
+                    
+                errorMessageBox.exec_()  
+
+            domain = str(self.domainComboBox.currentText())
+            category = str(self.categoryComboBox.currentText())
+
+            if category == "All":
+                category = ""
+            if category == "Movies - All":
+                category = "movies"
+            if category == "Movies - UHD":
+                category = "50;51;52"
+            if category == "Movies - HD":
+                category = "44;42;46;54"
+            if category == "Movies - Not HD":
+                category = "14;48;17;45"
+            if category == "TV - All":
+                category = "2;18;41;49"
+            if category == "TV - UHD":
+                category = "49"
+            if category == "TV - HD":
+                category = "41"
+            if category == "Music - All":
+                category = "2;23;24;25;26"            
+            if category == "XXX - All":
+                category = "2;4"
+
+            link = domain + 'rssdd.php?category=' + category
             request = requests.get(link)
+            source = request.content
+            soup = BeautifulSoup(source, 'xml')
+
+            magnets = ['==== Made by @eliasbenb ====']
+            for item in soup.findAll('item'):
+                magnets.append('\n'+item.link.text)
+            
+            timestr = time.strftime(" %Y%m%d%H%M%S")
+            file_name = "RARBG Results " + timestr + ".txt"
+            with open(file_name,'w') as w1:
+                for magnet in magnets:
+                    w1.write(magnet)
+            exported_sucess_message()
         except:
             error_message()
-        source = request.content
-        soup = BeautifulSoup(source, 'xml')
-
-        magnets = ['==== Made by @eliasbenb ====']
-        for item in soup.findAll('item'):
-            magnets.append('\n'+item.link.text)
-        
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        file_name = "RARBG Results " + timestr + ".txt"
-        with open(file_name,'w') as w1:
-            for magnet in magnets:
-                w1.write(magnet)
-        exported_sucess_message()
 
     def setupUi(self, rarbgMainWindow):
         rarbgMainWindow.setObjectName("rarbgMainWindow")

@@ -6,69 +6,69 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_tpbMainWindow(object):
     def callback(self):
-        def exported_sucess_message():
-            successMessageBox = QtWidgets.QMessageBox()
-            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-            successMessageBox.setWindowTitle("Task Completed!")
-            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            successMessageBox.setWindowIcon(icon)
-                
-            successMessageBox.exec_()
-
-        def error_message():
-            errorMessageBox = QtWidgets.QMessageBox()
-            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-            errorMessageBox.setWindowTitle("Error!")
-            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            errorMessageBox.setWindowIcon(icon)
-                
-            errorMessageBox.exec_()  
-
-        domain = str(self.domainComboBox.currentText())
-        category = str(self.categoryComboBox.currentText())
-
-        if category == "All":
-            category = "recent"
-        if category == "Movies - HD":
-            category = "browse/207"
-        if category == "Movies - Not HD":
-            category = "browse/201"
-        if category == "TV - HD":
-            category = "browse/208"
-        if category == "TV - Not HD":
-            category = "browse/205"
-        if category == "Music - All":
-            category = "browse/101"            
-        if category == "XXX - All":
-            category = "browse/500"
-
-        link = domain + category
         try:
+            def exported_sucess_message():
+                successMessageBox = QtWidgets.QMessageBox()
+                successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+                successMessageBox.setWindowTitle("Task Completed!")
+                successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                successMessageBox.setWindowIcon(icon)
+                    
+                successMessageBox.exec_()
+
+            def error_message():
+                errorMessageBox = QtWidgets.QMessageBox()
+                errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+                errorMessageBox.setWindowTitle("Error!")
+                errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                errorMessageBox.setWindowIcon(icon)
+                    
+                errorMessageBox.exec_()  
+
+            domain = str(self.domainComboBox.currentText())
+            category = str(self.categoryComboBox.currentText())
+
+            if category == "All":
+                category = "recent"
+            if category == "Movies - HD":
+                category = "browse/207"
+            if category == "Movies - Not HD":
+                category = "browse/201"
+            if category == "TV - HD":
+                category = "browse/208"
+            if category == "TV - Not HD":
+                category = "browse/205"
+            if category == "Music - All":
+                category = "browse/101"            
+            if category == "XXX - All":
+                category = "browse/500"
+
+            link = domain + category
             request = requests.get(link)
+            source = request.content
+            soup = BeautifulSoup(source, 'lxml')
+
+            magnets = ['==== Made by @eliasbenb ====']
+            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                magnets.append('\n')
+                magnets.append(link.get('href'))
+            
+            timestr = time.strftime(" %Y%m%d%H%M%S")
+            file_name = "TPB Results " + timestr + ".txt"
+            with open(file_name,'w') as w1:
+                for magnet in magnets:
+                    w1.write(magnet)
+            exported_sucess_message()
         except:
             error_message()
-        source = request.content
-        soup = BeautifulSoup(source, 'lxml')
-
-        magnets = ['==== Made by @eliasbenb ====']
-        for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-            magnets.append('\n')
-            magnets.append(link.get('href'))
-        
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        file_name = "TPB Results " + timestr + ".txt"
-        with open(file_name,'w') as w1:
-            for magnet in magnets:
-                w1.write(magnet)
-        exported_sucess_message()
 
     def setupUi(self, tpbMainWindow):
         tpbMainWindow.setObjectName("tpbMainWindow")

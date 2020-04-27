@@ -6,69 +6,72 @@ path = '%s\\eliasbenb' %  os.environ['APPDATA']
 
 class Ui_nyaaMainWindow(object):
     def callback(self):
-        def exported_sucess_message():
-            successMessageBox = QtWidgets.QMessageBox()
-            successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-            successMessageBox.setWindowTitle("Task Completed!")
-            successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            successMessageBox.setWindowIcon(icon)
-                
-            successMessageBox.exec_()
-
-        def error_message():
-            errorMessageBox = QtWidgets.QMessageBox()
-            errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
-
-            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-            errorMessageBox.setWindowTitle("Error!")
-            errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            errorMessageBox.setWindowIcon(icon)
-                
-            errorMessageBox.exec_()  
-
-        domain = str(self.domainComboBox.currentText())
-        category = str(self.categoryComboBox.currentText())
-
-        if category == "All":
-            category = "0_0"
-        if category == "Anime":
-            category = "1_0"
-        if category == "Audio":
-            category = "2_0"
-        if category == "Literature":
-            category = "3_0"
-        if category == "Live Action":
-            category = "4_0"
-        if category == "Pictures":
-            category = "5_0"
-        if category == "Software":
-            category = "6_0"
-        
-        link = domain + '?c=' + category
         try:
-            request = requests.get(link)
+            def exported_sucess_message():
+                successMessageBox = QtWidgets.QMessageBox()
+                successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
+                successMessageBox.setWindowTitle("Task Completed!")
+                successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                successMessageBox.setWindowIcon(icon)
+                    
+                successMessageBox.exec_()
+
+            def error_message():
+                errorMessageBox = QtWidgets.QMessageBox()
+                errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+
+                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+                errorMessageBox.setWindowTitle("Error!")
+                errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                icon = QtGui.QIcon()
+                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                errorMessageBox.setWindowIcon(icon)
+                    
+                errorMessageBox.exec_()  
+
+            domain = str(self.domainComboBox.currentText())
+            category = str(self.categoryComboBox.currentText())
+
+            if category == "All":
+                category = "0_0"
+            if category == "Anime":
+                category = "1_0"
+            if category == "Audio":
+                category = "2_0"
+            if category == "Literature":
+                category = "3_0"
+            if category == "Live Action":
+                category = "4_0"
+            if category == "Pictures":
+                category = "5_0"
+            if category == "Software":
+                category = "6_0"
+            
+            link = domain + '?c=' + category
+            try:
+                request = requests.get(link)
+            except:
+                error_message()
+            source = request.content
+            soup = BeautifulSoup(source, 'lxml')
+
+            magnets = ['==== Made by @eliasbenb ====']
+            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                magnets.append('\n'+link.get('href'))
+            magnets = list(dict.fromkeys(magnets))
+            
+            timestr = time.strftime(" %Y%m%d%H%M%S")
+            file_name = "Nyaa Results " + timestr + ".txt"
+            with open(file_name,'w') as w1:
+                for magnet in magnets:
+                    w1.write(magnet)
+            exported_sucess_message()
         except:
             error_message()
-        source = request.content
-        soup = BeautifulSoup(source, 'lxml')
-
-        magnets = ['==== Made by @eliasbenb ====']
-        for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-            magnets.append('\n'+link.get('href'))
-        magnets = list(dict.fromkeys(magnets))
-        
-        timestr = time.strftime(" %Y%m%d%H%M%S")
-        file_name = "Nyaa Results " + timestr + ".txt"
-        with open(file_name,'w') as w1:
-            for magnet in magnets:
-                w1.write(magnet)
-        exported_sucess_message()
 
     def setupUi(self, nyaaMainWindow):
         nyaaMainWindow.setObjectName("nyaaMainWindow")

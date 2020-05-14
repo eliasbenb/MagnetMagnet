@@ -333,7 +333,7 @@ class Ui_searchMainWindow(object):
                 for magnet in magnets_soup:
                     if limit_counter < limit:
                         if magnet.startswith("magnet:?"):
-                            self.magnets.append(magnet.startswith("magnet:?"))
+                            self.magnets.append(magnet)
                             limit_counter = limit_counter + 1
                             count1 = count1 + 1
 

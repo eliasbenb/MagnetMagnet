@@ -1,8 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import mglobals
 from search import Ui_searchMainWindow
 from imagebytes import *
-import os, requests, re, webbrowser
+import mglobals, os, requests, re, webbrowser
 
 if not os.path.exists(mglobals.base_path):
     os.makedirs(mglobals.base_path)
@@ -138,7 +137,7 @@ class Ui_homeMainWindow(object):
         def update():
             webbrowser.open("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
         
-        __VERSION__ = "6.5"
+        __VERSION__ = "7.0"
         version_request = requests.get("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
         version_url = version_request.url
         version_url = version_url.split("/")

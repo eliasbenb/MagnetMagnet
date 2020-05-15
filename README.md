@@ -24,6 +24,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Exporting magnet links to a .txt file in local directory
 - Copy specific magnet links to the clipboard on click
 - Auto version checker
+- Cross platform
 
 ## To do list:
 - ~~Add Nyaa support~~

@@ -1,9 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import os, requests, re, time
-
-import mglobals
-
+import mglobals, os, requests, re, time
 
 path = mglobals.base_path
 

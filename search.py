@@ -1,9 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import math, pyperclip, re, requests
-
-import mglobals
-
+import math, mglobals, pyperclip, re, requests
 
 path = mglobals.base_path
 

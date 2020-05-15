@@ -2,7 +2,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
 import os, requests, re, time
 
-path = '%s\\eliasbenb' %  os.environ['APPDATA']
+import mglobals
+
+
+path = mglobals.base_path
 
 class Ui_x1337MainWindow(object):
     def callback(self):
@@ -15,7 +18,7 @@ class Ui_x1337MainWindow(object):
                 successMessageBox.setWindowTitle("Task Completed!")
                 successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 successMessageBox.setWindowIcon(icon)
                     
                 successMessageBox.exec_()  
@@ -28,7 +31,7 @@ class Ui_x1337MainWindow(object):
                 errorMessageBox.setWindowTitle("Error!")
                 errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 errorMessageBox.setWindowIcon(icon)
                     
                 errorMessageBox.exec_()  
@@ -87,7 +90,7 @@ class Ui_x1337MainWindow(object):
         font.setFamily("Bahnschrift Light")
         x1337MainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         x1337MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(x1337MainWindow)
         self.centralwidget.setObjectName("centralwidget")

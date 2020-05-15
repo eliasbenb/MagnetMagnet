@@ -1,8 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import os, math, pyperclip, re, requests
+import math, pyperclip, re, requests
 
-path = '%s\\eliasbenb' %  os.environ['APPDATA']
+import mglobals
+
+
+path = mglobals.base_path
 
 class Ui_searchMainWindow(object):
     def copied_success_message(self):
@@ -13,7 +16,7 @@ class Ui_searchMainWindow(object):
         successMessageBox.setWindowTitle("Task Completed!")
         successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         successMessageBox.setWindowIcon(icon)
             
         successMessageBox.exec_()   
@@ -43,7 +46,7 @@ class Ui_searchMainWindow(object):
             successMessageBox.setWindowTitle("Task Completed!")
             successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             successMessageBox.setWindowIcon(icon)
                 
             successMessageBox.exec_()
@@ -56,7 +59,7 @@ class Ui_searchMainWindow(object):
             errorMessageBox.setWindowTitle("Error!")
             errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             errorMessageBox.setWindowIcon(icon)
                 
             errorMessageBox.exec_()
@@ -330,7 +333,7 @@ class Ui_searchMainWindow(object):
                 for magnet in magnets_soup:
                     if limit_counter < limit:
                         if magnet.startswith("magnet:?"):
-                            self.magnets.append(magnet.startswith("magnet:?"))
+                            self.magnets.append(magnet)
                             limit_counter = limit_counter + 1
                             count1 = count1 + 1
 
@@ -656,7 +659,7 @@ class Ui_searchMainWindow(object):
         font.setPointSize(11)
         searchMainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(path+r"/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         searchMainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(searchMainWindow)
         self.centralwidget.setObjectName("centralwidget")

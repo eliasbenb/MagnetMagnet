@@ -33,8 +33,9 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Make scraping asynchronous
 
 # Installation
-- To install MagnetMagnet either download the latest executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases).
-- Or you can download the entire repository from [here](https://github.com/eliasbenb/MagnetMagnet/archive/master.zip) and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python, dependencies must be installed using `pip install -r requirements.txt`
+- **Windows:** To install MagnetMagnet either download the latest executable file from [here](https://github.com/eliasbenb/MagnetMagnet/releases)
+- **MacOS:** MacOS releases are not maintained, so the latest release will be version 7.0, but you can download it from the [here](https://github.com/eliasbenb/MagnetMagnet/raw/MacOS/MacOS/v7.0/MagnetMagnet_v7.0_macos.zip) in the [MacOS branch](https://github.com/eliasbenb/MagnetMagnet/tree/MacOS)
+- **Other:** If you're using Linux or the above methods for Windows/MacOS didn't work, you can download the entire repository from [here](https://github.com/eliasbenb/MagnetMagnet/archive/master.zip) and run [main.py](https://github.com/eliasbenb/MagnetMagnet/blob/master/main.py) using python, dependencies must be installed with `pip install -r requirements.txt`
 
 # Usage:
 ### Home Screen:

@@ -1,35 +1,35 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from search import Ui_searchMainWindow
-from imagebytes import *
-import mglobals, os, requests, re, webbrowser
+from src.search import Ui_searchMainWindow
+from src.imagebytes import *
+import src.mglobals, os, requests, re, webbrowser
 
-if not os.path.exists(mglobals.base_path):
-    os.makedirs(mglobals.base_path)
-if not os.path.exists(mglobals.images_path):
-    os.makedirs(mglobals.images_path)
-if not os.path.exists(mglobals.images_path/'github.png'):
-    with open(mglobals.images_path/'github.png','wb') as w:
+if not os.path.exists(src.mglobals.base_path):
+    os.makedirs(src.mglobals.base_path)
+if not os.path.exists(src.mglobals.images_path):
+    os.makedirs(src.mglobals.images_path)
+if not os.path.exists(src.mglobals.images_path/'github.png'):
+    with open(src.mglobals.images_path/'github.png','wb') as w:
         w.write(github_image_bytes)
-if not os.path.exists(mglobals.images_path/'icon.png'):
-    with open(mglobals.images_path/'icon.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'icon.png'):
+    with open(src.mglobals.images_path/'icon.png','wb') as w:
         w.write(icon_image_bytes)
-if not os.path.exists(mglobals.images_path/'kat.png'):
-    with open(mglobals.images_path/'kat.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'kat.png'):
+    with open(src.mglobals.images_path/'kat.png','wb') as w:
         w.write(kat_image_bytes)
-if not os.path.exists(mglobals.images_path/'nyaa.png'):
-    with open(mglobals.images_path/'nyaa.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'nyaa.png'):
+    with open(src.mglobals.images_path/'nyaa.png','wb') as w:
         w.write(nyaa_image_bytes)
-if not os.path.exists(mglobals.images_path/'rarbg.png'):
-    with open(mglobals.images_path/'rarbg.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'rarbg.png'):
+    with open(src.mglobals.images_path/'rarbg.png','wb') as w:
         w.write(rarbg_image_bytes)
-if not os.path.exists(mglobals.images_path/'tpb.png'):
-    with open(mglobals.images_path/'tpb.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'tpb.png'):
+    with open(src.mglobals.images_path/'tpb.png','wb') as w:
         w.write(tpb_image_bytes)
-if not os.path.exists(mglobals.images_path/'website.png'):
-    with open(mglobals.images_path/'website.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'website.png'):
+    with open(src.mglobals.images_path/'website.png','wb') as w:
         w.write(website_image_bytes)
-if not os.path.exists(mglobals.images_path/'x1377.png'):
-    with open(mglobals.images_path/'x1377.png','wb') as w:
+if not os.path.exists(src.mglobals.images_path/'x1377.png'):
+    with open(src.mglobals.images_path/'x1377.png','wb') as w:
         w.write(x1377_image_bytes)
 
 class Ui_homeMainWindow(object):
@@ -41,7 +41,7 @@ class Ui_homeMainWindow(object):
         font.setPointSize(20)
         homeMainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         homeMainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(homeMainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -52,7 +52,7 @@ class Ui_homeMainWindow(object):
         self.x1377PushButton.setGeometry(QtCore.QRect(0, 200, 200, 200))
         self.x1377PushButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(mglobals.x1377_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(src.mglobals.x1377_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.x1377PushButton.setIcon(icon1)
         self.x1377PushButton.setIconSize(QtCore.QSize(80, 36))
         self.x1377PushButton.setObjectName("x1377PushButton")
@@ -60,7 +60,7 @@ class Ui_homeMainWindow(object):
         self.katPushButton.setGeometry(QtCore.QRect(200, 200, 200, 200))
         self.katPushButton.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(mglobals.kat_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(src.mglobals.kat_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.katPushButton.setIcon(icon2)
         self.katPushButton.setIconSize(QtCore.QSize(64, 54))
         self.katPushButton.setObjectName("katPushButton")
@@ -68,7 +68,7 @@ class Ui_homeMainWindow(object):
         self.nyaaPushButton.setGeometry(QtCore.QRect(400, 200, 200, 200))
         self.nyaaPushButton.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(mglobals.nyaa_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(src.mglobals.nyaa_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.nyaaPushButton.setIcon(icon3)
         self.nyaaPushButton.setIconSize(QtCore.QSize(64, 64))
         self.nyaaPushButton.setObjectName("nyaaPushButton")
@@ -76,7 +76,7 @@ class Ui_homeMainWindow(object):
         self.rarbgPushButton.setGeometry(QtCore.QRect(600, 200, 200, 200))
         self.rarbgPushButton.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(mglobals.rarbg_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(src.mglobals.rarbg_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.rarbgPushButton.setIcon(icon4)
         self.rarbgPushButton.setIconSize(QtCore.QSize(110, 30))
         self.rarbgPushButton.setObjectName("rarbgPushButton")
@@ -84,7 +84,7 @@ class Ui_homeMainWindow(object):
         self.tpbPushButton.setGeometry(QtCore.QRect(800, 200, 200, 200))
         self.tpbPushButton.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(mglobals.tpb_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(src.mglobals.tpb_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tpbPushButton.setIcon(icon5)
         self.tpbPushButton.setIconSize(QtCore.QSize(72, 72))
         self.tpbPushButton.setObjectName("tpbPushButton")
@@ -92,7 +92,7 @@ class Ui_homeMainWindow(object):
         self.websitePushButton.setGeometry(QtCore.QRect(0, 400, 500, 100))
         self.websitePushButton.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(mglobals.website_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(src.mglobals.website_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.websitePushButton.setIcon(icon6)
         self.websitePushButton.setIconSize(QtCore.QSize(64, 64))
         self.websitePushButton.setObjectName("websitePushButton")
@@ -100,7 +100,7 @@ class Ui_homeMainWindow(object):
         self.githubPushButton.setGeometry(QtCore.QRect(500, 400, 500, 100))
         self.githubPushButton.setText("")
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(mglobals.github_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(src.mglobals.github_icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.githubPushButton.setIcon(icon7)
         self.githubPushButton.setIconSize(QtCore.QSize(64, 64))
         self.githubPushButton.setObjectName("githubPushButton")
@@ -127,7 +127,7 @@ class Ui_homeMainWindow(object):
             updateMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             updateMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             updateMessageBox.setWindowIcon(icon)
 
             updateMessageBox.buttonClicked.connect(update)

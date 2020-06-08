@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import mglobals, os, requests, re, time
+import src.mglobals, os, requests, re, time
 
-path = mglobals.base_path
+path = src.mglobals.base_path
 
 class Ui_katMainWindow(object):
     def callback(self):
@@ -15,7 +15,7 @@ class Ui_katMainWindow(object):
                 successMessageBox.setWindowTitle("Task Completed!")
                 successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 successMessageBox.setWindowIcon(icon)
                     
                 successMessageBox.exec_()
@@ -28,7 +28,7 @@ class Ui_katMainWindow(object):
                 errorMessageBox.setWindowTitle("Error!")
                 errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 errorMessageBox.setWindowIcon(icon)
                     
                 errorMessageBox.exec_()  
@@ -80,7 +80,7 @@ class Ui_katMainWindow(object):
         font.setFamily("Bahnschrift Light")
         katMainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         katMainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(katMainWindow)
         self.centralwidget.setObjectName("centralwidget")

@@ -1,13 +1,13 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys, webbrowser
 
-from home import Ui_homeMainWindow
-from search import Ui_searchMainWindow
-from x1377 import Ui_x1337MainWindow
-from kat import Ui_katMainWindow
-from nyaa import Ui_nyaaMainWindow
-from rarbg import Ui_rarbgMainWindow
-from tpb import Ui_tpbMainWindow
+from src.home import Ui_homeMainWindow
+from src.search import Ui_searchMainWindow
+from src.x1377 import Ui_x1337MainWindow
+from src.kat import Ui_katMainWindow
+from src.nyaa import Ui_nyaaMainWindow
+from src.rarbg import Ui_rarbgMainWindow
+from src.tpb import Ui_tpbMainWindow
 
 class HomeWindow(QMainWindow):
     def __init__(self):

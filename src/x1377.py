@@ -1,10 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import mglobals, os, requests, re, time
+import src.mglobals, os, requests, re, time
 
-path = mglobals.base_path
+path = src.mglobals.base_path
 
-class Ui_tpbMainWindow(object):
+class Ui_x1337MainWindow(object):
     def callback(self):
         try:
             def exported_sucess_message():
@@ -15,11 +15,11 @@ class Ui_tpbMainWindow(object):
                 successMessageBox.setWindowTitle("Task Completed!")
                 successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 successMessageBox.setWindowIcon(icon)
                     
-                successMessageBox.exec_()
-
+                successMessageBox.exec_()  
+            
             def error_message():
                 errorMessageBox = QtWidgets.QMessageBox()
                 errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
@@ -28,7 +28,7 @@ class Ui_tpbMainWindow(object):
                 errorMessageBox.setWindowTitle("Error!")
                 errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
                 icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 errorMessageBox.setWindowIcon(icon)
                     
                 errorMessageBox.exec_()  
@@ -36,33 +36,43 @@ class Ui_tpbMainWindow(object):
             domain = str(self.domainComboBox.currentText())
             category = str(self.categoryComboBox.currentText())
 
-            if category == "All":
-                category = "recent"
-            if category == "Movies - HD":
-                category = "browse/207"
-            if category == "Movies - Not HD":
-                category = "browse/201"
-            if category == "TV - HD":
-                category = "browse/208"
-            if category == "TV - Not HD":
-                category = "browse/205"
-            if category == "Music - All":
-                category = "browse/101"            
-            if category == "XXX - All":
-                category = "browse/500"
-
+            if category == "Movies":
+                category = "popular-movies"
+            if category == "TV":
+                category = "popular-tv"
+            if category == "Games":
+                category = "popular-games"
+            if category == "Music":
+                category = "popular-music"
+            if category == "Applications":
+                category = "popular-apps"
+            if category == "Anime":
+                category = "popular-anime"
+            if category == "Documentaries":
+                category = "popular-documentaries"
+            if category == "Other":
+                category = "popular-other"
+            if category == "XXX":
+                category = "popular-xxx"
+            
             link = domain + category
             request = requests.get(link)
+
             source = request.content
             soup = BeautifulSoup(source, 'lxml')
-
             magnets = ['==== Made by @eliasbenb ====']
-            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-                magnets.append('\n')
-                magnets.append(link.get('href'))
-            
+            for page_link in soup.findAll('a', attrs={'href': re.compile("^/torrent/")}):
+                page_link = 'https://1377x.to/' + page_link.get('href')
+                page_request = requests.get(page_link)
+                page_source = page_request.content
+                page_soup = BeautifulSoup(page_source, 'lxml')
+
+                for link in page_soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                    magnets.append('\n'+link.get('href'))
+                magnets = list(dict.fromkeys(magnets))
+
             timestr = time.strftime(" %Y%m%d%H%M%S")
-            file_name = "TPB Results " + timestr + ".txt"
+            file_name = "1377x Results " + timestr + ".txt"
             with open(file_name,'w') as w1:
                 for magnet in magnets:
                     w1.write(magnet)
@@ -70,16 +80,16 @@ class Ui_tpbMainWindow(object):
         except:
             error_message()
 
-    def setupUi(self, tpbMainWindow):
-        tpbMainWindow.setObjectName("tpbMainWindow")
-        tpbMainWindow.setFixedSize(600, 330)
+    def setupUi(self, x1337MainWindow):
+        x1337MainWindow.setObjectName("x1337MainWindow")
+        x1337MainWindow.setFixedSize(600, 330)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light")
-        tpbMainWindow.setFont(font)
+        x1337MainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        tpbMainWindow.setWindowIcon(icon)
-        self.centralwidget = QtWidgets.QWidget(tpbMainWindow)
+        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        x1337MainWindow.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(x1337MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.domainComboBox = QtWidgets.QComboBox(self.centralwidget)
         self.domainComboBox.setGeometry(QtCore.QRect(150, 60, 300, 22))
@@ -101,8 +111,6 @@ class Ui_tpbMainWindow(object):
         self.categoryComboBox.addItem("")
         self.categoryComboBox.addItem("")
         self.categoryComboBox.addItem("")
-        self.categoryComboBox.addItem("")
-        self.categoryComboBox.addItem("")
         self.categoryLabel = QtWidgets.QLabel(self.centralwidget)
         self.categoryLabel.setGeometry(QtCore.QRect(200, 150, 200, 16))
         font = QtGui.QFont()
@@ -113,24 +121,22 @@ class Ui_tpbMainWindow(object):
         self.scrapeButton = QtWidgets.QPushButton(self.centralwidget)
         self.scrapeButton.setGeometry(QtCore.QRect(262, 260, 75, 30))
         self.scrapeButton.setObjectName("scrapeButton")
-        tpbMainWindow.setCentralWidget(self.centralwidget)
+        x1337MainWindow.setCentralWidget(self.centralwidget)
 
         self.scrapeButton.clicked.connect(self.callback)
 
-        self.retranslateUi(tpbMainWindow)
-        QtCore.QMetaObject.connectSlotsByName(tpbMainWindow)
+        self.retranslateUi(x1337MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(x1337MainWindow)
 
-    def retranslateUi(self, tpbMainWindow):
+    def retranslateUi(self, x1337MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        tpbMainWindow.setWindowTitle(_translate("tpbMainWindow", "MagnetMagnet - TPB"))
-        self.domainComboBox.setItemText(0, _translate("tpbMainWindow", "https://tpb.party/"))
-        self.domainLabel.setText(_translate("tpbMainWindow", "Choose a TPB domain:"))
-        self.categoryComboBox.setItemText(0, _translate("tpbMainWindow", "All"))
-        self.categoryComboBox.setItemText(1, _translate("tpbMainWindow", "Movies - HD"))
-        self.categoryComboBox.setItemText(2, _translate("tpbMainWindow", "Movies - Not HD"))
-        self.categoryComboBox.setItemText(3, _translate("tpbMainWindow", "TV - HD"))
-        self.categoryComboBox.setItemText(4, _translate("tpbMainWindow", "TV - Not HD"))
-        self.categoryComboBox.setItemText(5, _translate("tpbMainWindow", "Music - All"))
-        self.categoryComboBox.setItemText(6, _translate("tpbMainWindow", "XXX - All"))
-        self.categoryLabel.setText(_translate("tpbMainWindow", "Choose a category:"))
-        self.scrapeButton.setText(_translate("tpbMainWindow", "Scrape"))
+        x1337MainWindow.setWindowTitle(_translate("x1337MainWindow", "MagnetMagnet - 1377x"))
+        self.domainComboBox.setItemText(0, _translate("x1337MainWindow", "https://1377x.to/"))
+        self.domainLabel.setText(_translate("x1337MainWindow", "Choose a 1377x domain:"))
+        self.categoryComboBox.setItemText(0, _translate("x1337MainWindow", "Movies"))
+        self.categoryComboBox.setItemText(1, _translate("x1337MainWindow", "TV"))
+        self.categoryComboBox.setItemText(2, _translate("x1337MainWindow", "Anime"))
+        self.categoryComboBox.setItemText(3, _translate("x1337MainWindow", "Music"))
+        self.categoryComboBox.setItemText(4, _translate("x1337MainWindow", "XXX"))
+        self.categoryLabel.setText(_translate("x1337MainWindow", "Choose a category:"))
+        self.scrapeButton.setText(_translate("x1337MainWindow", "Scrape"))

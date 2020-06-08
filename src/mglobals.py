@@ -5,9 +5,9 @@ _platform_ = platform.system()
 
 
 if _platform_ == 'Windows':
-    base_path = PureWindowsPath('%s\\eliasbenb' %  os.environ['APPDATA'])
+    base_path = PureWindowsPath('%s\\eliasbenb\\MagnetMagnet' %  os.environ['APPDATA'])
 else:
-    base_path = Path('%s/eliasbenb' % os.environ['HOME'])
+    base_path = Path('%s/eliasbenb/MagnetMagnet' % os.environ['HOME'])
 
 images_path = base_path/'images'
 icon = str(images_path / "icon.png")
@@ -18,5 +18,3 @@ nyaa_icon = str(images_path / "nyaa.png")
 tpb_icon = str(images_path / "tpb.png")
 x1377_icon = str(images_path / "x1377.png")
 rarbg_icon = str(images_path / "rarbg.png")
-
-

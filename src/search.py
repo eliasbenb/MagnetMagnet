@@ -1,8 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from bs4 import BeautifulSoup
-import math, mglobals, pyperclip, re, requests
+import math, src.mglobals, pyperclip, re, requests
 
-path = mglobals.base_path
+path = src.mglobals.base_path
 
 class Ui_searchMainWindow(object):
     def copied_success_message(self):
@@ -13,7 +13,7 @@ class Ui_searchMainWindow(object):
         successMessageBox.setWindowTitle("Task Completed!")
         successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         successMessageBox.setWindowIcon(icon)
             
         successMessageBox.exec_()   
@@ -43,7 +43,7 @@ class Ui_searchMainWindow(object):
             successMessageBox.setWindowTitle("Task Completed!")
             successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             successMessageBox.setWindowIcon(icon)
                 
             successMessageBox.exec_()
@@ -56,7 +56,7 @@ class Ui_searchMainWindow(object):
             errorMessageBox.setWindowTitle("Error!")
             errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
             icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             errorMessageBox.setWindowIcon(icon)
                 
             errorMessageBox.exec_()
@@ -656,7 +656,7 @@ class Ui_searchMainWindow(object):
         font.setPointSize(11)
         searchMainWindow.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         searchMainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(searchMainWindow)
         self.centralwidget.setObjectName("centralwidget")

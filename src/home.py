@@ -140,13 +140,16 @@ class Ui_homeMainWindow(object):
         def update():
             webbrowser.open("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
         
-        __VERSION__ = "7.0"
-        version_request = requests.get("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
-        version_url = version_request.url
-        version_url = version_url.split("/")
-        latest_version = version_url[7]
-        if latest_version != __VERSION__:
-            update_message()
+        __VERSION__ = "7.1"
+        try:
+            version_request = requests.get("https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
+            version_url = version_request.url
+            version_url = version_url.split("/")
+            latest_version = version_url[7]
+            if latest_version > __VERSION__:
+                update_message()
+        except:
+            pass
 
     def retranslateUi(self, homeMainWindow):
         _translate = QCoreApplication.translate

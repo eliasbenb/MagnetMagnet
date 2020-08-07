@@ -1,4 +1,7 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
 from bs4 import BeautifulSoup
 import src.mglobals, os, requests, re, time
 
@@ -8,27 +11,27 @@ class Ui_katMainWindow(object):
     def callback(self):
         try:
             def exported_sucess_message():
-                successMessageBox = QtWidgets.QMessageBox()
-                successMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+                successMessageBox = QMessageBox()
+                successMessageBox.setIcon(QMessageBox.Information)
 
                 successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
                 successMessageBox.setWindowTitle("Task Completed!")
-                successMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-                icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                successMessageBox.setStandardButtons(QMessageBox.Ok)
+                icon = QIcon()
+                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
                 successMessageBox.setWindowIcon(icon)
                     
                 successMessageBox.exec_()
 
             def error_message():
-                errorMessageBox = QtWidgets.QMessageBox()
-                errorMessageBox.setIcon(QtWidgets.QMessageBox.Information)
+                errorMessageBox = QMessageBox()
+                errorMessageBox.setIcon(QMessageBox.Information)
 
                 errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
                 errorMessageBox.setWindowTitle("Error!")
-                errorMessageBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-                icon = QtGui.QIcon()
-                icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                errorMessageBox.setStandardButtons(QMessageBox.Ok)
+                icon = QIcon()
+                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
                 errorMessageBox.setWindowIcon(icon)
                     
                 errorMessageBox.exec_()  
@@ -76,28 +79,28 @@ class Ui_katMainWindow(object):
     def setupUi(self, katMainWindow):
         katMainWindow.setObjectName("katMainWindow")
         katMainWindow.setFixedSize(600, 330)
-        font = QtGui.QFont()
+        font = QFont()
         font.setFamily("Bahnschrift Light")
         katMainWindow.setFont(font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(src.mglobals.icon), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = QIcon()
+        icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
         katMainWindow.setWindowIcon(icon)
-        self.centralwidget = QtWidgets.QWidget(katMainWindow)
+        self.centralwidget = QWidget(katMainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.domainComboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.domainComboBox.setGeometry(QtCore.QRect(150, 60, 300, 22))
-        self.domainComboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.domainComboBox = QComboBox(self.centralwidget)
+        self.domainComboBox.setGeometry(QRect(150, 60, 300, 22))
+        self.domainComboBox.setLayoutDirection(Qt.LeftToRight)
         self.domainComboBox.setObjectName("domainComboBox")
         self.domainComboBox.addItem("")
-        self.domainLabel = QtWidgets.QLabel(self.centralwidget)
-        self.domainLabel.setGeometry(QtCore.QRect(200, 30, 200, 16))
-        font = QtGui.QFont()
+        self.domainLabel = QLabel(self.centralwidget)
+        self.domainLabel.setGeometry(QRect(200, 30, 200, 16))
+        font = QFont()
         font.setPointSize(11)
         self.domainLabel.setFont(font)
-        self.domainLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.domainLabel.setAlignment(Qt.AlignCenter)
         self.domainLabel.setObjectName("domainLabel")
-        self.categoryComboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.categoryComboBox.setGeometry(QtCore.QRect(150, 180, 300, 22))
+        self.categoryComboBox = QComboBox(self.centralwidget)
+        self.categoryComboBox.setGeometry(QRect(150, 180, 300, 22))
         self.categoryComboBox.setObjectName("categoryComboBox")
         self.categoryComboBox.addItem("")
         self.categoryComboBox.addItem("")
@@ -106,25 +109,25 @@ class Ui_katMainWindow(object):
         self.categoryComboBox.addItem("")
         self.categoryComboBox.addItem("")
         self.categoryComboBox.addItem("")
-        self.categoryLabel = QtWidgets.QLabel(self.centralwidget)
-        self.categoryLabel.setGeometry(QtCore.QRect(200, 150, 200, 16))
-        font = QtGui.QFont()
+        self.categoryLabel = QLabel(self.centralwidget)
+        self.categoryLabel.setGeometry(QRect(200, 150, 200, 16))
+        font = QFont()
         font.setPointSize(11)
         self.categoryLabel.setFont(font)
-        self.categoryLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.categoryLabel.setAlignment(Qt.AlignCenter)
         self.categoryLabel.setObjectName("categoryLabel")
-        self.scrapeButton = QtWidgets.QPushButton(self.centralwidget)
-        self.scrapeButton.setGeometry(QtCore.QRect(262, 260, 75, 30))
+        self.scrapeButton = QPushButton(self.centralwidget)
+        self.scrapeButton.setGeometry(QRect(262, 260, 75, 30))
         self.scrapeButton.setObjectName("scrapeButton")
         katMainWindow.setCentralWidget(self.centralwidget)
 
         self.scrapeButton.clicked.connect(self.callback)
 
         self.retranslateUi(katMainWindow)
-        QtCore.QMetaObject.connectSlotsByName(katMainWindow)
+        QMetaObject.connectSlotsByName(katMainWindow)
 
     def retranslateUi(self, katMainWindow):
-        _translate = QtCore.QCoreApplication.translate
+        _translate = QCoreApplication.translate
         katMainWindow.setWindowTitle(_translate("katMainWindow", "MagnetMagnet - KAT"))
         self.domainComboBox.setItemText(0, _translate("katMainWindow", "https://kat.rip/"))
         self.domainLabel.setText(_translate("katMainWindow", "Choose a KAT domain:"))

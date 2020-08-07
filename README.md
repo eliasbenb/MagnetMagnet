@@ -23,6 +23,7 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - Choosing the category/subcategory to scrape magnet links from
 - Exporting magnet links to a .txt file in local directory
 - Copy specific magnet links to the clipboard on click
+- Sort alphabetically, by most seeders or by most leechers (and vice versa)
 - Auto version checker
 - Cross platform
 

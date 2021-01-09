@@ -74,6 +74,7 @@ class Ui_searchMainWindow(object):
             errorMessageBox.exec_()
 
         def x1377():
+            try:
                 main_link = "https://1377x.to/search/" + query + '/1/'
                 main_request = requests.get(
                     main_link, headers={'User-Agent': 'Mozilla/5.0'})
@@ -119,6 +120,8 @@ class Ui_searchMainWindow(object):
                             row_position, 5, QTableWidgetItem("1377x"))
                         self.magnets.append(magnet)
                         limit_counter = limit_counter + 1
+            except:
+                error_message()
 
         def kat():
             try:

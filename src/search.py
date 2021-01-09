@@ -1,25 +1,32 @@
+import math
+import re
+
+import pyperclip
+import requests
+from bs4 import BeautifulSoup
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-import math, src.mglobals, pyperclip, re, requests
+import src.mglobals
 
 path = src.mglobals.base_path
+
 
 class Ui_searchMainWindow(object):
     def copied_success_message(self):
         successMessageBox = QMessageBox()
         successMessageBox.setIcon(QMessageBox.Information)
 
-        successMessageBox.setText("Magnet links have been successfully copied to the clipboard.")
+        successMessageBox.setText(
+            "Magnet links have been successfully copied to the clipboard.")
         successMessageBox.setWindowTitle("Task Completed!")
         successMessageBox.setStandardButtons(QMessageBox.Ok)
         icon = QIcon()
         icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
         successMessageBox.setWindowIcon(icon)
-            
-        successMessageBox.exec_()   
+
+        successMessageBox.exec_()
 
     def copy(self):
         choice_row = self.tableTableWidget.currentRow()
@@ -37,46 +44,51 @@ class Ui_searchMainWindow(object):
             self.tableTableWidget.resizeColumnToContents(2)
             self.tableTableWidget.resizeColumnToContents(3)
             self.tableTableWidget.resizeColumnToContents(4)
-        
+
         def searched_success_message():
             successMessageBox = QMessageBox()
             successMessageBox.setIcon(QMessageBox.Information)
 
-            successMessageBox.setText("Magnet links have been successfully scraped.")
+            successMessageBox.setText(
+                "Magnet links have been successfully scraped.")
             successMessageBox.setWindowTitle("Task Completed!")
             successMessageBox.setStandardButtons(QMessageBox.Ok)
             icon = QIcon()
             icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
             successMessageBox.setWindowIcon(icon)
-                
+
             successMessageBox.exec_()
 
         def error_message():
             errorMessageBox = QMessageBox()
             errorMessageBox.setIcon(QMessageBox.Information)
 
-            errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setText(
+                "Something went wrong! Please inform me through GitHub!")
             errorMessageBox.setWindowTitle("Error!")
             errorMessageBox.setStandardButtons(QMessageBox.Ok)
             icon = QIcon()
             icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
             errorMessageBox.setWindowIcon(icon)
-                
+
             errorMessageBox.exec_()
 
         def x1377():
             try:
                 main_link = "https://1377x.to/search/" + query + '/1/'
-                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(
+                    main_link, headers={'User-Agent': 'Mozilla/5.0'})
                 main_source = main_request.content
                 main_soup = BeautifulSoup(main_source, 'lxml')
-                
+
                 limit_counter = 0
-                page_links_soup = main_soup.findAll('a', attrs={'href': re.compile("^/torrent/")})
+                page_links_soup = main_soup.findAll(
+                    'a', attrs={'href': re.compile("^/torrent/")})
                 for page_link in page_links_soup:
                     if limit_counter < limit:
                         page_link = "https://1377x.to" + page_link.get('href')
-                        page_request = requests.get(page_link, headers={'User-Agent': 'Mozilla/5.0'})
+                        page_request = requests.get(
+                            page_link, headers={'User-Agent': 'Mozilla/5.0'})
                         page_source = page_request.content
                         page_soup = BeautifulSoup(page_source, 'lxml')
 
@@ -85,21 +97,27 @@ class Ui_searchMainWindow(object):
                         leecher = page_soup.find('span', class_="leeches").text
                         size = page_soup.findAll('span')[15].text
                         date = page_soup.findAll('span')[19].text
-                        magnet = page_soup.find('a', attrs={'href': re.compile("^magnet:?")}).get('href')
+                        magnet = page_soup.find(
+                            'a', attrs={'href': re.compile("^magnet:?")}).get('href')
 
                         row_position = self.tableTableWidget.rowCount()
                         self.tableTableWidget.insertRow(row_position)
-                        self.tableTableWidget.setItem(row_position, 0, QTableWidgetItem(title))
+                        self.tableTableWidget.setItem(
+                            row_position, 0, QTableWidgetItem(title))
                         item = QTableWidgetItem()
                         item.setData(Qt.DisplayRole, int(seeder))
                         self.tableTableWidget.setItem(row_position, 1, item)
-                        self.tableTableWidget.setItem(row_position, 2, QTableWidgetItem(leecher))
+                        self.tableTableWidget.setItem(
+                            row_position, 2, QTableWidgetItem(leecher))
                         item = QTableWidgetItem()
                         item.setData(Qt.DisplayRole, int(leecher))
                         self.tableTableWidget.setItem(row_position, 2, item)
-                        self.tableTableWidget.setItem(row_position, 3, QTableWidgetItem(size))
-                        self.tableTableWidget.setItem(row_position, 4, QTableWidgetItem(date))
-                        self.tableTableWidget.setItem(row_position, 5, QTableWidgetItem("1377x"))
+                        self.tableTableWidget.setItem(
+                            row_position, 3, QTableWidgetItem(size))
+                        self.tableTableWidget.setItem(
+                            row_position, 4, QTableWidgetItem(date))
+                        self.tableTableWidget.setItem(
+                            row_position, 5, QTableWidgetItem("1377x"))
                         self.magnets.append(magnet)
                         limit_counter = limit_counter + 1
             except:
@@ -108,16 +126,20 @@ class Ui_searchMainWindow(object):
         def kat():
             try:
                 main_link = "https://kat.rip/usearch/" + query
-                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(
+                    main_link, headers={'User-Agent': 'Mozilla/5.0'})
                 main_source = main_request.content
                 main_soup = BeautifulSoup(main_source, 'lxml')
 
                 titles_soup = main_soup.findAll('a', class_="cellMainLink")
                 seeders_soup = main_soup.findAll('td', class_="green center")
-                leechers_soup = main_soup.findAll('td', class_="red lasttd center")
+                leechers_soup = main_soup.findAll(
+                    'td', class_="red lasttd center")
                 sizes_soup = main_soup.findAll('td', class_="nobr center")
-                dates_soup = main_soup.findAll('td', class_="center", title=True)
-                magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?"), 'title': "Torrent magnet link"})
+                dates_soup = main_soup.findAll(
+                    'td', class_="center", title=True)
+                magnets_soup = main_soup.findAll(
+                    'a', attrs={'href': re.compile("^magnet:?"), 'title': "Torrent magnet link"})
 
                 titles = []
                 seeders = []
@@ -156,21 +178,25 @@ class Ui_searchMainWindow(object):
                         self.magnets.append(magnet.get('href'))
                         limit_counter = limit_counter + 1
                         count1 = count1 + 1
-                
+
                 count2 = 0
                 while count2 < count1:
                     row_position = self.tableTableWidget.rowCount()
                     self.tableTableWidget.insertRow(row_position)
-                    self.tableTableWidget.setItem(row_position, 0, QTableWidgetItem(titles[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 0, QTableWidgetItem(titles[count2]))
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(seeders[count2]))
                     self.tableTableWidget.setItem(row_position, 1, item)
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(leechers[count2]))
                     self.tableTableWidget.setItem(row_position, 2, item)
-                    self.tableTableWidget.setItem(row_position, 3, QTableWidgetItem(sizes[count2]))
-                    self.tableTableWidget.setItem(row_position, 4, QTableWidgetItem(dates[count2]))
-                    self.tableTableWidget.setItem(row_position, 5, QTableWidgetItem("KAT"))
+                    self.tableTableWidget.setItem(
+                        row_position, 3, QTableWidgetItem(sizes[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 4, QTableWidgetItem(dates[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 5, QTableWidgetItem("KAT"))
                     count2 = count2 + 1
             except:
                 error_message()
@@ -178,16 +204,19 @@ class Ui_searchMainWindow(object):
         def nyaa():
             try:
                 main_link = 'https://nyaa.si/?q=' + query
-                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(
+                    main_link, headers={'User-Agent': 'Mozilla/5.0'})
                 main_source = main_request.content
                 main_soup = BeautifulSoup(main_source, 'lxml')
 
-                titles_soup = main_soup.findAll('a', title=True, class_=False, attrs={'href': re.compile("^/view/")})
+                titles_soup = main_soup.findAll('a', title=True, class_=False, attrs={
+                                                'href': re.compile("^/view/")})
                 seeders_soup = main_soup.findAll('td', class_="text-center")
                 leechers_soup = main_soup.findAll('td', class_="text-center")
                 sizes_soup = main_soup.findAll('td', class_="text-center")
                 dates_soup = main_soup.findAll('td', class_="text-center")
-                magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet:?")})
+                magnets_soup = main_soup.findAll(
+                    'a', attrs={'href': re.compile("^magnet:?")})
 
                 titles = []
                 seeders = []
@@ -261,109 +290,82 @@ class Ui_searchMainWindow(object):
                 while count2 < count1:
                     row_position = self.tableTableWidget.rowCount()
                     self.tableTableWidget.insertRow(row_position)
-                    self.tableTableWidget.setItem(row_position, 0, QTableWidgetItem(titles[count2]))
-                    item = QTableWidgetItem()
-                    item.setData(Qt.DisplayRole, int(seeders[count2]))
-                    self.tableTableWidget.setItem(row_position, 1, item)
-                    item = QTableWidgetItem()
-                    item.setData(Qt.DisplayRole, int(leechers[count2]))
-                    self.tableTableWidget.setItem(row_position, 2, item)                    
-                    self.tableTableWidget.setItem(row_position, 3, QTableWidgetItem(sizes[count2]))
-                    self.tableTableWidget.setItem(row_position, 4, QTableWidgetItem(dates[count2]))
-                    self.tableTableWidget.setItem(row_position, 5, QTableWidgetItem("Nyaa"))
-                    count2 = count2 + 1
-            except:
-                error_message()
-
-        def rarbg():
-            try:
-                main_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + query + '&token=lnjzy73ucv&format=json_extended&app_id=lol'
-                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
-                main_source = main_request.content
-                main_soup = BeautifulSoup(main_source, 'lxml').text
-
-                titles_soup = main_soup.split(",")
-                seeders_soup = main_soup.split(',"')
-                leechers_soup = main_soup.split(',"')
-                sizes_soup = main_soup.split(',"')
-                dates_soup = main_soup.split(',"')
-                magnets_soup = main_soup.split('"')
-
-                titles = []
-                seeders = []
-                leechers = []
-                sizes = []
-                dates = []
-                limit_counter = 0
-                for title in titles_soup:
-                    if limit_counter < limit:
-                        if title.startswith('{"title":') or title.startswith('{"torrent_results":[{"title":'):
-                            title = title.replace('"', '')
-                            title = title.replace("{torrent_results:[{title:", '')
-                            title = title.replace('{title:', '')
-                            titles.append(title)
-                            limit_counter = limit_counter + 1
-                limit_counter = 0
-                for seeder in seeders_soup:
-                    if limit_counter < limit:
-                        if seeder.startswith('seeders":'):
-                            seeder = seeder.replace('seeders":', '')
-                            seeders.append(seeder)
-                            limit_counter = limit_counter + 1
-                limit_counter = 0
-                for leecher in leechers_soup:
-                    if limit_counter < limit:
-                        if leecher.startswith('leechers":'):
-                            leecher = leecher.replace('leechers":', '')
-                            leechers.append(leecher)
-                            limit_counter = limit_counter + 1
-                limit_counter = 0
-                for size in sizes_soup:
-                    if limit_counter < limit:
-                        if size.startswith('size":'):
-                            def convert_size(size):
-                                if size == 0:
-                                    return "0B"
-                                size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-                                i = int(math.floor(math.log(size, 1024)))
-                                p = math.pow(1024, i)
-                                s = round(size / p, 2)
-                                size = "%s %s" % (s, size_name[i])
-                                sizes.append(size)
-                            size = int(size.replace('size":', ''))
-                            convert_size(size)
-                            limit_counter = limit_counter + 1
-                limit_counter = 0
-                for date in dates_soup:
-                    if limit_counter < limit:
-                        if date.startswith('pubdate":'):
-                            date = date.replace('pubdate":"', '')
-                            date = date.replace('+0000"', '')
-                            dates.append(date)
-                            limit_counter = limit_counter + 1
-                limit_counter = 0
-                count1 = 0
-                for magnet in magnets_soup:
-                    if limit_counter < limit:
-                        if magnet.startswith("magnet:?"):
-                            self.magnets.append(magnet)
-                            limit_counter = limit_counter + 1
-                            count1 = count1 + 1
-
-                count2 = 0
-                while count2 < count1:
-                    row_position = self.tableTableWidget.rowCount()
-                    self.tableTableWidget.insertRow(row_position)
-                    self.tableTableWidget.setItem(row_position, 0, QTableWidgetItem(titles[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 0, QTableWidgetItem(titles[count2]))
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(seeders[count2]))
                     self.tableTableWidget.setItem(row_position, 1, item)
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(leechers[count2]))
                     self.tableTableWidget.setItem(row_position, 2, item)
-                    self.tableTableWidget.setItem(row_position, 3, QTableWidgetItem(sizes[count2]))
-                    self.tableTableWidget.setItem(row_position, 4, QTableWidgetItem(dates[count2]))
-                    self.tableTableWidget.setItem(row_position, 5, QTableWidgetItem("RARBG"))
+                    self.tableTableWidget.setItem(
+                        row_position, 3, QTableWidgetItem(sizes[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 4, QTableWidgetItem(dates[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 5, QTableWidgetItem("Nyaa"))
+                    count2 = count2 + 1
+            except:
+                error_message()
+
+        def rarbg():
+            try:
+                token_url = "https://torrentapi.org/pubapi_v2.php?get_token=get_token&app_id=MagnetMagnet"
+                token_request = requests.get(token_url, headers={'User-Agent': 'Mozilla/5.0'})
+                token = token_request.json()["token"]
+                main_link = 'https://torrentapi.org/pubapi_v2.php?mode=search&search_string=' + \
+                    query + '&token=' + token + '&format=json_extended&app_id=MagnetMagnet'
+                main_request = requests.get(
+                    main_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_source = main_request.json()["torrent_results"]
+
+                limit_counter = 0
+                titles = []
+                seeders = []
+                leechers = []
+                sizes = []
+                dates = []
+                for item in main_source:
+                    if limit_counter < limit:
+                        def convert_size(size):
+                            if size == 0:
+                                return "0B"
+                            size_name = ("B", "KB", "MB", "GB",
+                                            "TB", "PB", "EB", "ZB", "YB")
+                            i = int(math.floor(math.log(size, 1024)))
+                            p = math.pow(1024, i)
+                            s = round(size / p, 2)
+                            size = "%s %s" % (s, size_name[i])
+                            return size
+                        titles.append(item["title"])
+                        seeders.append(item["seeders"])
+                        leechers.append(item["leechers"])
+                        sizes.append(convert_size(item["size"]))
+                        dates.append(item["pubdate"])
+                        self.magnets.append(item["download"])
+                        limit_counter += 1
+                    else:
+                        pass
+                print(titles)
+
+                count2 = 0
+                while count2 < limit_counter:
+                    row_position = self.tableTableWidget.rowCount()
+                    self.tableTableWidget.insertRow(row_position)
+                    self.tableTableWidget.setItem(
+                        row_position, 0, QTableWidgetItem(titles[count2]))
+                    item = QTableWidgetItem()
+                    item.setData(Qt.DisplayRole, int(seeders[count2]))
+                    self.tableTableWidget.setItem(row_position, 1, item)
+                    item = QTableWidgetItem()
+                    item.setData(Qt.DisplayRole, int(leechers[count2]))
+                    self.tableTableWidget.setItem(row_position, 2, item)
+                    self.tableTableWidget.setItem(
+                        row_position, 3, QTableWidgetItem(sizes[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 4, QTableWidgetItem(dates[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 5, QTableWidgetItem("RARBG"))
                     count2 = count2 + 1
             except:
                 error_message()
@@ -371,18 +373,22 @@ class Ui_searchMainWindow(object):
         def tpb():
             try:
                 main_link = 'https://tpb.party/search/' + query + '/1/99/0/'
-                main_request = requests.get(main_link, headers={'User-Agent': 'Mozilla/5.0'})
+                main_request = requests.get(
+                    main_link, headers={'User-Agent': 'Mozilla/5.0'})
                 main_source = main_request.content
                 main_soup = BeautifulSoup(main_source, 'lxml')
 
                 titles_soup = main_soup.findAll('div', class_="detName")
-                seeders_soup = main_soup.findAll('td', attrs={'align': "right"})
+                seeders_soup = main_soup.findAll(
+                    'td', attrs={'align': "right"})
                 seeders_soup = seeders_soup[0::2]
-                leechers_soup = main_soup.findAll('td', attrs={'align': "right"})
+                leechers_soup = main_soup.findAll(
+                    'td', attrs={'align': "right"})
                 leechers_soup = leechers_soup[1::2]
                 sizes_soup = main_soup.findAll('font', class_="detDesc")
                 dates_soup = main_soup.findAll('font', class_="detDesc")
-                magnets_soup = main_soup.findAll('a', attrs={'href': re.compile("^magnet")})
+                magnets_soup = main_soup.findAll(
+                    'a', attrs={'href': re.compile("^magnet")})
 
                 titles = []
                 seeders = []
@@ -431,16 +437,20 @@ class Ui_searchMainWindow(object):
                 while count2 < count1:
                     row_position = self.tableTableWidget.rowCount()
                     self.tableTableWidget.insertRow(row_position)
-                    self.tableTableWidget.setItem(row_position, 0, QTableWidgetItem(titles[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 0, QTableWidgetItem(titles[count2]))
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(seeders[count2]))
                     self.tableTableWidget.setItem(row_position, 1, item)
                     item = QTableWidgetItem()
                     item.setData(Qt.DisplayRole, int(leechers[count2]))
                     self.tableTableWidget.setItem(row_position, 2, item)
-                    self.tableTableWidget.setItem(row_position, 3, QTableWidgetItem(sizes[count2]))
-                    self.tableTableWidget.setItem(row_position, 4, QTableWidgetItem(dates[count2]))
-                    self.tableTableWidget.setItem(row_position, 5, QTableWidgetItem("TPB"))
+                    self.tableTableWidget.setItem(
+                        row_position, 3, QTableWidgetItem(sizes[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 4, QTableWidgetItem(dates[count2]))
+                    self.tableTableWidget.setItem(
+                        row_position, 5, QTableWidgetItem("TPB"))
                     count2 = count2 + 1
             except:
                 error_message()
@@ -760,7 +770,8 @@ class Ui_searchMainWindow(object):
 
     def retranslateUi(self, searchMainWindow):
         _translate = QCoreApplication.translate
-        searchMainWindow.setWindowTitle(_translate("searchMainWindow", "MagnetMagnet - Search"))
+        searchMainWindow.setWindowTitle(_translate(
+            "searchMainWindow", "MagnetMagnet - Search"))
         self.x1377CheckBox.setText(_translate("searchMainWindow", "1377x"))
         item = self.tableTableWidget.horizontalHeaderItem(0)
         item.setText(_translate("searchMainWindow", "Titles"))

@@ -1,41 +1,48 @@
+import os
+import re
+import time
+
+import requests
+from bs4 import BeautifulSoup
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-import src.mglobals, os, requests, re, time
+import src.mglobals
 
 path = src.mglobals.base_path
 
+
 class Ui_x1337MainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QMessageBox()
+            successMessageBox.setIcon(QMessageBox.Information)
+
+            successMessageBox.setText(
+                "Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+
+            successMessageBox.exec_()
+
+        def error_message():
+            errorMessageBox = QMessageBox()
+            errorMessageBox.setIcon(QMessageBox.Information)
+
+            errorMessageBox.setText(
+                "Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+
+            errorMessageBox.exec_()
         try:
-            def exported_sucess_message():
-                successMessageBox = QMessageBox()
-                successMessageBox.setIcon(QMessageBox.Information)
-
-                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-                successMessageBox.setWindowTitle("Task Completed!")
-                successMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                successMessageBox.setWindowIcon(icon)
-                    
-                successMessageBox.exec_()  
-            
-            def error_message():
-                errorMessageBox = QMessageBox()
-                errorMessageBox.setIcon(QMessageBox.Information)
-
-                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-                errorMessageBox.setWindowTitle("Error!")
-                errorMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                errorMessageBox.setWindowIcon(icon)
-                    
-                errorMessageBox.exec_()  
-
             domain = str(self.domainComboBox.currentText())
             category = str(self.categoryComboBox.currentText())
 
@@ -57,7 +64,7 @@ class Ui_x1337MainWindow(object):
                 category = "popular-other"
             if category == "XXX":
                 category = "popular-xxx"
-            
+
             link = domain + category
             request = requests.get(link)
 
@@ -76,7 +83,7 @@ class Ui_x1337MainWindow(object):
 
             timestr = time.strftime(" %Y%m%d%H%M%S")
             file_name = "1377x Results " + timestr + ".txt"
-            with open(file_name,'w') as w1:
+            with open(file_name, 'w') as w1:
                 for magnet in magnets:
                     w1.write(magnet)
             exported_sucess_message()
@@ -133,13 +140,22 @@ class Ui_x1337MainWindow(object):
 
     def retranslateUi(self, x1337MainWindow):
         _translate = QCoreApplication.translate
-        x1337MainWindow.setWindowTitle(_translate("x1337MainWindow", "MagnetMagnet - 1377x"))
-        self.domainComboBox.setItemText(0, _translate("x1337MainWindow", "https://1377x.to/"))
-        self.domainLabel.setText(_translate("x1337MainWindow", "Choose a 1377x domain:"))
-        self.categoryComboBox.setItemText(0, _translate("x1337MainWindow", "Movies"))
-        self.categoryComboBox.setItemText(1, _translate("x1337MainWindow", "TV"))
-        self.categoryComboBox.setItemText(2, _translate("x1337MainWindow", "Anime"))
-        self.categoryComboBox.setItemText(3, _translate("x1337MainWindow", "Music"))
-        self.categoryComboBox.setItemText(4, _translate("x1337MainWindow", "XXX"))
-        self.categoryLabel.setText(_translate("x1337MainWindow", "Choose a category:"))
+        x1337MainWindow.setWindowTitle(_translate(
+            "x1337MainWindow", "MagnetMagnet - 1377x"))
+        self.domainComboBox.setItemText(0, _translate(
+            "x1337MainWindow", "https://1377x.to/"))
+        self.domainLabel.setText(_translate(
+            "x1337MainWindow", "Choose a 1377x domain:"))
+        self.categoryComboBox.setItemText(
+            0, _translate("x1337MainWindow", "Movies"))
+        self.categoryComboBox.setItemText(
+            1, _translate("x1337MainWindow", "TV"))
+        self.categoryComboBox.setItemText(
+            2, _translate("x1337MainWindow", "Anime"))
+        self.categoryComboBox.setItemText(
+            3, _translate("x1337MainWindow", "Music"))
+        self.categoryComboBox.setItemText(
+            4, _translate("x1337MainWindow", "XXX"))
+        self.categoryLabel.setText(_translate(
+            "x1337MainWindow", "Choose a category:"))
         self.scrapeButton.setText(_translate("x1337MainWindow", "Scrape"))

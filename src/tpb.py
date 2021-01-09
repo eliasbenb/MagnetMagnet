@@ -1,41 +1,50 @@
+import os
+import re
+import time
+
+import requests
+from bs4 import BeautifulSoup
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-import src.mglobals, os, requests, re, time
+import src.mglobals
 
 path = src.mglobals.base_path
 
+
 class Ui_tpbMainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QMessageBox()
+            successMessageBox.setIcon(QMessageBox.Information)
+
+            successMessageBox.setText(
+                "Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon),
+                           QIcon.Normal, QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+
+            successMessageBox.exec_()
+
+        def error_message():
+            errorMessageBox = QMessageBox()
+            errorMessageBox.setIcon(QMessageBox.Information)
+
+            errorMessageBox.setText(
+                "Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon),
+                           QIcon.Normal, QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+
+            errorMessageBox.exec_()
         try:
-            def exported_sucess_message():
-                successMessageBox = QMessageBox()
-                successMessageBox.setIcon(QMessageBox.Information)
-
-                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-                successMessageBox.setWindowTitle("Task Completed!")
-                successMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                successMessageBox.setWindowIcon(icon)
-                    
-                successMessageBox.exec_()
-
-            def error_message():
-                errorMessageBox = QMessageBox()
-                errorMessageBox.setIcon(QMessageBox.Information)
-
-                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-                errorMessageBox.setWindowTitle("Error!")
-                errorMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                errorMessageBox.setWindowIcon(icon)
-                    
-                errorMessageBox.exec_()  
-
             domain = str(self.domainComboBox.currentText())
             category = str(self.categoryComboBox.currentText())
 
@@ -50,7 +59,7 @@ class Ui_tpbMainWindow(object):
             if category == "TV - Not HD":
                 category = "browse/205"
             if category == "Music - All":
-                category = "browse/101"            
+                category = "browse/101"
             if category == "XXX - All":
                 category = "browse/500"
 
@@ -63,10 +72,10 @@ class Ui_tpbMainWindow(object):
             for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
                 magnets.append('\n')
                 magnets.append(link.get('href'))
-            
+
             timestr = time.strftime(" %Y%m%d%H%M%S")
             file_name = "TPB Results " + timestr + ".txt"
-            with open(file_name,'w') as w1:
+            with open(file_name, 'w') as w1:
                 for magnet in magnets:
                     w1.write(magnet)
             exported_sucess_message()
@@ -125,15 +134,26 @@ class Ui_tpbMainWindow(object):
 
     def retranslateUi(self, tpbMainWindow):
         _translate = QCoreApplication.translate
-        tpbMainWindow.setWindowTitle(_translate("tpbMainWindow", "MagnetMagnet - TPB"))
-        self.domainComboBox.setItemText(0, _translate("tpbMainWindow", "https://tpb.party/"))
-        self.domainLabel.setText(_translate("tpbMainWindow", "Choose a TPB domain:"))
-        self.categoryComboBox.setItemText(0, _translate("tpbMainWindow", "All"))
-        self.categoryComboBox.setItemText(1, _translate("tpbMainWindow", "Movies - HD"))
-        self.categoryComboBox.setItemText(2, _translate("tpbMainWindow", "Movies - Not HD"))
-        self.categoryComboBox.setItemText(3, _translate("tpbMainWindow", "TV - HD"))
-        self.categoryComboBox.setItemText(4, _translate("tpbMainWindow", "TV - Not HD"))
-        self.categoryComboBox.setItemText(5, _translate("tpbMainWindow", "Music - All"))
-        self.categoryComboBox.setItemText(6, _translate("tpbMainWindow", "XXX - All"))
-        self.categoryLabel.setText(_translate("tpbMainWindow", "Choose a category:"))
+        tpbMainWindow.setWindowTitle(_translate(
+            "tpbMainWindow", "MagnetMagnet - TPB"))
+        self.domainComboBox.setItemText(0, _translate(
+            "tpbMainWindow", "https://tpb.party/"))
+        self.domainLabel.setText(_translate(
+            "tpbMainWindow", "Choose a TPB domain:"))
+        self.categoryComboBox.setItemText(
+            0, _translate("tpbMainWindow", "All"))
+        self.categoryComboBox.setItemText(
+            1, _translate("tpbMainWindow", "Movies - HD"))
+        self.categoryComboBox.setItemText(
+            2, _translate("tpbMainWindow", "Movies - Not HD"))
+        self.categoryComboBox.setItemText(
+            3, _translate("tpbMainWindow", "TV - HD"))
+        self.categoryComboBox.setItemText(
+            4, _translate("tpbMainWindow", "TV - Not HD"))
+        self.categoryComboBox.setItemText(
+            5, _translate("tpbMainWindow", "Music - All"))
+        self.categoryComboBox.setItemText(
+            6, _translate("tpbMainWindow", "XXX - All"))
+        self.categoryLabel.setText(_translate(
+            "tpbMainWindow", "Choose a category:"))
         self.scrapeButton.setText(_translate("tpbMainWindow", "Scrape"))

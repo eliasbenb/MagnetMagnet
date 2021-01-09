@@ -1,5 +1,6 @@
+import os
+import platform
 from pathlib import Path, PureWindowsPath
-import os, platform
 
 _platform_ = platform.system()
 

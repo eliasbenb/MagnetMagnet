@@ -1,41 +1,48 @@
+import os
+import re
+import time
+
+import requests
+from bs4 import BeautifulSoup
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-import src.mglobals, os, requests, re, time
+import src.mglobals
 
 path = src.mglobals.base_path
 
+
 class Ui_nyaaMainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QMessageBox()
+            successMessageBox.setIcon(QMessageBox.Information)
+
+            successMessageBox.setText(
+                "Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+
+            successMessageBox.exec_()
+
+        def error_message():
+            errorMessageBox = QMessageBox()
+            errorMessageBox.setIcon(QMessageBox.Information)
+
+            errorMessageBox.setText(
+                "Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+
+            errorMessageBox.exec_()
         try:
-            def exported_sucess_message():
-                successMessageBox = QMessageBox()
-                successMessageBox.setIcon(QMessageBox.Information)
-
-                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-                successMessageBox.setWindowTitle("Task Completed!")
-                successMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                successMessageBox.setWindowIcon(icon)
-                    
-                successMessageBox.exec_()
-
-            def error_message():
-                errorMessageBox = QMessageBox()
-                errorMessageBox.setIcon(QMessageBox.Information)
-
-                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-                errorMessageBox.setWindowTitle("Error!")
-                errorMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                errorMessageBox.setWindowIcon(icon)
-                    
-                errorMessageBox.exec_()  
-
             domain = str(self.domainComboBox.currentText())
             category = str(self.categoryComboBox.currentText())
 
@@ -53,26 +60,26 @@ class Ui_nyaaMainWindow(object):
                 category = "5_0"
             if category == "Software":
                 category = "6_0"
-            
+
             link = domain + '?c=' + category
             try:
                 request = requests.get(link)
+                source = request.content
+                soup = BeautifulSoup(source, 'lxml')
+
+                magnets = ['==== Made by @eliasbenb ====']
+                for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
+                    magnets.append('\n'+link.get('href'))
+                magnets = list(dict.fromkeys(magnets))
+
+                timestr = time.strftime(" %Y%m%d%H%M%S")
+                file_name = "Nyaa Results " + timestr + ".txt"
+                with open(file_name, 'w') as w1:
+                    for magnet in magnets:
+                        w1.write(magnet)
+                exported_sucess_message()
             except:
                 error_message()
-            source = request.content
-            soup = BeautifulSoup(source, 'lxml')
-
-            magnets = ['==== Made by @eliasbenb ====']
-            for link in soup.findAll('a', attrs={'href': re.compile("^magnet")}):
-                magnets.append('\n'+link.get('href'))
-            magnets = list(dict.fromkeys(magnets))
-            
-            timestr = time.strftime(" %Y%m%d%H%M%S")
-            file_name = "Nyaa Results " + timestr + ".txt"
-            with open(file_name,'w') as w1:
-                for magnet in magnets:
-                    w1.write(magnet)
-            exported_sucess_message()
         except:
             error_message()
 
@@ -129,15 +136,26 @@ class Ui_nyaaMainWindow(object):
 
     def retranslateUi(self, nyaaMainWindow):
         _translate = QCoreApplication.translate
-        nyaaMainWindow.setWindowTitle(_translate("nyaaMainWindow", "MagnetMagnet - Nyaa"))
-        self.domainComboBox.setItemText(0, _translate("nyaaMainWindow", "https://nyaa.si/"))
-        self.domainLabel.setText(_translate("nyaaMainWindow", "Choose a Nyaa domain:"))
-        self.categoryComboBox.setItemText(0, _translate("nyaaMainWindow", "All"))
-        self.categoryComboBox.setItemText(1, _translate("nyaaMainWindow", "Anime"))
-        self.categoryComboBox.setItemText(2, _translate("nyaaMainWindow", "Audio"))
-        self.categoryComboBox.setItemText(3, _translate("nyaaMainWindow", "Literature"))
-        self.categoryComboBox.setItemText(4, _translate("nyaaMainWindow", "Live Action"))
-        self.categoryComboBox.setItemText(5, _translate("nyaaMainWindow", "Pictrues"))
-        self.categoryComboBox.setItemText(6, _translate("nyaaMainWindow", "Software"))
-        self.categoryLabel.setText(_translate("nyaaMainWindow", "Choose a category:"))
+        nyaaMainWindow.setWindowTitle(_translate(
+            "nyaaMainWindow", "MagnetMagnet - Nyaa"))
+        self.domainComboBox.setItemText(
+            0, _translate("nyaaMainWindow", "https://nyaa.si/"))
+        self.domainLabel.setText(_translate(
+            "nyaaMainWindow", "Choose a Nyaa domain:"))
+        self.categoryComboBox.setItemText(
+            0, _translate("nyaaMainWindow", "All"))
+        self.categoryComboBox.setItemText(
+            1, _translate("nyaaMainWindow", "Anime"))
+        self.categoryComboBox.setItemText(
+            2, _translate("nyaaMainWindow", "Audio"))
+        self.categoryComboBox.setItemText(
+            3, _translate("nyaaMainWindow", "Literature"))
+        self.categoryComboBox.setItemText(
+            4, _translate("nyaaMainWindow", "Live Action"))
+        self.categoryComboBox.setItemText(
+            5, _translate("nyaaMainWindow", "Pictrues"))
+        self.categoryComboBox.setItemText(
+            6, _translate("nyaaMainWindow", "Software"))
+        self.categoryLabel.setText(_translate(
+            "nyaaMainWindow", "Choose a category:"))
         self.scrapeButton.setText(_translate("nyaaMainWindow", "Scrape"))

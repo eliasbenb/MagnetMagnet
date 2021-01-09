@@ -1,41 +1,48 @@
+import os
+import re
+import time
+
+import requests
+from bs4 import BeautifulSoup
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-import src.mglobals, os, requests, re, time
+import src.mglobals
 
 path = src.mglobals.base_path
 
+
 class Ui_rarbgMainWindow(object):
     def callback(self):
+        def exported_sucess_message():
+            successMessageBox = QMessageBox()
+            successMessageBox.setIcon(QMessageBox.Information)
+
+            successMessageBox.setText(
+                "Magnet links have been successfully exported to the local directory.")
+            successMessageBox.setWindowTitle("Task Completed!")
+            successMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            successMessageBox.setWindowIcon(icon)
+
+            successMessageBox.exec_()
+
+        def error_message():
+            errorMessageBox = QMessageBox()
+            errorMessageBox.setIcon(QMessageBox.Information)
+
+            errorMessageBox.setText(
+                "Something went wrong! Please inform me through GitHub!")
+            errorMessageBox.setWindowTitle("Error!")
+            errorMessageBox.setStandardButtons(QMessageBox.Ok)
+            icon = QIcon()
+            icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
+            errorMessageBox.setWindowIcon(icon)
+
+            errorMessageBox.exec_()
         try:
-            def exported_sucess_message():
-                successMessageBox = QMessageBox()
-                successMessageBox.setIcon(QMessageBox.Information)
-
-                successMessageBox.setText("Magnet links have been successfully exported to the local directory.")
-                successMessageBox.setWindowTitle("Task Completed!")
-                successMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                successMessageBox.setWindowIcon(icon)
-                    
-                successMessageBox.exec_()
-
-            def error_message():
-                errorMessageBox = QMessageBox()
-                errorMessageBox.setIcon(QMessageBox.Information)
-
-                errorMessageBox.setText("Something went wrong! Please inform me through GitHub!")
-                errorMessageBox.setWindowTitle("Error!")
-                errorMessageBox.setStandardButtons(QMessageBox.Ok)
-                icon = QIcon()
-                icon.addPixmap(QPixmap(src.mglobals.icon), QIcon.Normal, QIcon.Off)
-                errorMessageBox.setWindowIcon(icon)
-                    
-                errorMessageBox.exec_()  
-
             domain = str(self.domainComboBox.currentText())
             category = str(self.categoryComboBox.currentText())
 
@@ -56,7 +63,7 @@ class Ui_rarbgMainWindow(object):
             if category == "TV - HD":
                 category = "41"
             if category == "Music - All":
-                category = "2;23;24;25;26"            
+                category = "2;23;24;25;26"
             if category == "XXX - All":
                 category = "2;4"
 
@@ -68,10 +75,10 @@ class Ui_rarbgMainWindow(object):
             magnets = ['==== Made by @eliasbenb ====']
             for item in soup.findAll('item'):
                 magnets.append('\n'+item.link.text)
-            
+
             timestr = time.strftime(" %Y%m%d%H%M%S")
             file_name = "RARBG Results " + timestr + ".txt"
-            with open(file_name,'w') as w1:
+            with open(file_name, 'w') as w1:
                 for magnet in magnets:
                     w1.write(magnet)
             exported_sucess_message()
@@ -134,19 +141,34 @@ class Ui_rarbgMainWindow(object):
 
     def retranslateUi(self, rarbgMainWindow):
         _translate = QCoreApplication.translate
-        rarbgMainWindow.setWindowTitle(_translate("rarbgMainWindow", "MagnetMagnet - RARBG"))
-        self.domainComboBox.setItemText(0, _translate("rarbgMainWindow", "https://rarbg.to/"))
-        self.domainComboBox.setItemText(1, _translate("rarbgMainWindow", "https://rarbgmirror.com/"))
-        self.domainLabel.setText(_translate("rarbgMainWindow", "Choose a RARBG domain:"))
-        self.categoryComboBox.setItemText(0, _translate("rarbgMainWindow", "All"))
-        self.categoryComboBox.setItemText(1, _translate("rarbgMainWindow", "Movies - All"))
-        self.categoryComboBox.setItemText(2, _translate("rarbgMainWindow", "Movies - UHD"))
-        self.categoryComboBox.setItemText(3, _translate("rarbgMainWindow", "Movies - HD"))
-        self.categoryComboBox.setItemText(4, _translate("rarbgMainWindow", "Movies - Not HD"))
-        self.categoryComboBox.setItemText(5, _translate("rarbgMainWindow", "TV - All"))
-        self.categoryComboBox.setItemText(6, _translate("rarbgMainWindow", "TV - UHD"))
-        self.categoryComboBox.setItemText(7, _translate("rarbgMainWindow", "TV - HD"))
-        self.categoryComboBox.setItemText(8, _translate("rarbgMainWindow", "Music - All"))
-        self.categoryComboBox.setItemText(9, _translate("rarbgMainWindow", "XXX - All"))
-        self.categoryLabel.setText(_translate("rarbgMainWindow", "Choose a category:"))
+        rarbgMainWindow.setWindowTitle(_translate(
+            "rarbgMainWindow", "MagnetMagnet - RARBG"))
+        self.domainComboBox.setItemText(0, _translate(
+            "rarbgMainWindow", "https://rarbg.to/"))
+        self.domainComboBox.setItemText(1, _translate(
+            "rarbgMainWindow", "https://rarbgmirror.com/"))
+        self.domainLabel.setText(_translate(
+            "rarbgMainWindow", "Choose a RARBG domain:"))
+        self.categoryComboBox.setItemText(
+            0, _translate("rarbgMainWindow", "All"))
+        self.categoryComboBox.setItemText(
+            1, _translate("rarbgMainWindow", "Movies - All"))
+        self.categoryComboBox.setItemText(
+            2, _translate("rarbgMainWindow", "Movies - UHD"))
+        self.categoryComboBox.setItemText(
+            3, _translate("rarbgMainWindow", "Movies - HD"))
+        self.categoryComboBox.setItemText(
+            4, _translate("rarbgMainWindow", "Movies - Not HD"))
+        self.categoryComboBox.setItemText(
+            5, _translate("rarbgMainWindow", "TV - All"))
+        self.categoryComboBox.setItemText(
+            6, _translate("rarbgMainWindow", "TV - UHD"))
+        self.categoryComboBox.setItemText(
+            7, _translate("rarbgMainWindow", "TV - HD"))
+        self.categoryComboBox.setItemText(
+            8, _translate("rarbgMainWindow", "Music - All"))
+        self.categoryComboBox.setItemText(
+            9, _translate("rarbgMainWindow", "XXX - All"))
+        self.categoryLabel.setText(_translate(
+            "rarbgMainWindow", "Choose a category:"))
         self.scrapeButton.setText(_translate("rarbgMainWindow", "Scrape"))

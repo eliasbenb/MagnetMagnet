@@ -155,7 +155,7 @@ class Ui_homeMainWindow(object):
             webbrowser.open(
                 "https://github.com/eliasbenb/MagnetMagnet/releases/latest/")
 
-        __VERSION__ = "7.1"
+        __VERSION__ = "7.2"
         try:
             version_request = requests.get(
                 "https://github.com/eliasbenb/MagnetMagnet/releases/latest/")

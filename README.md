@@ -67,3 +67,10 @@ MagnetMagnet is well, a magnet link magnet, it's a scraper that allows you to sc
 - **Category:** the second field is for the category which you can choose from the drop down box
 
 ![Scrapers](https://user-images.githubusercontent.com/54410649/78696217-31ca4a80-7910-11ea-8d2d-4b26cf67a256.PNG)
+
+# Building
+
+- Create a Python virtual environment and activate it
+- Install all the requirements in `requirements.txt` (you need to have [wheel](https://pypi.org/project/wheel/) installed beforehand)
+- Then install pyinstaller with `pip install pyinstaller`
+- Run `pyinstaller -n MagnetMagnet -i ./src/icon.ico -w -F main.py`
